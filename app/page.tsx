@@ -52,13 +52,14 @@ export default function HomePage() {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 font-space-grotesk leading-tight">
-              Lunar South Pole Trajectory &amp; Communication Planning
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 font-space-grotesk leading-[1.15]">
+              Plan Lunar South Pole Missions <br className="hidden sm:inline" />
+              with <span className="text-[#4e6aff]">Total Precision</span>
             </h1>
 
             {/* Subtitle */}
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
-              Simulate solar illumination cycles, topographic crater rim horizon obstruction, and Direct-to-Earth (DTE) communication windows for NASA Artemis and CLPS commercial lander missions.
+              Simulate real-time solar illumination cycles, crater rim shadow masking, and Direct-to-Earth (DTE) communication windows for NASA Artemis and CLPS commercial landers.
             </p>
 
             {/* Action Buttons */}
