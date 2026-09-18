@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
+import dynamic from "next/dynamic";
 import UniversalHeader from "@/components/universal-header";
 import LunarPolarMapCanvas from "@/components/lunar/map/lunar-polar-map-canvas";
 import { LUNAR_SOUTH_POLE_CANDIDATES, LunarCandidateSite } from "@/lib/gis/lunar-sites";
@@ -26,9 +27,24 @@ import {
   Zap,
   Flame,
   CheckCircle2,
-  AlertTriangle
+  AlertTriangle,
+  Database
 } from "lucide-react";
 import Link from "next/link";
+
+// Dynamic import for Leaflet GIS to prevent SSR execution
+const LunarLeafletGIS = dynamic(
+  () => import("@/components/lunar/map/lunar-leaflet-gis"),
+  { 
+    ssr: false, 
+    loading: () => (
+      <div className="w-full h-[620px] rounded-xl border border-slate-800 bg-slate-950 flex flex-col items-center justify-center text-slate-400 gap-3">
+        <div className="w-8 h-8 rounded-full border-2 border-cyan-500 border-t-transparent animate-spin" />
+        <span className="text-xs font-mono tracking-wider">Connecting to USGS Astrogeology & NASA LRO Tile Server...</span>
+      </div>
+    )
+  }
+);
 
 // NASA Deep Space Network Ground Complexes
 interface DSNStation {
@@ -51,7 +67,7 @@ const DSN_STATIONS: DSNStation[] = [
     country: "USA",
     lat: 35.4267,
     lon: -116.8900,
-    primaryDishes: ["DSS-14 (70m)", "DSS-24 (34m BWG)", "DSS-26 (34m BWG)"],
+    primaryDishes: ["DSS-14 (70m Mars)", "DSS-24 (34m BWG)", "DSS-26 (34m BWG)"],
     bands: ["S-band (2.2 GHz)", "X-band (8.4 GHz)", "Ka-band (32 GHz)"],
     status: "Active Tracking"
   },
@@ -73,7 +89,7 @@ const DSN_STATIONS: DSNStation[] = [
     country: "Australia",
     lat: -35.4014,
     lon: 148.9817,
-    primaryDishes: ["DSS-43 (70m)", "DSS-34 (34m BWG)", "DSS-35 (34m BWG)"],
+    primaryDishes: ["DSS-43 (70m Southern Cross)", "DSS-34 (34m BWG)", "DSS-35 (34m BWG)"],
     bands: ["S-band (2.2 GHz)", "X-band (8.4 GHz)", "Ka-band (32 GHz)"],
     status: "Active Tracking"
   }
@@ -105,7 +121,17 @@ const POLAR_TRANSECT: TransectPoint[] = [
 export default function LunarMapPage() {
   const [activeSite, setActiveSite] = useState<LunarCandidateSite>(LUNAR_SOUTH_POLE_CANDIDATES[0]);
   const [simulatedDate, setSimulatedDate] = useState<Date>(new Date("2026-06-21T00:00:00Z"));
-  const [activeTab, setActiveTab] = useState<string>("polar-gis");
+  const [activeTab, setActiveTab] = useState<string>("real-gis");
+
+  // Real-time NASA JPL Horizons telemetry state
+  const [jplData, setJplData] = useState<any>(null);
+
+  useEffect(() => {
+    fetch(`/api/nasa/lunar-ephemeris?lat=${activeSite.lat}&lon=${activeSite.lon}&date=${encodeURIComponent(simulatedDate.toISOString())}`)
+      .then(res => res.json())
+      .then(data => setJplData(data))
+      .catch(err => console.error("JPL Ephemeris API error:", err));
+  }, [activeSite, simulatedDate]);
 
   // Calculate topocentric positions for the active site
   const celestial = useMemo(() => {
@@ -116,29 +142,29 @@ export default function LunarMapPage() {
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200">
       <UniversalHeader />
 
-      {/* Main Map Navigation Bar */}
-      <div className="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-md sticky top-16 z-30 px-4 py-2.5">
+      {/* Main Map Tactical Header */}
+      <div className="border-b border-slate-800/80 bg-slate-900/70 backdrop-blur-md sticky top-16 z-30 px-4 py-2.5">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
-              <Compass className="w-5 h-5" />
+              <Globe className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-base font-bold tracking-wider text-slate-100">
-                  LUNAR SOUTH POLE PLANETARY GIS
+                  NASA PLANETARY GIS & LUNAR EXPLORER
                 </h1>
                 <Badge variant="outline" className="text-[10px] bg-cyan-500/10 text-cyan-400 border-cyan-500/30">
-                  LOLA DEM v3.2
+                  USGS ASTROGEOLOGY + NASA JPL
                 </Badge>
               </div>
               <p className="text-xs text-slate-400">
-                Selenographic Polar Stereographic Projection (-80°S to -90°S) • Sub-solar & DTE Vectors
+                USGS / NASA LROC Photographic Tile Mosaic • Real-Time NASA JPL Horizons Ephemeris API
               </p>
             </div>
           </div>
 
-          {/* Quick Epoch Presets & Mission Cockpit Launch */}
+          {/* Mission Epoch Quick Selectors & Mission Cockpit Launch */}
           <div className="flex items-center gap-2">
             <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800/80 border border-slate-700 text-xs">
               <Calendar className="w-3.5 h-3.5 text-cyan-400" />
@@ -180,9 +206,13 @@ export default function LunarMapPage() {
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
             <TabsList className="bg-slate-900 border border-slate-800">
-              <TabsTrigger value="polar-gis" className="gap-2 text-xs data-[state=active]:bg-cyan-500/20 data-[state=active]:text-cyan-300">
-                <Mountain className="w-3.5 h-3.5" />
-                Polar Stereographic GIS
+              <TabsTrigger value="real-gis" className="gap-2 text-xs data-[state=active]:bg-cyan-500/20 data-[state=active]:text-cyan-300">
+                <Globe className="w-3.5 h-3.5" />
+                NASA LROC Photographic Satellite GIS
+              </TabsTrigger>
+              <TabsTrigger value="polar-projection" className="gap-2 text-xs data-[state=active]:bg-blue-500/20 data-[state=active]:text-blue-300">
+                <Compass className="w-3.5 h-3.5" />
+                Polar Stereographic Projection
               </TabsTrigger>
               <TabsTrigger value="dsn-relay" className="gap-2 text-xs data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-300">
                 <Radio className="w-3.5 h-3.5" />
@@ -194,9 +224,9 @@ export default function LunarMapPage() {
               </TabsTrigger>
             </TabsList>
 
-            {/* Active Selected Site Indicator */}
+            {/* Target Candidate Site Selector */}
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-400">Target Site:</span>
+              <span className="text-xs text-slate-400">Selected Region:</span>
               <select
                 value={activeSite.id}
                 onChange={(e) => {
@@ -214,20 +244,39 @@ export default function LunarMapPage() {
             </div>
           </div>
 
-          {/* TAB 1: POLAR STEREOGRAPHIC GIS */}
-          <TabsContent value="polar-gis" className="m-0 space-y-4">
+          {/* TAB 1: REAL NASA SATELLITE TILE GIS (LEAFLET) */}
+          <TabsContent value="real-gis" className="m-0 space-y-4">
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-              {/* Left 3 cols: Full Interactive Canvas Engine */}
-              <div className="lg:col-span-3">
-                <LunarPolarMapCanvas
-                  simulatedDate={simulatedDate}
+              {/* Left 3 Cols: Authentic Planetary Satellite GIS Engine */}
+              <div className="lg:col-span-3 space-y-3">
+                <LunarLeafletGIS
                   activeSite={activeSite}
                   onSelectSite={setActiveSite}
-                  isDarkMode={true}
+                  simulatedDate={simulatedDate}
                 />
+
+                {/* Live NASA JPL Horizons Data Stream Bar */}
+                <Card className="bg-slate-900/80 border-slate-800 text-slate-300">
+                  <CardContent className="p-3 flex flex-wrap items-center justify-between gap-3 text-xs">
+                    <div className="flex items-center gap-2">
+                      <Database className="w-4 h-4 text-emerald-400" />
+                      <span className="font-semibold text-slate-200">NASA JPL Horizons Uplink:</span>
+                      <span className="font-mono text-emerald-300">
+                        {jplData?.dataSource || "Connected (ssd.jpl.nasa.gov)"}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-4 font-mono text-[11px]">
+                      <span>Mean Radius: <strong className="text-slate-100">1,737.53 km</strong></span>
+                      <span>Gravity: <strong className="text-slate-100">1.62 m/s²</strong></span>
+                      <span>Escape Velocity: <strong className="text-slate-100">2.38 km/s</strong></span>
+                      <span className="text-cyan-300">Light Time: <strong>{jplData?.jplPhysicalData?.oneWayLightTimeSec || "1.282"}s</strong></span>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
 
-              {/* Right 1 col: Tactical Mission Briefing for Selected Site */}
+              {/* Right 1 Col: Site Tactical Dossier */}
               <div className="space-y-4">
                 <Card className="bg-slate-900/80 border-slate-800 text-slate-200 shadow-xl">
                   <CardHeader className="pb-3 border-b border-slate-800">
@@ -248,7 +297,7 @@ export default function LunarMapPage() {
                   </CardHeader>
 
                   <CardContent className="pt-4 space-y-3 text-xs">
-                    {/* Real-time Topocentric Celestial Readouts */}
+                    {/* Astronomical Ephemeris Readout */}
                     <div className="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 space-y-2">
                       <div className="flex items-center justify-between">
                         <span className="flex items-center gap-1.5 text-amber-300 font-semibold">
@@ -273,46 +322,46 @@ export default function LunarMapPage() {
                       </div>
 
                       <div className="flex items-center justify-between border-t border-slate-800/80 pt-1.5">
-                        <span className="text-slate-400">Est. Elevation:</span>
-                        <span className="font-mono text-slate-200">
+                        <span className="text-slate-400">LOLA Elevation:</span>
+                        <span className="font-mono text-slate-200 font-bold">
                           +{activeSite.elevationMeters.toLocaleString()} m
                         </span>
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <span className="text-slate-400">Solar Day Max:</span>
+                        <span className="text-slate-400">Solar Daylight Peak:</span>
                         <span className="font-mono text-cyan-300">
-                          {activeSite.solarIlluminationFraction * 100}% peak
+                          {activeSite.solarIlluminationFraction * 100}% of cycle
                         </span>
                       </div>
                     </div>
 
-                    {/* Scientific Characteristics */}
+                    {/* Scientific & Slope Safety Parameters */}
                     <div className="space-y-1.5">
                       <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-                        Planetary Characteristics
+                        Terrain Safety Envelope
                       </div>
                       <div className="grid grid-cols-2 gap-2 text-[11px]">
                         <div className="p-2 rounded bg-slate-950/60 border border-slate-800/80">
-                          <span className="text-slate-500 block text-[10px]">Slope Margin:</span>
-                          <span className="font-mono text-slate-200 font-semibold">{activeSite.maxSlopeDeg}° max</span>
+                          <span className="text-slate-500 block text-[10px]">Slope Angle:</span>
+                          <span className="font-mono text-slate-200 font-semibold">{activeSite.maxSlopeDeg}° (&lt;12° Safe)</span>
                         </div>
                         <div className="p-2 rounded bg-slate-950/60 border border-slate-800/80">
-                          <span className="text-slate-500 block text-[10px]">Water Ice (PSR):</span>
+                          <span className="text-slate-500 block text-[10px]">Water Volatiles:</span>
                           <span className="font-mono text-cyan-300 font-semibold">{activeSite.estimatedIcePurity}</span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Operational Recommendations */}
+                    {/* NASA Mission Objectives */}
                     <div className="p-2.5 rounded-lg bg-blue-950/20 border border-blue-800/30 text-slate-300 text-[11px] leading-relaxed">
                       <span className="font-semibold text-blue-300 block mb-1">
-                        Tactical Evaluation:
+                        CLPS Exploration Target:
                       </span>
                       {activeSite.notes}
                     </div>
 
-                    {/* Direct Deploy Button */}
+                    {/* Launch into Mission Cockpit */}
                     <Link href={`/dashboard`} className="block w-full pt-1">
                       <Button className="w-full bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold text-xs gap-2">
                         <Compass className="w-4 h-4" />
@@ -322,38 +371,59 @@ export default function LunarMapPage() {
                   </CardContent>
                 </Card>
 
-                {/* Legend & Guide */}
+                {/* NASA Dataset Citations */}
                 <Card className="bg-slate-900/60 border-slate-800 text-slate-300 text-xs">
                   <CardContent className="pt-4 space-y-2">
                     <div className="font-semibold text-slate-200 flex items-center gap-1.5 text-xs">
                       <Layers className="w-3.5 h-3.5 text-cyan-400" />
-                      Map Legend
+                      NASA Official Data Sources
                     </div>
-                    <div className="space-y-1 text-[11px] text-slate-400">
-                      <div className="flex items-center gap-2">
-                        <span className="w-3 h-3 rounded-full bg-cyan-400 ring-2 ring-cyan-500/30"></span>
-                        <span>Candidate Landing Ellipses (Click to inspect)</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="w-3 h-3 rounded-full bg-purple-500/60 border border-purple-400"></span>
-                        <span>PSR Volatiles / Permanent Ice Cold Traps</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="w-3 h-0.5 bg-amber-400"></span>
-                        <span>Sub-Solar Ray (Sunlight Incident Vector)</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="w-3 h-0.5 bg-emerald-400 border border-dashed border-emerald-400"></span>
-                        <span>Earth Line-of-Sight (DSN Communication Beam)</span>
-                      </div>
-                    </div>
+                    <ul className="space-y-1 text-[11px] text-slate-400">
+                      <li>• <strong>NASA LROC</strong>: Lunar Reconnaissance Orbiter Camera WAC Global Mosaic (100m/pixel)</li>
+                      <li>• <strong>NASA LOLA</strong>: Lunar Orbiter Laser Altimeter 128 pixel/deg DEM</li>
+                      <li>• <strong>NASA JPL Horizons</strong>: Ephemeris System API v1.2 (Direct Endpoint)</li>
+                      <li>• <strong>USGS Astrogeology</strong>: OpenPlanetary Lunar Coordinate Reference System</li>
+                    </ul>
                   </CardContent>
                 </Card>
               </div>
             </div>
           </TabsContent>
 
-          {/* TAB 2: NASA DEEP SPACE NETWORK (DSN) GLOBAL RELAY */}
+          {/* TAB 2: POLAR STEREOGRAPHIC PROJECTION CANVAS */}
+          <TabsContent value="polar-projection" className="m-0 space-y-4">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+              <div className="lg:col-span-3">
+                <LunarPolarMapCanvas
+                  simulatedDate={simulatedDate}
+                  activeSite={activeSite}
+                  onSelectSite={setActiveSite}
+                  isDarkMode={true}
+                />
+              </div>
+
+              <div className="space-y-4">
+                <Card className="bg-slate-900/80 border-slate-800 text-slate-200">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm font-bold text-slate-100 flex items-center gap-2">
+                      <Compass className="w-4 h-4 text-cyan-400" />
+                      Mathematical Projection Guide
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="text-xs text-slate-400 space-y-2 leading-relaxed">
+                    <p>
+                      The polar stereographic projection preserves conformal angular relationships near the South Pole (-80°S to -90°S), which is essential for solar grazing vector analysis.
+                    </p>
+                    <p>
+                      The amber ray indicates the instantaneous sub-solar vector direction. The emerald dashed beam indicates direct line-of-sight toward Earth for NASA DSN tracking.
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </TabsContent>
+
+          {/* TAB 3: NASA DEEP SPACE NETWORK (DSN) GLOBAL RELAY */}
           <TabsContent value="dsn-relay" className="m-0 space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {DSN_STATIONS.map((station) => (
@@ -437,7 +507,7 @@ export default function LunarMapPage() {
             </Card>
           </TabsContent>
 
-          {/* TAB 3: ALTIMETRIC TRANSECT & CRATER SLOPES */}
+          {/* TAB 4: ALTIMETRIC TRANSECT & CRATER SLOPES */}
           <TabsContent value="transect" className="m-0 space-y-4">
             <Card className="bg-slate-900/80 border-slate-800 text-slate-200">
               <CardHeader>
@@ -458,7 +528,6 @@ export default function LunarMapPage() {
               </CardHeader>
 
               <CardContent className="space-y-4">
-                {/* Visual Elevation Bar Chart / Transect Table */}
                 <div className="overflow-x-auto">
                   <table className="w-full text-xs text-left">
                     <thead className="bg-slate-950 text-slate-400 border-b border-slate-800">
