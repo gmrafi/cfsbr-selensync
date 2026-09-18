@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Intuitive 3D Lunar South Pole Mission & Communication Window Browser for CLPS Operations. NASA Space Apps Challenge 2026.",
   "private": true,
+  "packageManager": "npm@10.8.2",
   "scripts": {
     "build": "next build",
     "dev": "next dev",
