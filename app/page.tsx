@@ -49,55 +49,56 @@ export default function HomePage() {
       <UniversalHeader variant="light" />
 
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION                                                           */}
+      {/* 1. HERO SECTION (Subtle Depth, Tactile Borders, Live Telemetry Cockpit)   */}
       {/* ========================================================================= */}
-      <section className="relative pt-12 pb-16 sm:pt-16 sm:pb-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center max-w-4xl mx-auto space-y-5">
+      <section className="relative pt-10 pb-14 sm:pt-14 sm:pb-18 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-100/70 via-white to-slate-50 border-b border-slate-300">
+        <div className="absolute inset-0 bg-[radial-gradient(#94a3b8_0.75px,transparent_0.75px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
+        
+        <div className="container mx-auto max-w-6xl relative z-10">
+          <div className="text-center max-w-4xl mx-auto space-y-4">
             {/* Top Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-medium">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-300 text-slate-800 text-xs font-medium shadow-xs">
               <span className="text-amber-500">🏆</span>
               <span className="font-semibold text-slate-900">NASA Space Apps 2026 Challenge</span>
               <span className="text-slate-300">•</span>
-              <span>CLPS Lunar Mission Browser</span>
+              <span className="text-slate-700 font-medium">CLPS Lunar Mission Browser</span>
               <span className="text-slate-300">•</span>
-              <span className="text-[#4e6aff] font-medium">Built by Global Nominees</span>
+              <span className="text-[#4e6aff] font-semibold">Global Nominees</span>
             </div>
 
-            {/* Main Title (H1) */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 font-space-grotesk leading-[1.15]">
-              Intuitive Lunar South Pole <br className="hidden sm:inline" />
-              Trajectory &amp; Communication Engine <br className="hidden sm:inline" />
-              <span className="text-[#4e6aff]">for Artemis-Era Payloads</span>
+            {/* Main Title (H1) - Punchy, Balanced & High-Impact */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 font-space-grotesk leading-[1.12]">
+              Navigate Lunar South Pole Payloads <br className="hidden sm:inline" />
+              with <span className="text-[#4e6aff]">Real-Time Solar &amp; Comms Precision</span>
             </h1>
 
-            {/* Sub-Title Description */}
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
-              Simulate real-time Sun illumination cycles, crater rim topographic shadows, and Direct-to-Earth (DTE) communication windows for CLPS landers and rovers. Powered by NASA LRO, LOLA DEM, and planetary ephemeris.
+            {/* Sub-Title Description - Concise & Focused */}
+            <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
+              Simulate Sun illumination cycles, crater rim topographic shadow masking, and Direct-to-Earth (DTE) communication windows for NASA Artemis and CLPS commercial landers.
             </p>
 
             {/* Feature Pills */}
-            <div className="flex flex-wrap items-center justify-center gap-2.5 pt-1">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700">
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border border-slate-300 text-xs font-medium text-slate-700 shadow-xs">
                 <span>☀️</span>
                 <span>Sun Illumination Modeling</span>
               </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border border-slate-300 text-xs font-medium text-slate-700 shadow-xs">
                 <span>⛰️</span>
                 <span>Topographic Shadow Masking</span>
               </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border border-slate-300 text-xs font-medium text-slate-700 shadow-xs">
                 <span>📡</span>
                 <span>Direct-to-Earth (DTE) Comms</span>
               </div>
             </div>
 
             {/* Call-to-Actions (CTAs) */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <Link href="/dashboard" className="w-full sm:w-auto">
                 <Button
                   size="lg"
-                  className="w-full sm:w-auto bg-[#4e6aff] hover:bg-[#3d59ef] text-white font-medium px-7 py-5 text-sm rounded-lg shadow-xs transition-colors"
+                  className="w-full sm:w-auto bg-[#4e6aff] hover:bg-[#3d59ef] text-white font-medium px-7 py-5 text-sm rounded-lg shadow-sm transition-colors"
                 >
                   <Rocket className="w-4 h-4 mr-2" />
                   Launch Lunar Browser
@@ -108,7 +109,7 @@ export default function HomePage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="w-full sm:w-auto border-slate-300 bg-white text-slate-700 hover:bg-slate-50 font-medium px-7 py-5 text-sm rounded-lg transition-colors"
+                  className="w-full sm:w-auto border-slate-300 bg-white text-slate-800 hover:bg-slate-50 font-medium px-7 py-5 text-sm rounded-lg shadow-xs transition-colors"
                 >
                   <Compass className="w-4 h-4 mr-2 text-slate-500" />
                   Explore Landing Sites
@@ -117,12 +118,110 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Hero Live Telemetry Cockpit Preview (Visual Centerpiece) */}
+          <div className="mt-8 max-w-4xl mx-auto rounded-xl border border-slate-300 bg-white shadow-md overflow-hidden">
+            {/* Cockpit Header Bar */}
+            <div className="px-4 py-2.5 bg-slate-100/90 border-b border-slate-200 flex items-center justify-between flex-wrap gap-2 text-xs">
+              <div className="flex items-center gap-2">
+                <div className="flex gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
+                </div>
+                <span className="font-mono font-semibold text-slate-800 ml-1.5">
+                  MISSION COCKPIT &bull; MALAPERT MASSIF (-85.99°S, 2.93°E)
+                </span>
+              </div>
+              <Badge variant="outline" className="text-emerald-700 bg-emerald-50 border-emerald-300 text-[10px] font-mono">
+                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1.5 inline-block"></span>
+                ACTIVE TELEMETRY
+              </Badge>
+            </div>
+
+            {/* Cockpit Telemetry Grid */}
+            <div className="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-3 gap-3.5 bg-slate-50/60">
+              {/* Telemetry Block 1 */}
+              <div className="bg-white border border-slate-200 rounded-lg p-3.5 space-y-1.5 shadow-xs">
+                <div className="flex items-center justify-between text-xs font-medium text-slate-600">
+                  <span className="flex items-center gap-1.5 text-slate-700">
+                    <Sun className="w-4 h-4 text-amber-500" /> Sun Elevation (θ)
+                  </span>
+                  <span className="text-emerald-700 font-bold text-[10px] bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">Unobstructed</span>
+                </div>
+                <div className="text-2xl font-bold font-mono text-slate-900">
+                  +2.84° <span className="text-xs text-slate-500 font-normal">Az: 142.6°</span>
+                </div>
+                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div className="bg-amber-500 h-full w-[78%]"></div>
+                </div>
+                <div className="flex justify-between text-[11px] text-slate-600">
+                  <span>Horizon Margin: +2.04°</span>
+                  <span className="font-semibold text-slate-900">614 W Solar Output</span>
+                </div>
+              </div>
+
+              {/* Telemetry Block 2 */}
+              <div className="bg-white border border-slate-200 rounded-lg p-3.5 space-y-1.5 shadow-xs">
+                <div className="flex items-center justify-between text-xs font-medium text-slate-600">
+                  <span className="flex items-center gap-1.5 text-slate-700">
+                    <Radio className="w-4 h-4 text-[#4e6aff]" /> DSN 34m X-Band
+                  </span>
+                  <span className="text-emerald-700 font-bold text-[10px] bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">Link Closed</span>
+                </div>
+                <div className="text-2xl font-bold font-mono text-slate-900">
+                  +4.8 dB <span className="text-xs text-slate-500 font-normal">Margin</span>
+                </div>
+                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div className="bg-[#4e6aff] h-full w-[88%]"></div>
+                </div>
+                <div className="flex justify-between text-[11px] text-slate-600">
+                  <span>FSPL: 216.5 dB</span>
+                  <span className="font-semibold text-slate-900">Goldstone Locked</span>
+                </div>
+              </div>
+
+              {/* Telemetry Block 3 */}
+              <div className="bg-white border border-slate-200 rounded-lg p-3.5 space-y-1.5 shadow-xs">
+                <div className="flex items-center justify-between text-xs font-medium text-slate-600">
+                  <span className="flex items-center gap-1.5 text-slate-700">
+                    <Mountain className="w-4 h-4 text-slate-600" /> Horizon Obstacle
+                  </span>
+                  <span className="text-slate-700 font-bold text-[10px] bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">5000m Elev</span>
+                </div>
+                <div className="text-2xl font-bold font-mono text-slate-900">
+                  0.80° <span className="text-xs text-slate-500 font-normal">Max Relief</span>
+                </div>
+                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div className="bg-slate-400 h-full w-[35%]"></div>
+                </div>
+                <div className="flex justify-between text-[11px] text-slate-600">
+                  <span>Crater Mask: Clear</span>
+                  <span className="font-semibold text-slate-900">Artemis Baseline</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Cockpit Footer Action */}
+            <div className="px-4 py-2.5 bg-white border-t border-slate-200 flex items-center justify-between flex-wrap gap-2 text-xs">
+              <div className="flex items-center gap-1.5 text-slate-600 text-[11px]">
+                <Sparkles className="w-3.5 h-3.5 text-[#4e6aff]" />
+                <span>Ephemeris pipeline calculated topocentrically with NASA LOLA altimetry.</span>
+              </div>
+              <Link href="/dashboard">
+                <Button size="sm" className="bg-[#4e6aff] hover:bg-[#3d59ef] text-white text-xs font-medium h-7 px-3">
+                  Open Interactive Studio
+                  <ChevronRight className="w-3 h-3 ml-1" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+
           {/* Partners / Trusted By Bar */}
-          <div className="mt-12 pt-8 border-t border-slate-100 text-center">
-            <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-4">
+          <div className="mt-8 pt-6 border-t border-slate-200 text-center">
+            <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-3">
               Integrated with NASA &amp; Commercial Lunar Ecosystem Standards
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-medium text-slate-600">
+            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs font-medium text-slate-700">
               <span className="hover:text-slate-900 transition-colors">NASA Artemis</span>
               <span className="text-slate-300">•</span>
               <span className="hover:text-slate-900 transition-colors">CLPS Initiative</span>
