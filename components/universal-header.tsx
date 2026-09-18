@@ -16,15 +16,15 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-18">
-          {/* Brand Logo & Title */}
+        <div className="flex items-center justify-between h-16 sm:h-20">
+          {/* Brand Logo & Slogan */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 bg-[#4e6aff] rounded-lg flex items-center justify-center text-white shadow-xs group-hover:bg-[#3d59ef] transition-colors">
+            <div className="w-10 h-10 bg-[#4e6aff] rounded-xl flex items-center justify-center text-white shadow-xs group-hover:bg-[#3d59ef] transition-colors">
               <Satellite className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="text-lg font-bold font-space-grotesk tracking-tight text-slate-900">
+                <span className="text-xl font-bold font-space-grotesk tracking-tight text-slate-900">
                   SelenSync
                 </span>
                 <Badge variant="outline" className="text-[10px] font-mono px-1.5 py-0 font-medium text-slate-600 border-slate-300">
@@ -32,7 +32,7 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
                 </Badge>
               </div>
               <p className="text-[11px] text-slate-500 font-normal hidden sm:block">
-                CLPS Lunar South Pole Mission &amp; Communication Browser
+                The Lunar South Pole Mission &amp; Communication Engine
               </p>
             </div>
           </Link>
@@ -43,31 +43,37 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
               href="/#features"
               className="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
             >
-              Mission Modules
+              Features
             </Link>
             <Link
               href="/#landing-sites"
               className="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
             >
-              Candidate Sites
+              Landing Sites
             </Link>
             <Link
-              href="/#scientific-architecture"
+              href="/#horizon-profiler"
               className="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
             >
-              Mathematical Models
+              Horizon Profiler
             </Link>
             <Link
-              href="/#team"
+              href="/#dte-windows"
               className="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
             >
-              CFSBR SpaceWeb
+              DTE Windows
+            </Link>
+            <Link
+              href="/#site-comparison"
+              className="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
+            >
+              Site Comparison
             </Link>
             <Link
               href="/dashboard"
               className="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
             >
-              Dashboard
+              Mission Control
             </Link>
           </nav>
 
@@ -89,7 +95,7 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
                 className="bg-[#4e6aff] hover:bg-[#3d59ef] text-white font-medium text-xs px-4 rounded-lg shadow-xs transition-colors"
               >
                 <Rocket className="w-3.5 h-3.5 mr-1.5" />
-                Mission Control
+                Launch Lunar Browser
                 <ArrowRight className="w-3 h-3 ml-1" />
               </Button>
             </Link>
@@ -113,28 +119,42 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 rounded-md"
             >
-              Mission Modules
+              Features
             </Link>
             <Link
               href="/#landing-sites"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 rounded-md"
             >
-              Candidate Sites
+              Landing Sites
             </Link>
             <Link
-              href="/#scientific-architecture"
+              href="/#horizon-profiler"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 rounded-md"
             >
-              Mathematical Models
+              Horizon Profiler
             </Link>
             <Link
-              href="/#team"
+              href="/#dte-windows"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 rounded-md"
             >
-              CFSBR SpaceWeb
+              DTE Windows
+            </Link>
+            <Link
+              href="/#site-comparison"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 rounded-md"
+            >
+              Site Comparison
+            </Link>
+            <Link
+              href="/dashboard"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 rounded-md"
+            >
+              Mission Control (Dashboard)
             </Link>
             <div className="pt-2 flex flex-col gap-2">
               <Link href="/dashboard/chat" onClick={() => setMobileMenuOpen(false)}>
@@ -146,7 +166,7 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
               <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
                 <Button size="sm" className="w-full justify-center bg-[#4e6aff] hover:bg-[#3d59ef] text-white text-xs font-medium">
                   <Rocket className="w-3.5 h-3.5 mr-1.5" />
-                  Launch Mission Control
+                  Launch Lunar Browser
                 </Button>
               </Link>
             </div>
