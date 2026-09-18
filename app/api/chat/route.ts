@@ -3,7 +3,7 @@ import Groq from 'groq-sdk';
 import { NextResponse } from 'next/server';
 
 // Initialize both AI providers
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || '' });
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY || '');
 
 const SELENSYNC_SYSTEM_INSTRUCTION = `
