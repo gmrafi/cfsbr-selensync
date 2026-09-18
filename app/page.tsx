@@ -51,7 +51,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 1. HERO SECTION (Subtle Depth, Tactile Borders, Live Telemetry Cockpit)   */}
       {/* ========================================================================= */}
-      <section className="relative pt-10 pb-14 sm:pt-14 sm:pb-18 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-100/70 via-white to-slate-50 border-b border-slate-300">
+      <section className="relative pt-10 pb-14 sm:pt-14 sm:pb-18 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-100/80 via-white to-slate-50 border-b border-slate-300">
         <div className="absolute inset-0 bg-[radial-gradient(#94a3b8_0.75px,transparent_0.75px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
         
         <div className="container mx-auto max-w-6xl relative z-10">
@@ -118,10 +118,10 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Hero Live Telemetry Cockpit Preview (Visual Centerpiece) */}
+          {/* Hero Live Telemetry Cockpit Preview (Visual Centerpiece with Crisp Borders) */}
           <div className="mt-8 max-w-4xl mx-auto rounded-xl border border-slate-300 bg-white shadow-md overflow-hidden">
             {/* Cockpit Header Bar */}
-            <div className="px-4 py-2.5 bg-slate-100/90 border-b border-slate-200 flex items-center justify-between flex-wrap gap-2 text-xs">
+            <div className="px-4 py-2.5 bg-slate-100 border-b border-slate-300 flex items-center justify-between flex-wrap gap-2 text-xs">
               <div className="flex items-center gap-2">
                 <div className="flex gap-1.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
@@ -139,9 +139,9 @@ export default function HomePage() {
             </div>
 
             {/* Cockpit Telemetry Grid */}
-            <div className="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-3 gap-3.5 bg-slate-50/60">
+            <div className="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-3 gap-3.5 bg-slate-50/70">
               {/* Telemetry Block 1 */}
-              <div className="bg-white border border-slate-200 rounded-lg p-3.5 space-y-1.5 shadow-xs">
+              <div className="bg-white border border-slate-300 rounded-lg p-3.5 space-y-1.5 shadow-xs">
                 <div className="flex items-center justify-between text-xs font-medium text-slate-600">
                   <span className="flex items-center gap-1.5 text-slate-700">
                     <Sun className="w-4 h-4 text-amber-500" /> Sun Elevation (θ)
@@ -161,7 +161,7 @@ export default function HomePage() {
               </div>
 
               {/* Telemetry Block 2 */}
-              <div className="bg-white border border-slate-200 rounded-lg p-3.5 space-y-1.5 shadow-xs">
+              <div className="bg-white border border-slate-300 rounded-lg p-3.5 space-y-1.5 shadow-xs">
                 <div className="flex items-center justify-between text-xs font-medium text-slate-600">
                   <span className="flex items-center gap-1.5 text-slate-700">
                     <Radio className="w-4 h-4 text-[#4e6aff]" /> DSN 34m X-Band
@@ -181,7 +181,7 @@ export default function HomePage() {
               </div>
 
               {/* Telemetry Block 3 */}
-              <div className="bg-white border border-slate-200 rounded-lg p-3.5 space-y-1.5 shadow-xs">
+              <div className="bg-white border border-slate-300 rounded-lg p-3.5 space-y-1.5 shadow-xs">
                 <div className="flex items-center justify-between text-xs font-medium text-slate-600">
                   <span className="flex items-center gap-1.5 text-slate-700">
                     <Mountain className="w-4 h-4 text-slate-600" /> Horizon Obstacle
@@ -202,7 +202,7 @@ export default function HomePage() {
             </div>
 
             {/* Cockpit Footer Action */}
-            <div className="px-4 py-2.5 bg-white border-t border-slate-200 flex items-center justify-between flex-wrap gap-2 text-xs">
+            <div className="px-4 py-2.5 bg-white border-t border-slate-300 flex items-center justify-between flex-wrap gap-2 text-xs">
               <div className="flex items-center gap-1.5 text-slate-600 text-[11px]">
                 <Sparkles className="w-3.5 h-3.5 text-[#4e6aff]" />
                 <span>Ephemeris pipeline calculated topocentrically with NASA LOLA altimetry.</span>
@@ -217,7 +217,7 @@ export default function HomePage() {
           </div>
 
           {/* Partners / Trusted By Bar */}
-          <div className="mt-8 pt-6 border-t border-slate-200 text-center">
+          <div className="mt-8 pt-6 border-t border-slate-300 text-center">
             <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-3">
               Integrated with NASA &amp; Commercial Lunar Ecosystem Standards
             </p>
@@ -239,12 +239,12 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 2. CORE SOLUTIONS (6 CARDS)                                              */}
+      {/* 2. CORE SOLUTIONS (6 CARDS WITH CRISP BORDERS)                            */}
       {/* ========================================================================= */}
-      <section id="features" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/50 border-b border-slate-200">
+      <section id="features" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 border-b border-slate-300">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
-            <Badge variant="outline" className="text-slate-700 border-slate-300 text-xs font-medium">
+            <Badge variant="outline" className="text-slate-800 bg-white border-slate-300 text-xs font-medium shadow-xs">
               Core Capabilities
             </Badge>
             <h2 className="text-3xl font-bold text-slate-900 font-space-grotesk tracking-tight">
@@ -257,9 +257,9 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {/* Card 1 */}
-            <Card className="bg-white border border-slate-200 hover:border-slate-300 shadow-xs rounded-xl flex flex-col justify-between">
+            <Card className="bg-white border border-slate-300 hover:border-slate-400 shadow-sm rounded-xl flex flex-col justify-between transition-all">
               <CardHeader className="pb-3">
-                <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center mb-3 text-slate-700">
+                <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center mb-3 text-slate-700">
                   <Mountain className="w-5 h-5" />
                 </div>
                 <CardTitle className="text-lg text-slate-900 font-space-grotesk font-bold">
@@ -270,7 +270,7 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-100 text-[11px] text-slate-600 flex justify-between">
+                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-600 flex justify-between">
                   <span>Elevation Grid:</span>
                   <span className="font-semibold text-slate-800">5m–30m DEM Resolution</span>
                 </div>
@@ -278,10 +278,10 @@ export default function HomePage() {
             </Card>
 
             {/* Card 2 */}
-            <Card className="bg-white border border-slate-200 hover:border-slate-300 shadow-xs rounded-xl flex flex-col justify-between">
+            <Card className="bg-white border border-slate-300 hover:border-slate-400 shadow-sm rounded-xl flex flex-col justify-between transition-all">
               <CardHeader className="pb-3">
-                <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center mb-3 text-slate-700">
-                  <Radio className="w-5 h-5 text-[#4e6aff]" />
+                <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center mb-3 text-[#4e6aff]">
+                  <Radio className="w-5 h-5" />
                 </div>
                 <CardTitle className="text-lg text-slate-900 font-space-grotesk font-bold">
                   Direct-to-Earth (DTE) Comms Windows
@@ -291,7 +291,7 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-100 text-[11px] text-slate-600 flex justify-between">
+                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-600 flex justify-between">
                   <span>RF Frequency:</span>
                   <span className="font-semibold text-slate-800">8.45 GHz X-Band / DSN</span>
                 </div>
@@ -299,10 +299,10 @@ export default function HomePage() {
             </Card>
 
             {/* Card 3 */}
-            <Card className="bg-white border border-slate-200 hover:border-slate-300 shadow-xs rounded-xl flex flex-col justify-between">
+            <Card className="bg-white border border-slate-300 hover:border-slate-400 shadow-sm rounded-xl flex flex-col justify-between transition-all">
               <CardHeader className="pb-3">
-                <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center mb-3 text-slate-700">
-                  <Zap className="w-5 h-5 text-amber-500" />
+                <div className="w-10 h-10 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center mb-3 text-amber-600">
+                  <Zap className="w-5 h-5" />
                 </div>
                 <CardTitle className="text-lg text-slate-900 font-space-grotesk font-bold">
                   Solar Power Potential Simulator
@@ -312,7 +312,7 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-100 text-[11px] text-slate-600 flex justify-between">
+                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-600 flex justify-between">
                   <span>Photovoltaic Solar Flux:</span>
                   <span className="font-semibold text-slate-800">1,361 W/m² (AM0)</span>
                 </div>
@@ -320,9 +320,9 @@ export default function HomePage() {
             </Card>
 
             {/* Card 4 */}
-            <Card className="bg-white border border-slate-200 hover:border-slate-300 shadow-xs rounded-xl flex flex-col justify-between" id="horizon-profiler">
+            <Card className="bg-white border border-slate-300 hover:border-slate-400 shadow-sm rounded-xl flex flex-col justify-between transition-all" id="horizon-profiler">
               <CardHeader className="pb-3">
-                <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center mb-3 text-slate-700">
+                <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center mb-3 text-slate-700">
                   <Compass className="w-5 h-5" />
                 </div>
                 <CardTitle className="text-lg text-slate-900 font-space-grotesk font-bold">
@@ -333,7 +333,7 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-100 text-[11px] text-slate-600 flex justify-between">
+                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-600 flex justify-between">
                   <span>Azimuth Sampling:</span>
                   <span className="font-semibold text-slate-800">360° Continuous Masking</span>
                 </div>
@@ -341,9 +341,9 @@ export default function HomePage() {
             </Card>
 
             {/* Card 5 */}
-            <Card className="bg-white border border-slate-200 hover:border-slate-300 shadow-xs rounded-xl flex flex-col justify-between" id="site-comparison">
+            <Card className="bg-white border border-slate-300 hover:border-slate-400 shadow-sm rounded-xl flex flex-col justify-between transition-all" id="site-comparison">
               <CardHeader className="pb-3">
-                <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center mb-3 text-slate-700">
+                <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center mb-3 text-slate-700">
                   <Scale className="w-5 h-5" />
                 </div>
                 <CardTitle className="text-lg text-slate-900 font-space-grotesk font-bold">
@@ -354,7 +354,7 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-100 text-[11px] text-slate-600 flex justify-between">
+                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-600 flex justify-between">
                   <span>Decision Engine:</span>
                   <span className="font-semibold text-slate-800">Direct Trade-Off Matrix</span>
                 </div>
@@ -362,10 +362,10 @@ export default function HomePage() {
             </Card>
 
             {/* Card 6 */}
-            <Card className="bg-white border border-slate-200 hover:border-slate-300 shadow-xs rounded-xl flex flex-col justify-between">
+            <Card className="bg-white border border-slate-300 hover:border-slate-400 shadow-sm rounded-xl flex flex-col justify-between transition-all">
               <CardHeader className="pb-3">
-                <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center mb-3 text-slate-700">
-                  <Rocket className="w-5 h-5 text-[#4e6aff]" />
+                <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center mb-3 text-[#4e6aff]">
+                  <Rocket className="w-5 h-5" />
                 </div>
                 <CardTitle className="text-lg text-slate-900 font-space-grotesk font-bold">
                   CLPS Mission Presets
@@ -375,7 +375,7 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-100 text-[11px] text-slate-600 flex justify-between">
+                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-600 flex justify-between">
                   <span>Pre-Configured Sites:</span>
                   <span className="font-semibold text-slate-800">4 NASA Artemis Baselines</span>
                 </div>
@@ -386,12 +386,12 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 3. ADVANCED CAPABILITIES (6 CARDS)                                       */}
+      {/* 3. ADVANCED CAPABILITIES (6 CARDS WITH CRISP BORDERS)                    */}
       {/* ========================================================================= */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-300">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
-            <Badge variant="outline" className="text-slate-700 border-slate-300 text-xs font-medium">
+            <Badge variant="outline" className="text-slate-800 bg-slate-50 border-slate-300 text-xs font-medium shadow-xs">
               Architecture &amp; Intelligence
             </Badge>
             <h2 className="text-3xl font-bold text-slate-900 font-space-grotesk tracking-tight">
@@ -404,8 +404,8 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {/* Adv Card 1 */}
-            <div className="p-6 rounded-xl border border-slate-200 bg-white shadow-xs space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-blue-50 text-[#4e6aff] flex items-center justify-center">
+            <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm space-y-3 hover:border-slate-400 transition-all">
+              <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 text-[#4e6aff] flex items-center justify-center">
                 <Sparkles className="w-5 h-5" />
               </div>
               <h3 className="text-base font-bold text-slate-900 font-space-grotesk">
@@ -417,8 +417,8 @@ export default function HomePage() {
             </div>
 
             {/* Adv Card 2 */}
-            <div className="p-6 rounded-xl border border-slate-200 bg-white shadow-xs space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
+            <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm space-y-3 hover:border-slate-400 transition-all">
+              <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center">
                 <Sliders className="w-5 h-5" />
               </div>
               <h3 className="text-base font-bold text-slate-900 font-space-grotesk">
@@ -430,8 +430,8 @@ export default function HomePage() {
             </div>
 
             {/* Adv Card 3 */}
-            <div className="p-6 rounded-xl border border-slate-200 bg-white shadow-xs space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
+            <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm space-y-3 hover:border-slate-400 transition-all">
+              <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center">
                 <Code className="w-5 h-5" />
               </div>
               <h3 className="text-base font-bold text-slate-900 font-space-grotesk">
@@ -443,8 +443,8 @@ export default function HomePage() {
             </div>
 
             {/* Adv Card 4 */}
-            <div className="p-6 rounded-xl border border-slate-200 bg-white shadow-xs space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
+            <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm space-y-3 hover:border-slate-400 transition-all">
+              <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center">
                 <Layers className="w-5 h-5" />
               </div>
               <h3 className="text-base font-bold text-slate-900 font-space-grotesk">
@@ -456,8 +456,8 @@ export default function HomePage() {
             </div>
 
             {/* Adv Card 5 */}
-            <div className="p-6 rounded-xl border border-slate-200 bg-white shadow-xs space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
+            <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm space-y-3 hover:border-slate-400 transition-all">
+              <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center">
                 <Shield className="w-5 h-5" />
               </div>
               <h3 className="text-base font-bold text-slate-900 font-space-grotesk">
@@ -469,8 +469,8 @@ export default function HomePage() {
             </div>
 
             {/* Adv Card 6 */}
-            <div className="p-6 rounded-xl border border-slate-200 bg-white shadow-xs space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
+            <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm space-y-3 hover:border-slate-400 transition-all">
+              <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center">
                 <FileText className="w-5 h-5" />
               </div>
               <h3 className="text-base font-bold text-slate-900 font-space-grotesk">
@@ -485,13 +485,13 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 4. CANDIDATE LANDING SITES SECTION (NASA LRO CANDIDATES)                  */}
+      {/* 4. CANDIDATE LANDING SITES SECTION (CRISP BORDERS & CLEAR STATS)          */}
       {/* ========================================================================= */}
-      <section id="landing-sites" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 border-b border-slate-200">
+      <section id="landing-sites" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 border-b border-slate-300">
         <div className="container mx-auto max-w-6xl">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
-              <Badge variant="outline" className="text-slate-700 border-slate-300 text-xs font-medium mb-2">
+              <Badge variant="outline" className="text-slate-800 bg-white border-slate-300 text-xs font-medium mb-2 shadow-xs">
                 NASA Candidate Sites
               </Badge>
               <h2 className="text-3xl font-bold text-slate-900 font-space-grotesk tracking-tight">
@@ -502,7 +502,7 @@ export default function HomePage() {
               </p>
             </div>
             <Link href="/dashboard">
-              <Button className="bg-[#4e6aff] hover:bg-[#3d59ef] text-white text-xs font-medium">
+              <Button className="bg-[#4e6aff] hover:bg-[#3d59ef] text-white text-xs font-medium shadow-sm">
                 Compare in Mission Control
                 <ArrowRight className="w-3.5 h-3.5 ml-1" />
               </Button>
@@ -513,14 +513,14 @@ export default function HomePage() {
             {LUNAR_SOUTH_POLE_CANDIDATES.map((site) => (
               <Card
                 key={site.id}
-                className="bg-white border border-slate-200 hover:border-slate-300 shadow-xs rounded-xl flex flex-col justify-between"
+                className="bg-white border border-slate-300 hover:border-slate-400 shadow-sm rounded-xl flex flex-col justify-between transition-all"
               >
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[11px] font-mono font-medium text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                    <span className="text-[11px] font-mono font-medium text-slate-800 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
                       {site.latitude}°S, {site.longitude}°E
                     </span>
-                    <span className="text-xs font-mono text-slate-500">{site.elevationMeters}m</span>
+                    <span className="text-xs font-mono text-slate-600 font-medium">{site.elevationMeters}m</span>
                   </div>
                   <CardTitle className="text-base text-slate-900 font-space-grotesk font-bold">{site.name}</CardTitle>
                   <CardDescription className="text-slate-600 text-xs line-clamp-2">
@@ -528,19 +528,19 @@ export default function HomePage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-0 space-y-2.5 text-xs">
-                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-100 space-y-0.5">
+                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200 space-y-0.5">
                     <div className="text-slate-500 text-[11px]">Sun Illumination:</div>
-                    <div className="font-semibold text-slate-800">{site.solarIlluminationPotential}</div>
+                    <div className="font-semibold text-slate-900">{site.solarIlluminationPotential}</div>
                   </div>
 
-                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-100 space-y-0.5">
+                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200 space-y-0.5">
                     <div className="text-slate-500 text-[11px]">Earth Visibility:</div>
-                    <div className="font-semibold text-slate-800">{site.dteDirectToEarthStatus}</div>
+                    <div className="font-semibold text-slate-900">{site.dteDirectToEarthStatus}</div>
                   </div>
 
                   <div className="flex flex-wrap gap-1 pt-1">
                     {site.targetMissions.map((m, idx) => (
-                      <Badge key={idx} variant="outline" className="text-[10px] font-normal bg-slate-50 text-slate-600 border-slate-200">
+                      <Badge key={idx} variant="outline" className="text-[10px] font-normal bg-slate-50 text-slate-700 border-slate-300">
                         {m}
                       </Badge>
                     ))}
@@ -553,12 +553,12 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 5. WHO WE SERVE (5 CATEGORIES)                                           */}
+      {/* 5. WHO WE SERVE (5 CATEGORIES WITH CRISP BORDERS)                        */}
       {/* ========================================================================= */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-300">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
-            <Badge variant="outline" className="text-slate-700 border-slate-300 text-xs font-medium">
+            <Badge variant="outline" className="text-slate-800 bg-slate-50 border-slate-300 text-xs font-medium shadow-xs">
               Ecosystem Alignment
             </Badge>
             <h2 className="text-3xl font-bold text-slate-900 font-space-grotesk tracking-tight">
@@ -571,8 +571,8 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {/* User Category 1 */}
-            <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-xs transition-all space-y-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#4e6aff]/10 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
+            <div className="p-5 rounded-xl border border-slate-300 bg-white hover:border-slate-400 shadow-sm transition-all space-y-2.5">
+              <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
                 1
               </div>
               <h3 className="text-sm font-bold text-slate-900 font-space-grotesk">
@@ -584,8 +584,8 @@ export default function HomePage() {
             </div>
 
             {/* User Category 2 */}
-            <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-xs transition-all space-y-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#4e6aff]/10 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
+            <div className="p-5 rounded-xl border border-slate-300 bg-white hover:border-slate-400 shadow-sm transition-all space-y-2.5">
+              <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
                 2
               </div>
               <h3 className="text-sm font-bold text-slate-900 font-space-grotesk">
@@ -597,8 +597,8 @@ export default function HomePage() {
             </div>
 
             {/* User Category 3 */}
-            <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-xs transition-all space-y-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#4e6aff]/10 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
+            <div className="p-5 rounded-xl border border-slate-300 bg-white hover:border-slate-400 shadow-sm transition-all space-y-2.5">
+              <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
                 3
               </div>
               <h3 className="text-sm font-bold text-slate-900 font-space-grotesk">
@@ -610,8 +610,8 @@ export default function HomePage() {
             </div>
 
             {/* User Category 4 */}
-            <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-xs transition-all space-y-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#4e6aff]/10 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
+            <div className="p-5 rounded-xl border border-slate-300 bg-white hover:border-slate-400 shadow-sm transition-all space-y-2.5">
+              <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
                 4
               </div>
               <h3 className="text-sm font-bold text-slate-900 font-space-grotesk">
@@ -623,8 +623,8 @@ export default function HomePage() {
             </div>
 
             {/* User Category 5 */}
-            <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-xs transition-all space-y-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#4e6aff]/10 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
+            <div className="p-5 rounded-xl border border-slate-300 bg-white hover:border-slate-400 shadow-sm transition-all space-y-2.5">
+              <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
                 5
               </div>
               <h3 className="text-sm font-bold text-slate-900 font-space-grotesk">
@@ -639,12 +639,12 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 6. PLATFORM TIERS (CHOOSE YOUR MISSION TIER)                             */}
+      {/* 6. PLATFORM TIERS (CRISP BORDERS & PRO HIGHLIGHT)                        */}
       {/* ========================================================================= */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 border-b border-slate-200">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 border-b border-slate-300">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
-            <Badge variant="outline" className="text-slate-700 border-slate-300 text-xs font-medium">
+            <Badge variant="outline" className="text-slate-800 bg-white border-slate-300 text-xs font-medium shadow-xs">
               Mission Access Tiers
             </Badge>
             <h2 className="text-3xl font-bold text-slate-900 font-space-grotesk tracking-tight">
@@ -657,9 +657,9 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto items-stretch">
             {/* Tier 1 */}
-            <div className="p-6 rounded-xl border border-slate-200 bg-white shadow-xs flex flex-col justify-between space-y-5">
+            <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm flex flex-col justify-between space-y-5 hover:border-slate-400 transition-all">
               <div className="space-y-3">
-                <Badge variant="outline" className="text-slate-700 bg-slate-100 border-slate-200 text-xs font-medium">
+                <Badge variant="outline" className="text-slate-800 bg-slate-100 border-slate-300 text-xs font-medium">
                   Free / Open Access
                 </Badge>
                 <h3 className="text-xl font-bold text-slate-900 font-space-grotesk">
@@ -668,7 +668,7 @@ export default function HomePage() {
                 <p className="text-xs text-slate-500">
                   Perfect for students, educators, and space enthusiasts
                 </p>
-                <ul className="space-y-2 pt-3 border-t border-slate-100 text-xs text-slate-600">
+                <ul className="space-y-2 pt-3 border-t border-slate-200 text-xs text-slate-600">
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>Access to official CLPS presets</span>
@@ -692,16 +692,16 @@ export default function HomePage() {
                 </ul>
               </div>
               <Link href="/dashboard">
-                <Button variant="outline" className="w-full text-xs font-medium border-slate-300 hover:bg-slate-50 text-slate-700">
+                <Button variant="outline" className="w-full text-xs font-medium border-slate-300 hover:bg-slate-50 text-slate-800">
                   Start Exploring
                 </Button>
               </Link>
             </div>
 
             {/* Tier 2 (Highlighted Pro Tier) */}
-            <div className="p-6 rounded-xl border-2 border-[#4e6aff] bg-white shadow-sm flex flex-col justify-between space-y-5 relative">
+            <div className="p-6 rounded-xl border-2 border-[#4e6aff] bg-white shadow-md flex flex-col justify-between space-y-5 relative">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                <Badge className="bg-[#4e6aff] text-white text-[10px] font-semibold px-2.5 py-0.5">
+                <Badge className="bg-[#4e6aff] text-white text-[10px] font-semibold px-2.5 py-0.5 shadow-xs">
                   POPULAR FOR MISSION TEAMS
                 </Badge>
               </div>
@@ -715,10 +715,10 @@ export default function HomePage() {
                 <p className="text-xs text-slate-500">
                   For aerospace researchers, mission planners, and engineers
                 </p>
-                <ul className="space-y-2 pt-3 border-t border-slate-100 text-xs text-slate-600">
+                <ul className="space-y-2 pt-3 border-t border-slate-200 text-xs text-slate-600">
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-[#4e6aff] shrink-0" />
-                    <span className="font-semibold text-slate-800">Custom coordinate inputs (-80° to -90°S)</span>
+                    <span className="font-semibold text-slate-900">Custom coordinate inputs (-80° to -90°S)</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-[#4e6aff] shrink-0" />
@@ -739,16 +739,16 @@ export default function HomePage() {
                 </ul>
               </div>
               <Link href="/dashboard">
-                <Button className="w-full bg-[#4e6aff] hover:bg-[#3d59ef] text-white text-xs font-medium shadow-xs">
+                <Button className="w-full bg-[#4e6aff] hover:bg-[#3d59ef] text-white text-xs font-medium shadow-sm">
                   Launch Planner
                 </Button>
               </Link>
             </div>
 
             {/* Tier 3 */}
-            <div className="p-6 rounded-xl border border-slate-200 bg-white shadow-xs flex flex-col justify-between space-y-5">
+            <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm flex flex-col justify-between space-y-5 hover:border-slate-400 transition-all">
               <div className="space-y-3">
-                <Badge variant="outline" className="text-slate-700 bg-slate-100 border-slate-200 text-xs font-medium">
+                <Badge variant="outline" className="text-slate-800 bg-slate-100 border-slate-300 text-xs font-medium">
                   Custom Architecture
                 </Badge>
                 <h3 className="text-xl font-bold text-slate-900 font-space-grotesk">
@@ -757,7 +757,7 @@ export default function HomePage() {
                 <p className="text-xs text-slate-500">
                   Tailored for institutional missions and commercial operators
                 </p>
-                <ul className="space-y-2 pt-3 border-t border-slate-100 text-xs text-slate-600">
+                <ul className="space-y-2 pt-3 border-t border-slate-200 text-xs text-slate-600">
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-slate-700 shrink-0" />
                     <span>Dedicated ephemeris API endpoints</span>
@@ -781,7 +781,7 @@ export default function HomePage() {
                 </ul>
               </div>
               <Link href="/dashboard/chat">
-                <Button variant="outline" className="w-full text-xs font-medium border-slate-300 hover:bg-slate-50 text-slate-700">
+                <Button variant="outline" className="w-full text-xs font-medium border-slate-300 hover:bg-slate-50 text-slate-800">
                   Contact Architecture Team
                 </Button>
               </Link>
@@ -791,12 +791,12 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 7. BACKED BY REAL NUMBERS (4 METRICS)                                    */}
+      {/* 7. BACKED BY REAL NUMBERS (CRISP BORDERS)                                */}
       {/* ========================================================================= */}
-      <section className="py-14 sm:py-16 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200">
+      <section className="py-14 sm:py-16 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-300">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-2xl mx-auto mb-10 space-y-1">
-            <Badge variant="outline" className="text-slate-700 border-slate-300 text-xs font-medium">
+            <Badge variant="outline" className="text-slate-800 bg-slate-50 border-slate-300 text-xs font-medium shadow-xs">
               Platform Metrics
             </Badge>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-space-grotesk tracking-tight">
@@ -805,22 +805,22 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto text-center">
-            <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 shadow-xs">
+            <div className="p-5 rounded-xl border border-slate-300 bg-slate-50 shadow-sm hover:border-slate-400 transition-all">
               <div className="text-3xl sm:text-4xl font-extrabold text-slate-900 font-mono">85°–90°S</div>
               <div className="text-xs text-slate-600 font-medium mt-1">Lunar South Pole Target Focus</div>
             </div>
 
-            <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 shadow-xs">
+            <div className="p-5 rounded-xl border border-slate-300 bg-slate-50 shadow-sm hover:border-slate-400 transition-all">
               <div className="text-3xl sm:text-4xl font-extrabold text-slate-900 font-mono">360°</div>
               <div className="text-xs text-slate-600 font-medium mt-1">Continuous Horizon Masking</div>
             </div>
 
-            <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 shadow-xs">
+            <div className="p-5 rounded-xl border border-slate-300 bg-slate-50 shadow-sm hover:border-slate-400 transition-all">
               <div className="text-3xl sm:text-4xl font-extrabold text-[#4e6aff] font-mono">&lt; 50ms</div>
               <div className="text-xs text-slate-600 font-medium mt-1">Real-Time Calculation Latency</div>
             </div>
 
-            <div className="p-5 rounded-xl border border-slate-200 bg-slate-50/50 shadow-xs">
+            <div className="p-5 rounded-xl border border-slate-300 bg-slate-50 shadow-sm hover:border-slate-400 transition-all">
               <div className="text-3xl sm:text-4xl font-extrabold text-emerald-600 font-mono">100%</div>
               <div className="text-xs text-slate-600 font-medium mt-1">Authoritative NASA Open Data</div>
             </div>
@@ -829,12 +829,12 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 8. AUTHORITATIVE PLANETARY DATA SOURCES (5 SOURCES)                      */}
+      {/* 8. AUTHORITATIVE PLANETARY DATA SOURCES (CRISP BORDERS)                  */}
       {/* ========================================================================= */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 border-b border-slate-200">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 border-b border-slate-300">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
-            <Badge variant="outline" className="text-slate-700 border-slate-300 text-xs font-medium">
+            <Badge variant="outline" className="text-slate-800 bg-white border-slate-300 text-xs font-medium shadow-xs">
               Data Integrity &amp; Verification
             </Badge>
             <h2 className="text-3xl font-bold text-slate-900 font-space-grotesk tracking-tight">
@@ -847,7 +847,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
             {/* Source 1 */}
-            <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-xs space-y-2">
+            <div className="p-5 rounded-xl bg-white border border-slate-300 shadow-sm space-y-2 hover:border-slate-400 transition-all">
               <div className="flex items-center gap-2 font-bold text-sm text-slate-900 font-space-grotesk">
                 <Database className="w-4 h-4 text-[#4e6aff]" />
                 <span>NASA Planetary Data System (PDS)</span>
@@ -858,7 +858,7 @@ export default function HomePage() {
             </div>
 
             {/* Source 2 */}
-            <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-xs space-y-2">
+            <div className="p-5 rounded-xl bg-white border border-slate-300 shadow-sm space-y-2 hover:border-slate-400 transition-all">
               <div className="flex items-center gap-2 font-bold text-sm text-slate-900 font-space-grotesk">
                 <Mountain className="w-4 h-4 text-slate-700" />
                 <span>NASA LRO LOLA Science Team</span>
@@ -869,7 +869,7 @@ export default function HomePage() {
             </div>
 
             {/* Source 3 */}
-            <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-xs space-y-2">
+            <div className="p-5 rounded-xl bg-white border border-slate-300 shadow-sm space-y-2 hover:border-slate-400 transition-all">
               <div className="flex items-center gap-2 font-bold text-sm text-slate-900 font-space-grotesk">
                 <Cpu className="w-4 h-4 text-slate-700" />
                 <span>NASA JPL Horizons System</span>
@@ -880,7 +880,7 @@ export default function HomePage() {
             </div>
 
             {/* Source 4 */}
-            <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-xs space-y-2">
+            <div className="p-5 rounded-xl bg-white border border-slate-300 shadow-sm space-y-2 hover:border-slate-400 transition-all">
               <div className="flex items-center gap-2 font-bold text-sm text-slate-900 font-space-grotesk">
                 <Globe className="w-4 h-4 text-slate-700" />
                 <span>USGS Astrogeology Science Center</span>
@@ -891,7 +891,7 @@ export default function HomePage() {
             </div>
 
             {/* Source 5 */}
-            <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-xs space-y-2 md:col-span-2 lg:col-span-1">
+            <div className="p-5 rounded-xl bg-white border border-slate-300 shadow-sm space-y-2 md:col-span-2 lg:col-span-1 hover:border-slate-400 transition-all">
               <div className="flex items-center gap-2 font-bold text-sm text-slate-900 font-space-grotesk">
                 <Rocket className="w-4 h-4 text-slate-700" />
                 <span>NASA CLPS Mission Archives</span>
@@ -905,12 +905,12 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 9. TEAM & CFSBR SPACEWEB SHOWCASE                                        */}
+      {/* 9. TEAM & CFSBR SPACEWEB SHOWCASE (CRISP BORDERS)                         */}
       {/* ========================================================================= */}
-      <section id="team" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200">
+      <section id="team" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-300">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-medium text-slate-700">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-50 border border-slate-300 text-xs font-medium text-slate-800 shadow-xs">
               <Award className="w-3.5 h-3.5 text-amber-500" />
               <span>NASA Space Apps Regional 1st Runner-Up &amp; Global Nominee (2025) &bull; Advancing Lunar Exploration in 2026</span>
             </div>
@@ -924,13 +924,13 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {/* Member 1: Md Golam Mubasshir Rafi */}
-            <div className="p-6 rounded-xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between space-y-4">
+            <div className="p-6 rounded-xl bg-white border border-slate-300 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 transition-all">
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
                   <Badge className="bg-slate-900 text-white text-[11px] font-medium px-2.5 py-0.5">
                     Lead: Product Architecture &amp; Spatial Analytics
                   </Badge>
-                  <span className="text-xs text-slate-500 font-mono">CFSBR SpaceWeb</span>
+                  <span className="text-xs text-slate-600 font-mono font-medium">CFSBR SpaceWeb</span>
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-slate-900 font-space-grotesk">
@@ -944,10 +944,10 @@ export default function HomePage() {
                   Spearheads spatial intelligence, ephemeris integration, Mapbox 3D rendering pipelines, and orbital data science architectures.
                 </p>
               </div>
-              <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                <span className="text-xs text-slate-500">Sylhet, Bangladesh</span>
+              <div className="pt-3 border-t border-slate-200 flex items-center justify-between">
+                <span className="text-xs text-slate-600 font-medium">Sylhet, Bangladesh</span>
                 <Link href="https://github.com/gmrafi" target="_blank">
-                  <Button variant="outline" size="sm" className="text-xs text-slate-700 hover:bg-slate-50 border-slate-300 h-8 px-3">
+                  <Button variant="outline" size="sm" className="text-xs text-slate-800 hover:bg-slate-50 border-slate-300 h-8 px-3">
                     GitHub Profile <ExternalLink className="w-3.5 h-3.5 ml-1" />
                   </Button>
                 </Link>
@@ -955,13 +955,13 @@ export default function HomePage() {
             </div>
 
             {/* Member 2: Afshara Tasneem Zoa */}
-            <div className="p-6 rounded-xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between space-y-4">
+            <div className="p-6 rounded-xl bg-white border border-slate-300 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 transition-all">
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
                   <Badge className="bg-slate-900 text-white text-[11px] font-medium px-2.5 py-0.5">
                     Co-Lead: Strategy &amp; Research
                   </Badge>
-                  <span className="text-xs text-slate-500 font-mono">CFSBR SpaceWeb</span>
+                  <span className="text-xs text-slate-600 font-mono font-medium">CFSBR SpaceWeb</span>
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-slate-900 font-space-grotesk">
@@ -975,10 +975,10 @@ export default function HomePage() {
                   Leads lunar mission research, CLPS regulatory and payload requirement evaluation, and AI decision assistant prompt engineering.
                 </p>
               </div>
-              <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                <span className="text-xs text-slate-500">Sylhet, Bangladesh</span>
+              <div className="pt-3 border-t border-slate-200 flex items-center justify-between">
+                <span className="text-xs text-slate-600 font-medium">Sylhet, Bangladesh</span>
                 <Link href="https://github.com/gmrafi" target="_blank">
-                  <Button variant="outline" size="sm" className="text-xs text-slate-700 hover:bg-slate-50 border-slate-300 h-8 px-3">
+                  <Button variant="outline" size="sm" className="text-xs text-slate-800 hover:bg-slate-50 border-slate-300 h-8 px-3">
                     Research Dossier <ExternalLink className="w-3.5 h-3.5 ml-1" />
                   </Button>
                 </Link>
@@ -987,7 +987,7 @@ export default function HomePage() {
           </div>
 
           {/* About CFSBR SpaceWeb Box */}
-          <div className="mt-8 max-w-4xl mx-auto p-5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 leading-relaxed">
+          <div className="mt-8 max-w-4xl mx-auto p-5 rounded-xl bg-slate-50 border border-slate-300 text-xs text-slate-700 leading-relaxed shadow-xs">
             <span className="font-semibold text-slate-900">About CFSBR SpaceWeb: </span>
             An initiative under the Centre for Fintech &amp; Strategic Business Research (CFSBR), bridging advanced web architecture, orbital mechanics, and intuitive design to solve complex mission planning bottlenecks for NASA&apos;s Artemis and CLPS eras.
           </div>
@@ -995,12 +995,12 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 10. CALL TO ACTION & FOOTER                                              */}
+      {/* 10. CALL TO ACTION & FOOTER (CRISP BORDERS)                              */}
       {/* ========================================================================= */}
-      <section className="py-14 px-4 sm:px-6 lg:px-8 bg-slate-50/50">
+      <section className="py-14 px-4 sm:px-6 lg:px-8 bg-slate-50/70">
         <div className="container mx-auto max-w-4xl">
-          <div className="rounded-2xl border border-slate-200 bg-white p-8 sm:p-12 text-center space-y-4 shadow-xs">
-            <Badge variant="outline" className="text-slate-700 border-slate-300 text-xs font-medium">
+          <div className="rounded-2xl border border-slate-300 bg-white p-8 sm:p-12 text-center space-y-4 shadow-sm">
+            <Badge variant="outline" className="text-slate-800 bg-slate-50 border-slate-300 text-xs font-medium shadow-xs">
               NASA Space Apps 2026
             </Badge>
             <h2 className="text-2xl sm:text-3xl font-bold font-space-grotesk text-slate-900 tracking-tight">
@@ -1011,13 +1011,13 @@ export default function HomePage() {
             </p>
             <div className="pt-2 flex flex-col sm:flex-row justify-center gap-3">
               <Link href="/dashboard">
-                <Button size="lg" className="w-full sm:w-auto bg-[#4e6aff] hover:bg-[#3d59ef] text-white font-medium px-6 py-5 text-sm rounded-lg shadow-xs">
+                <Button size="lg" className="w-full sm:w-auto bg-[#4e6aff] hover:bg-[#3d59ef] text-white font-medium px-6 py-5 text-sm rounded-lg shadow-sm">
                   <Rocket className="w-4 h-4 mr-2" />
                   Launch Lunar Browser
                 </Button>
               </Link>
               <Link href="/dashboard/chat">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto border-slate-300 bg-white text-slate-700 hover:bg-slate-50 px-6 py-5 text-sm rounded-lg font-medium">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto border-slate-300 bg-white text-slate-800 hover:bg-slate-50 px-6 py-5 text-sm rounded-lg font-medium shadow-xs">
                   <Sparkles className="w-4 h-4 mr-2 text-[#4e6aff]" />
                   Consult AI Strategist
                 </Button>
@@ -1028,11 +1028,11 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-10 border-t border-slate-200 bg-white text-xs text-slate-500">
+      <footer className="py-10 border-t border-slate-300 bg-white text-xs text-slate-500">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl space-y-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-[#4e6aff] flex items-center justify-center text-white">
+              <div className="w-8 h-8 rounded-lg bg-[#4e6aff] flex items-center justify-center text-white shadow-xs">
                 <Satellite className="w-4 h-4" />
               </div>
               <div>
@@ -1041,7 +1041,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-6 font-medium text-slate-600">
+            <div className="flex flex-wrap items-center justify-center gap-6 font-medium text-slate-700">
               <Link href="/dashboard" className="hover:text-slate-900 transition-colors">Mission Control</Link>
               <Link href="/#features" className="hover:text-slate-900 transition-colors">Features</Link>
               <Link href="/#landing-sites" className="hover:text-slate-900 transition-colors">Landing Sites</Link>
@@ -1051,13 +1051,13 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-500">
+          <div className="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-500">
             <p className="max-w-xl text-center sm:text-left">
               SelenSync: Empowering sustainable lunar exploration through intuitive solar power and communication window intelligence for the CLPS and Artemis generation.
             </p>
             <div className="text-center sm:text-right space-y-0.5">
               <p>&copy; 2026 SelenSync. Built for NASA Space Apps Challenge 2026. Powered by NASA Open Data.</p>
-              <p className="text-slate-400 font-mono">Designed and Developed by Md Golam Mubasshir Rafi | CFSBR SpaceWeb</p>
+              <p className="text-slate-600 font-mono">Designed and Developed by Md Golam Mubasshir Rafi | CFSBR SpaceWeb</p>
             </div>
           </div>
         </div>
