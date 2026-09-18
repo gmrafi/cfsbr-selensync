@@ -45,49 +45,49 @@ import { LUNAR_SOUTH_POLE_CANDIDATES } from "@/lib/gis/lunar-sites"
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-[#4e6aff]/10">
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-[#4e6aff]/20 transition-colors">
       <UniversalHeader variant="light" />
 
       {/* ========================================================================= */}
       {/* 1. HERO SECTION (Subtle Depth, Tactile Borders, Live Telemetry Cockpit)   */}
       {/* ========================================================================= */}
-      <section className="relative pt-10 pb-14 sm:pt-14 sm:pb-18 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-100/80 via-white to-slate-50 border-b border-slate-300">
-        <div className="absolute inset-0 bg-[radial-gradient(#94a3b8_0.75px,transparent_0.75px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
+      <section className="relative pt-10 pb-14 sm:pt-14 sm:pb-18 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-100/80 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b border-slate-300 dark:border-slate-800">
+        <div className="absolute inset-0 bg-[radial-gradient(#94a3b8_0.75px,transparent_0.75px)] dark:bg-[radial-gradient(#334155_0.75px,transparent_0.75px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
         
         <div className="container mx-auto max-w-6xl relative z-10">
           <div className="text-center max-w-4xl mx-auto space-y-4">
             {/* Top Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-300 text-slate-800 text-xs font-medium shadow-xs">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs font-medium shadow-xs">
               <span className="flex h-2 w-2 rounded-full bg-[#4e6aff]"></span>
-              <span className="font-semibold text-slate-900">NASA International Space Apps Challenge 2026</span>
-              <span className="text-slate-300">•</span>
-              <span className="text-slate-600">CLPS Lunar Mission Browser</span>
-              <span className="text-slate-300">•</span>
+              <span className="font-semibold text-slate-900 dark:text-white">NASA International Space Apps Challenge 2026</span>
+              <span className="text-slate-300 dark:text-slate-600">•</span>
+              <span className="text-slate-600 dark:text-slate-300">CLPS Lunar Mission Browser</span>
+              <span className="text-slate-300 dark:text-slate-600">•</span>
               <span className="text-[#4e6aff] font-medium">Developed by 2025 Global Nominees</span>
             </div>
 
             {/* Main Title (H1) - Punchy, Balanced & High-Impact */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 font-space-grotesk leading-[1.12]">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 dark:text-white font-sans leading-[1.12]">
               Navigate Lunar South Pole Payloads <br className="hidden sm:inline" />
               with <span className="text-[#4e6aff]">Real-Time Solar &amp; Comms Precision</span>
             </h1>
 
             {/* Sub-Title Description - Concise & Focused */}
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mx-auto">
               Simulate Sun illumination cycles, crater rim topographic shadow masking, and Direct-to-Earth (DTE) communication windows for NASA Artemis and CLPS commercial landers.
             </p>
 
             {/* Feature Pills */}
             <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border border-slate-300 text-xs font-medium text-slate-700 shadow-xs">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-300 shadow-xs">
                 <span>☀️</span>
                 <span>Sun Illumination Modeling</span>
               </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border border-slate-300 text-xs font-medium text-slate-700 shadow-xs">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-300 shadow-xs">
                 <span>⛰️</span>
                 <span>Topographic Shadow Masking</span>
               </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white border border-slate-300 text-xs font-medium text-slate-700 shadow-xs">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-300 shadow-xs">
                 <span>📡</span>
                 <span>Direct-to-Earth (DTE) Comms</span>
               </div>
@@ -109,7 +109,7 @@ export default function HomePage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="w-full sm:w-auto border-slate-300 bg-white text-slate-800 hover:bg-slate-50 font-medium px-7 py-5 text-sm rounded-lg shadow-xs transition-colors"
+                  className="w-full sm:w-auto border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 font-medium px-7 py-5 text-sm rounded-lg shadow-xs transition-colors"
                 >
                   <Compass className="w-4 h-4 mr-2 text-slate-500" />
                   Explore Landing Sites
@@ -119,91 +119,91 @@ export default function HomePage() {
           </div>
 
           {/* Hero Live Telemetry Cockpit Preview (Visual Centerpiece with Crisp Borders) */}
-          <div className="mt-8 max-w-4xl mx-auto rounded-xl border border-slate-300 bg-white shadow-md overflow-hidden">
+          <div className="mt-8 max-w-4xl mx-auto rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-md overflow-hidden">
             {/* Cockpit Header Bar */}
-            <div className="px-4 py-2.5 bg-slate-100 border-b border-slate-300 flex items-center justify-between flex-wrap gap-2 text-xs">
+            <div className="px-4 py-2.5 bg-slate-100 dark:bg-slate-800/90 border-b border-slate-300 dark:border-slate-700 flex items-center justify-between flex-wrap gap-2 text-xs">
               <div className="flex items-center gap-2">
                 <div className="flex gap-1.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
                   <div className="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
                   <div className="w-2.5 h-2.5 rounded-full bg-slate-400"></div>
                 </div>
-                <span className="font-mono font-semibold text-slate-800 ml-1.5">
+                <span className="font-mono font-semibold text-slate-800 dark:text-slate-200 ml-1.5">
                   MISSION COCKPIT &bull; MALAPERT MASSIF (-85.99°S, 2.93°E)
                 </span>
               </div>
-              <Badge variant="outline" className="text-emerald-700 bg-emerald-50 border-emerald-300 text-[10px] font-mono">
+              <Badge variant="outline" className="text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 border-emerald-300 dark:border-emerald-700 text-[10px] font-mono">
                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1.5 inline-block"></span>
                 ACTIVE TELEMETRY
               </Badge>
             </div>
 
             {/* Cockpit Telemetry Grid */}
-            <div className="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-3 gap-3.5 bg-slate-50/70">
+            <div className="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-3 gap-3.5 bg-slate-50/70 dark:bg-slate-950/70">
               {/* Telemetry Block 1 */}
-              <div className="bg-white border border-slate-300 rounded-lg p-3.5 space-y-1.5 shadow-xs">
-                <div className="flex items-center justify-between text-xs font-medium text-slate-600">
-                  <span className="flex items-center gap-1.5 text-slate-700">
+              <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg p-3.5 space-y-1.5 shadow-xs">
+                <div className="flex items-center justify-between text-xs font-medium text-slate-600 dark:text-slate-400">
+                  <span className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 font-sans">
                     <Sun className="w-4 h-4 text-amber-500" /> Sun Elevation (θ)
                   </span>
-                  <span className="text-emerald-700 font-bold text-[10px] bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">Unobstructed</span>
+                  <span className="text-emerald-700 dark:text-emerald-400 font-bold text-[10px] bg-emerald-50 dark:bg-emerald-950/50 px-1.5 py-0.5 rounded border border-emerald-200 dark:border-emerald-800">Unobstructed</span>
                 </div>
-                <div className="text-2xl font-bold font-mono text-slate-900">
+                <div className="text-2xl font-bold font-mono text-slate-900 dark:text-white">
                   +2.84° <span className="text-xs text-slate-500 font-normal">Az: 142.6°</span>
                 </div>
-                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                   <div className="bg-amber-500 h-full w-[78%]"></div>
                 </div>
-                <div className="flex justify-between text-[11px] text-slate-600">
+                <div className="flex justify-between text-[11px] text-slate-600 dark:text-slate-400">
                   <span>Horizon Margin: +2.04°</span>
-                  <span className="font-semibold text-slate-900">614 W Solar Output</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-200">614 W Solar Output</span>
                 </div>
               </div>
 
               {/* Telemetry Block 2 */}
-              <div className="bg-white border border-slate-300 rounded-lg p-3.5 space-y-1.5 shadow-xs">
-                <div className="flex items-center justify-between text-xs font-medium text-slate-600">
-                  <span className="flex items-center gap-1.5 text-slate-700">
+              <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg p-3.5 space-y-1.5 shadow-xs">
+                <div className="flex items-center justify-between text-xs font-medium text-slate-600 dark:text-slate-400">
+                  <span className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 font-sans">
                     <Radio className="w-4 h-4 text-[#4e6aff]" /> DSN 34m X-Band
                   </span>
-                  <span className="text-emerald-700 font-bold text-[10px] bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">Link Closed</span>
+                  <span className="text-emerald-700 dark:text-emerald-400 font-bold text-[10px] bg-emerald-50 dark:bg-emerald-950/50 px-1.5 py-0.5 rounded border border-emerald-200 dark:border-emerald-800">Link Closed</span>
                 </div>
-                <div className="text-2xl font-bold font-mono text-slate-900">
+                <div className="text-2xl font-bold font-mono text-slate-900 dark:text-white">
                   +4.8 dB <span className="text-xs text-slate-500 font-normal">Margin</span>
                 </div>
-                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                   <div className="bg-[#4e6aff] h-full w-[88%]"></div>
                 </div>
-                <div className="flex justify-between text-[11px] text-slate-600">
+                <div className="flex justify-between text-[11px] text-slate-600 dark:text-slate-400">
                   <span>FSPL: 216.5 dB</span>
-                  <span className="font-semibold text-slate-900">Goldstone Locked</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-200">Goldstone Locked</span>
                 </div>
               </div>
 
               {/* Telemetry Block 3 */}
-              <div className="bg-white border border-slate-300 rounded-lg p-3.5 space-y-1.5 shadow-xs">
-                <div className="flex items-center justify-between text-xs font-medium text-slate-600">
-                  <span className="flex items-center gap-1.5 text-slate-700">
-                    <Mountain className="w-4 h-4 text-slate-600" /> Horizon Obstacle
+              <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-lg p-3.5 space-y-1.5 shadow-xs">
+                <div className="flex items-center justify-between text-xs font-medium text-slate-600 dark:text-slate-400">
+                  <span className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 font-sans">
+                    <Mountain className="w-4 h-4 text-slate-600 dark:text-slate-400" /> Horizon Obstacle
                   </span>
-                  <span className="text-slate-700 font-bold text-[10px] bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">5000m Elev</span>
+                  <span className="text-slate-700 dark:text-slate-300 font-bold text-[10px] bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700">5000m Elev</span>
                 </div>
-                <div className="text-2xl font-bold font-mono text-slate-900">
+                <div className="text-2xl font-bold font-mono text-slate-900 dark:text-white">
                   0.80° <span className="text-xs text-slate-500 font-normal">Max Relief</span>
                 </div>
-                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                  <div className="bg-slate-400 h-full w-[35%]"></div>
+                <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+                  <div className="bg-slate-400 dark:bg-slate-600 h-full w-[35%]"></div>
                 </div>
-                <div className="flex justify-between text-[11px] text-slate-600">
+                <div className="flex justify-between text-[11px] text-slate-600 dark:text-slate-400">
                   <span>Crater Mask: Clear</span>
-                  <span className="font-semibold text-slate-900">Artemis Baseline</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-200">Artemis Baseline</span>
                 </div>
               </div>
             </div>
 
             {/* Cockpit Footer Action */}
-            <div className="px-4 py-2.5 bg-white border-t border-slate-300 flex items-center justify-between flex-wrap gap-2 text-xs">
-              <div className="flex items-center gap-1.5 text-slate-600 text-[11px]">
+            <div className="px-4 py-2.5 bg-white dark:bg-slate-900 border-t border-slate-300 dark:border-slate-800 flex items-center justify-between flex-wrap gap-2 text-xs">
+              <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400 text-[11px]">
                 <Sparkles className="w-3.5 h-3.5 text-[#4e6aff]" />
                 <span>Ephemeris pipeline calculated topocentrically with NASA LOLA altimetry.</span>
               </div>
@@ -217,22 +217,22 @@ export default function HomePage() {
           </div>
 
           {/* Partners / Trusted By Bar */}
-          <div className="mt-8 pt-6 border-t border-slate-300 text-center">
-            <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-3">
+          <div className="mt-8 pt-6 border-t border-slate-300 dark:border-slate-800 text-center">
+            <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">
               Integrated with NASA &amp; Commercial Lunar Ecosystem Standards
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs font-medium text-slate-700">
-              <span className="hover:text-slate-900 transition-colors">NASA Artemis</span>
-              <span className="text-slate-300">•</span>
-              <span className="hover:text-slate-900 transition-colors">CLPS Initiative</span>
-              <span className="text-slate-300">•</span>
-              <span className="hover:text-slate-900 transition-colors">NASA LRO Mission</span>
-              <span className="text-slate-300">•</span>
-              <span className="hover:text-slate-900 transition-colors">Intuitive Machines</span>
-              <span className="text-slate-300">•</span>
-              <span className="hover:text-slate-900 transition-colors">Astrobotic</span>
-              <span className="text-slate-300">•</span>
-              <span className="hover:text-slate-900 transition-colors">ESA Lunar Exploration</span>
+            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs font-medium text-slate-700 dark:text-slate-300">
+              <span className="hover:text-slate-900 dark:hover:text-white transition-colors">NASA Artemis</span>
+              <span className="text-slate-300 dark:text-slate-700">•</span>
+              <span className="hover:text-slate-900 dark:hover:text-white transition-colors">CLPS Initiative</span>
+              <span className="text-slate-300 dark:text-slate-700">•</span>
+              <span className="hover:text-slate-900 dark:hover:text-white transition-colors">NASA LRO Mission</span>
+              <span className="text-slate-300 dark:text-slate-700">•</span>
+              <span className="hover:text-slate-900 dark:hover:text-white transition-colors">Intuitive Machines</span>
+              <span className="text-slate-300 dark:text-slate-700">•</span>
+              <span className="hover:text-slate-900 dark:hover:text-white transition-colors">Astrobotic</span>
+              <span className="text-slate-300 dark:text-slate-700">•</span>
+              <span className="hover:text-slate-900 dark:hover:text-white transition-colors">ESA Lunar Exploration</span>
             </div>
           </div>
         </div>
@@ -241,143 +241,143 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 2. CORE SOLUTIONS (6 CARDS WITH CRISP BORDERS)                            */}
       {/* ========================================================================= */}
-      <section id="features" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 border-b border-slate-300">
+      <section id="features" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 dark:bg-slate-900/60 border-b border-slate-300 dark:border-slate-800">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
-            <Badge variant="outline" className="text-slate-800 bg-white border-slate-300 text-xs font-medium shadow-xs">
+            <Badge variant="outline" className="text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-xs font-medium shadow-xs">
               Core Capabilities
             </Badge>
-            <h2 className="text-3xl font-bold text-slate-900 font-space-grotesk tracking-tight">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white font-sans tracking-tight">
               Comprehensive Lunar Mission Solutions
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base">
+            <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base">
               End-to-end telemetry modeling engineered specifically for the extreme conditions of the Lunar South Pole.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {/* Card 1 */}
-            <Card className="bg-white border border-slate-300 hover:border-slate-400 shadow-sm rounded-xl flex flex-col justify-between transition-all">
+            <Card className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700 shadow-sm rounded-xl flex flex-col justify-between transition-all">
               <CardHeader className="pb-3">
-                <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center mb-3 text-slate-700">
+                <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center mb-3 text-slate-700 dark:text-slate-300">
                   <Mountain className="w-5 h-5" />
                 </div>
-                <CardTitle className="text-lg text-slate-900 font-space-grotesk font-bold">
+                <CardTitle className="text-lg text-slate-900 dark:text-white font-sans font-bold">
                   3D Lunar South Pole Topography
                 </CardTitle>
-                <CardDescription className="text-slate-600 text-xs leading-relaxed">
+                <CardDescription className="text-slate-600 dark:text-slate-300 text-xs leading-relaxed">
                   High-resolution interactive 3D surface viewer powered by NASA LOLA DEM data. Explore candidate landing zones, crater rims, and surface slope gradients in real-time.
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-600 flex justify-between">
+                <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 flex justify-between">
                   <span>Elevation Grid:</span>
-                  <span className="font-semibold text-slate-800">5m–30m DEM Resolution</span>
+                  <span className="font-semibold text-slate-800 dark:text-slate-200">5m–30m DEM Resolution</span>
                 </div>
               </CardContent>
             </Card>
 
             {/* Card 2 */}
-            <Card className="bg-white border border-slate-300 hover:border-slate-400 shadow-sm rounded-xl flex flex-col justify-between transition-all">
+            <Card className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700 shadow-sm rounded-xl flex flex-col justify-between transition-all">
               <CardHeader className="pb-3">
-                <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center mb-3 text-[#4e6aff]">
+                <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900/60 flex items-center justify-center mb-3 text-[#4e6aff]">
                   <Radio className="w-5 h-5" />
                 </div>
-                <CardTitle className="text-lg text-slate-900 font-space-grotesk font-bold">
+                <CardTitle className="text-lg text-slate-900 dark:text-white font-sans font-bold">
                   Direct-to-Earth (DTE) Comms Windows
                 </CardTitle>
-                <CardDescription className="text-slate-600 text-xs leading-relaxed">
+                <CardDescription className="text-slate-600 dark:text-slate-300 text-xs leading-relaxed">
                   Instant line-of-sight (LOS) calculation between lunar south pole sites and Earth ground stations, accounting for lunar libration and RF link budgets.
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-600 flex justify-between">
+                <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 flex justify-between">
                   <span>RF Frequency:</span>
-                  <span className="font-semibold text-slate-800">8.45 GHz X-Band / DSN</span>
+                  <span className="font-semibold text-slate-800 dark:text-slate-200">8.45 GHz X-Band / DSN</span>
                 </div>
               </CardContent>
             </Card>
 
             {/* Card 3 */}
-            <Card className="bg-white border border-slate-300 hover:border-slate-400 shadow-sm rounded-xl flex flex-col justify-between transition-all">
+            <Card className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700 shadow-sm rounded-xl flex flex-col justify-between transition-all">
               <CardHeader className="pb-3">
-                <div className="w-10 h-10 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center mb-3 text-amber-600">
+                <div className="w-10 h-10 rounded-lg bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900/60 flex items-center justify-center mb-3 text-amber-600">
                   <Zap className="w-5 h-5" />
                 </div>
-                <CardTitle className="text-lg text-slate-900 font-space-grotesk font-bold">
+                <CardTitle className="text-lg text-slate-900 dark:text-white font-sans font-bold">
                   Solar Power Potential Simulator
                 </CardTitle>
-                <CardDescription className="text-slate-600 text-xs leading-relaxed">
+                <CardDescription className="text-slate-600 dark:text-slate-300 text-xs leading-relaxed">
                   Calculate solar incidence angles, solar flux (1,361 W/m²), and battery recharge wattage across 14-day lunar daylight cycles to guarantee lander survival.
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-600 flex justify-between">
+                <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 flex justify-between">
                   <span>Photovoltaic Solar Flux:</span>
-                  <span className="font-semibold text-slate-800">1,361 W/m² (AM0)</span>
+                  <span className="font-semibold text-slate-800 dark:text-slate-200">1,361 W/m² (AM0)</span>
                 </div>
               </CardContent>
             </Card>
 
             {/* Card 4 */}
-            <Card className="bg-white border border-slate-300 hover:border-slate-400 shadow-sm rounded-xl flex flex-col justify-between transition-all" id="horizon-profiler">
+            <Card className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700 shadow-sm rounded-xl flex flex-col justify-between transition-all" id="horizon-profiler">
               <CardHeader className="pb-3">
-                <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center mb-3 text-slate-700">
+                <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center mb-3 text-slate-700 dark:text-slate-300">
                   <Compass className="w-5 h-5" />
                 </div>
-                <CardTitle className="text-lg text-slate-900 font-space-grotesk font-bold">
+                <CardTitle className="text-lg text-slate-900 dark:text-white font-sans font-bold">
                   Topographic Horizon Polar Plot
                 </CardTitle>
-                <CardDescription className="text-slate-600 text-xs leading-relaxed">
+                <CardDescription className="text-slate-600 dark:text-slate-300 text-xs leading-relaxed">
                   360° fish-eye horizon masking that models local mountain and crater rim obstructions to predict exact shadow entry and exit times down to the minute.
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-600 flex justify-between">
+                <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 flex justify-between">
                   <span>Azimuth Sampling:</span>
-                  <span className="font-semibold text-slate-800">360° Continuous Masking</span>
+                  <span className="font-semibold text-slate-800 dark:text-slate-200">360° Continuous Masking</span>
                 </div>
               </CardContent>
             </Card>
 
             {/* Card 5 */}
-            <Card className="bg-white border border-slate-300 hover:border-slate-400 shadow-sm rounded-xl flex flex-col justify-between transition-all" id="site-comparison">
+            <Card className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700 shadow-sm rounded-xl flex flex-col justify-between transition-all" id="site-comparison">
               <CardHeader className="pb-3">
-                <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center mb-3 text-slate-700">
+                <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center mb-3 text-slate-700 dark:text-slate-300">
                   <Scale className="w-5 h-5" />
                 </div>
-                <CardTitle className="text-lg text-slate-900 font-space-grotesk font-bold">
+                <CardTitle className="text-lg text-slate-900 dark:text-white font-sans font-bold">
                   Multi-Site Comparative Analysis
                 </CardTitle>
-                <CardDescription className="text-slate-600 text-xs leading-relaxed">
+                <CardDescription className="text-slate-600 dark:text-slate-300 text-xs leading-relaxed">
                   Side-by-side feasibility matrix (Site A vs. Site B) evaluating continuous daylight hours, blackout durations, and RF link reliability for informed decision-making.
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-600 flex justify-between">
+                <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 flex justify-between">
                   <span>Decision Engine:</span>
-                  <span className="font-semibold text-slate-800">Direct Trade-Off Matrix</span>
+                  <span className="font-semibold text-slate-800 dark:text-slate-200">Direct Trade-Off Matrix</span>
                 </div>
               </CardContent>
             </Card>
 
             {/* Card 6 */}
-            <Card className="bg-white border border-slate-300 hover:border-slate-400 shadow-sm rounded-xl flex flex-col justify-between transition-all">
+            <Card className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700 shadow-sm rounded-xl flex flex-col justify-between transition-all">
               <CardHeader className="pb-3">
-                <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center mb-3 text-[#4e6aff]">
+                <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900/60 flex items-center justify-center mb-3 text-[#4e6aff]">
                   <Rocket className="w-5 h-5" />
                 </div>
-                <CardTitle className="text-lg text-slate-900 font-space-grotesk font-bold">
+                <CardTitle className="text-lg text-slate-900 dark:text-white font-sans font-bold">
                   CLPS Mission Presets
                 </CardTitle>
-                <CardDescription className="text-slate-600 text-xs leading-relaxed">
+                <CardDescription className="text-slate-600 dark:text-slate-300 text-xs leading-relaxed">
                   Pre-configured operational parameters for NASA&apos;s commercial landing sites, including Malapert Mountain, Shackleton Ridge, de Gerlache, and Haworth.
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-600 flex justify-between">
+                <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 flex justify-between">
                   <span>Pre-Configured Sites:</span>
-                  <span className="font-semibold text-slate-800">4 NASA Artemis Baselines</span>
+                  <span className="font-semibold text-slate-800 dark:text-slate-200">4 NASA Artemis Baselines</span>
                 </div>
               </CardContent>
             </Card>
@@ -388,95 +388,95 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 3. ADVANCED CAPABILITIES (6 CARDS WITH CRISP BORDERS)                    */}
       {/* ========================================================================= */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-300">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 border-b border-slate-300 dark:border-slate-800">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
-            <Badge variant="outline" className="text-slate-800 bg-slate-50 border-slate-300 text-xs font-medium shadow-xs">
+            <Badge variant="outline" className="text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-xs font-medium shadow-xs">
               Architecture &amp; Intelligence
             </Badge>
-            <h2 className="text-3xl font-bold text-slate-900 font-space-grotesk tracking-tight">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white font-sans tracking-tight">
               Advanced Mission Capabilities
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base">
+            <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base">
               Precision tools built for aerospace engineers, scientific principal investigators, and mission leads.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {/* Adv Card 1 */}
-            <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm space-y-3 hover:border-slate-400 transition-all">
-              <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-200 text-[#4e6aff] flex items-center justify-center">
+            <div className="p-6 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-3 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900/60 text-[#4e6aff] flex items-center justify-center">
                 <Sparkles className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900 font-space-grotesk">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white font-sans">
                 Afshara — AI Lunar Mission Strategist
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Context-aware mission assistant providing real-time operational advice, power risk alerts, and landing window recommendations based on active coordinates.
               </p>
             </div>
 
             {/* Adv Card 2 */}
-            <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm space-y-3 hover:border-slate-400 transition-all">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center">
+            <div className="p-6 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-3 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center">
                 <Sliders className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900 font-space-grotesk">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white font-sans">
                 Dynamic Time Scrubber
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Smooth 24-hour to 14-day timeline slider allowing interactive visual playback of solar elevation curves and Earth visibility vectors.
               </p>
             </div>
 
             {/* Adv Card 3 */}
-            <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm space-y-3 hover:border-slate-400 transition-all">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center">
+            <div className="p-6 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-3 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center">
                 <Code className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900 font-space-grotesk">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white font-sans">
                 Open Ephemeris &amp; DEM API
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 High-performance REST endpoints delivering topocentric lunar coordinates, azimuth/elevation vectors, and terrain elevation profiles for researchers.
               </p>
             </div>
 
             {/* Adv Card 4 */}
-            <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm space-y-3 hover:border-slate-400 transition-all">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center">
+            <div className="p-6 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-3 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center">
                 <Layers className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900 font-space-grotesk">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white font-sans">
                 Dual UX Workspace (Lite vs. Pro)
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Seamless toggle between an intuitive educational view for students/public and a high-density telemetry interface for mission engineers.
               </p>
             </div>
 
             {/* Adv Card 5 */}
-            <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm space-y-3 hover:border-slate-400 transition-all">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center">
+            <div className="p-6 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-3 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center">
                 <Shield className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900 font-space-grotesk">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white font-sans">
                 Blackout &amp; Cold Survival Assessment
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Thermal and battery discharge risk modeling for surviving the ultra-cold, 14-day lunar night and permanently shadowed regions (PSRs).
               </p>
             </div>
 
             {/* Adv Card 6 */}
-            <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm space-y-3 hover:border-slate-400 transition-all">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center">
+            <div className="p-6 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-3 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center">
                 <FileText className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900 font-space-grotesk">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white font-sans">
                 Mission Plan Export &amp; Briefing Generator
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 One-click export of comprehensive landing site feasibility reports (PDF/JSON) formatted for aerospace mission architecture reviews.
               </p>
             </div>
@@ -487,17 +487,20 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 4. CANDIDATE LANDING SITES SECTION (CRISP BORDERS & CLEAR STATS)          */}
       {/* ========================================================================= */}
-      <section id="landing-sites" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 border-b border-slate-300">
+      {/* ========================================================================= */}
+      {/* 4. CANDIDATE LANDING SITES SECTION (CRISP BORDERS & CLEAR STATS)          */}
+      {/* ========================================================================= */}
+      <section id="landing-sites" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 dark:bg-slate-900/60 border-b border-slate-300 dark:border-slate-800">
         <div className="container mx-auto max-w-6xl">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
-              <Badge variant="outline" className="text-slate-800 bg-white border-slate-300 text-xs font-medium mb-2 shadow-xs">
+              <Badge variant="outline" className="text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-xs font-medium mb-2 shadow-xs">
                 NASA Candidate Sites
               </Badge>
-              <h2 className="text-3xl font-bold text-slate-900 font-space-grotesk tracking-tight">
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-white font-sans tracking-tight">
                 Artemis &amp; CLPS Priority Landing Zones
               </h2>
-              <p className="text-slate-600 text-sm mt-1 max-w-2xl">
+              <p className="text-slate-600 dark:text-slate-300 text-sm mt-1 max-w-2xl">
                 High-resolution elevation and illumination datasets derived from Lunar Reconnaissance Orbiter (LRO) altimetry.
               </p>
             </div>
@@ -513,34 +516,34 @@ export default function HomePage() {
             {LUNAR_SOUTH_POLE_CANDIDATES.map((site) => (
               <Card
                 key={site.id}
-                className="bg-white border border-slate-300 hover:border-slate-400 shadow-sm rounded-xl flex flex-col justify-between transition-all"
+                className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-700 shadow-sm rounded-xl flex flex-col justify-between transition-all"
               >
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[11px] font-mono font-medium text-slate-800 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+                    <span className="text-[11px] font-mono font-medium text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
                       {site.latitude}°S, {site.longitude}°E
                     </span>
-                    <span className="text-xs font-mono text-slate-600 font-medium">{site.elevationMeters}m</span>
+                    <span className="text-xs font-mono text-slate-600 dark:text-slate-400 font-medium">{site.elevationMeters}m</span>
                   </div>
-                  <CardTitle className="text-base text-slate-900 font-space-grotesk font-bold">{site.name}</CardTitle>
-                  <CardDescription className="text-slate-600 text-xs line-clamp-2">
+                  <CardTitle className="text-base text-slate-900 dark:text-white font-sans font-bold">{site.name}</CardTitle>
+                  <CardDescription className="text-slate-600 dark:text-slate-300 text-xs line-clamp-2">
                     {site.description}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-0 space-y-2.5 text-xs">
-                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200 space-y-0.5">
-                    <div className="text-slate-500 text-[11px]">Sun Illumination:</div>
-                    <div className="font-semibold text-slate-900">{site.solarIlluminationPotential}</div>
+                  <div className="p-2.5 bg-slate-50 dark:bg-slate-950/60 rounded-lg border border-slate-200 dark:border-slate-800 space-y-0.5">
+                    <div className="text-slate-500 dark:text-slate-400 text-[11px]">Sun Illumination:</div>
+                    <div className="font-semibold text-slate-900 dark:text-slate-100">{site.solarIlluminationPotential}</div>
                   </div>
 
-                  <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200 space-y-0.5">
-                    <div className="text-slate-500 text-[11px]">Earth Visibility:</div>
-                    <div className="font-semibold text-slate-900">{site.dteDirectToEarthStatus}</div>
+                  <div className="p-2.5 bg-slate-50 dark:bg-slate-950/60 rounded-lg border border-slate-200 dark:border-slate-800 space-y-0.5">
+                    <div className="text-slate-500 dark:text-slate-400 text-[11px]">Earth Visibility:</div>
+                    <div className="font-semibold text-slate-900 dark:text-slate-100">{site.dteDirectToEarthStatus}</div>
                   </div>
 
                   <div className="flex flex-wrap gap-1 pt-1">
                     {site.targetMissions.map((m, idx) => (
-                      <Badge key={idx} variant="outline" className="text-[10px] font-normal bg-slate-50 text-slate-700 border-slate-300">
+                      <Badge key={idx} variant="outline" className="text-[10px] font-normal bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-700">
                         {m}
                       </Badge>
                     ))}
@@ -555,82 +558,82 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 5. WHO WE SERVE (5 CATEGORIES WITH CRISP BORDERS)                        */}
       {/* ========================================================================= */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-300">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 border-b border-slate-300 dark:border-slate-800">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
-            <Badge variant="outline" className="text-slate-800 bg-slate-50 border-slate-300 text-xs font-medium shadow-xs">
+            <Badge variant="outline" className="text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-xs font-medium shadow-xs">
               Ecosystem Alignment
             </Badge>
-            <h2 className="text-3xl font-bold text-slate-900 font-space-grotesk tracking-tight">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white font-sans tracking-tight">
               Who We Serve
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base">
+            <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base">
               Empowering commercial lunar operators, institutional space agencies, academic researchers, and students.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {/* User Category 1 */}
-            <div className="p-5 rounded-xl border border-slate-300 bg-white hover:border-slate-400 shadow-sm transition-all space-y-2.5">
-              <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
+            <div className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-400 dark:hover:border-slate-700 shadow-sm transition-all space-y-2.5">
+              <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900/60 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
                 1
               </div>
-              <h3 className="text-sm font-bold text-slate-900 font-space-grotesk">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white font-sans">
                 Commercial Lunar Landers (CLPS Providers)
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Optimize landing timelines, battery sizing, and payload power distribution before final lunar descent and trajectory burn.
               </p>
             </div>
 
             {/* User Category 2 */}
-            <div className="p-5 rounded-xl border border-slate-300 bg-white hover:border-slate-400 shadow-sm transition-all space-y-2.5">
-              <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
+            <div className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-400 dark:hover:border-slate-700 shadow-sm transition-all space-y-2.5">
+              <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900/60 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
                 2
               </div>
-              <h3 className="text-sm font-bold text-slate-900 font-space-grotesk">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white font-sans">
                 Space Agencies &amp; Mission Planners
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Fast-track site selection for robotic rovers and Artemis human outposts without dealing with complex, slow command-line tools.
               </p>
             </div>
 
             {/* User Category 3 */}
-            <div className="p-5 rounded-xl border border-slate-300 bg-white hover:border-slate-400 shadow-sm transition-all space-y-2.5">
-              <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
+            <div className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-400 dark:hover:border-slate-700 shadow-sm transition-all space-y-2.5">
+              <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900/60 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
                 3
               </div>
-              <h3 className="text-sm font-bold text-slate-900 font-space-grotesk">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white font-sans">
                 Scientific Payload Teams
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Schedule high-bandwidth direct-to-Earth scientific data downlinks during verified line-of-sight communication windows.
               </p>
             </div>
 
             {/* User Category 4 */}
-            <div className="p-5 rounded-xl border border-slate-300 bg-white hover:border-slate-400 shadow-sm transition-all space-y-2.5">
-              <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
+            <div className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-400 dark:hover:border-slate-700 shadow-sm transition-all space-y-2.5">
+              <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900/60 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
                 4
               </div>
-              <h3 className="text-sm font-bold text-slate-900 font-space-grotesk">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white font-sans">
                 Space Systems Engineers &amp; Students
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Validate RF link margins and solar array geometry against actual lunar terrain elevation masks and real orbital physics.
               </p>
             </div>
 
             {/* User Category 5 */}
-            <div className="p-5 rounded-xl border border-slate-300 bg-white hover:border-slate-400 shadow-sm transition-all space-y-2.5">
-              <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
+            <div className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-400 dark:hover:border-slate-700 shadow-sm transition-all space-y-2.5">
+              <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-900/60 text-[#4e6aff] flex items-center justify-center font-bold text-sm">
                 5
               </div>
-              <h3 className="text-sm font-bold text-slate-900 font-space-grotesk">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white font-sans">
                 Educators &amp; Public Explorers
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Demystify lunar south pole orbital mechanics, extreme lighting conditions, and the realities of deep-space exploration through interactive 3D visualizations.
               </p>
             </div>
@@ -641,80 +644,83 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 6. MISSION OPERATIONAL MODES (NASA OPEN-SCIENCE OPERATIONAL PROFILES)     */}
       {/* ========================================================================= */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 border-b border-slate-300">
+      {/* ========================================================================= */}
+      {/* 6. MISSION OPERATIONAL MODES (NASA OPEN-SCIENCE OPERATIONAL PROFILES)     */}
+      {/* ========================================================================= */}
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 dark:bg-slate-900/60 border-b border-slate-300 dark:border-slate-800">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
-            <Badge variant="outline" className="text-slate-800 bg-white border-slate-300 text-xs font-medium shadow-xs">
+            <Badge variant="outline" className="text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-xs font-medium shadow-xs">
               Operational Architecture
             </Badge>
-            <h2 className="text-3xl font-bold text-slate-900 font-space-grotesk tracking-tight">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white font-sans tracking-tight">
               Mission Operational Modes
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base">
+            <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base">
               Standardized flight dynamics and surface telemetry profiles for CLPS robotic landers and Artemis lunar payloads.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto items-stretch">
             {/* Mode 1 */}
-            <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm flex flex-col justify-between space-y-5 hover:border-slate-400 transition-all">
+            <div className="p-6 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col justify-between space-y-5 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
               <div className="space-y-3">
-                <Badge variant="outline" className="text-slate-800 bg-slate-100 border-slate-300 text-xs font-medium">
+                <Badge variant="outline" className="text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-xs font-medium">
                   Mode 01 // Surface Patrol
                 </Badge>
-                <h3 className="text-xl font-bold text-slate-900 font-space-grotesk">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white font-sans">
                   Autonomous Reconnaissance
                 </h3>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-500 dark:text-slate-400">
                   Low-power mobile rover traversal and continuous thermal boundary logging
                 </p>
-                <ul className="space-y-2 pt-3 border-t border-slate-200 text-xs text-slate-600 font-mono">
+                <ul className="space-y-2 pt-3 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 font-mono">
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                     <span>Solar grazing tracking (θ &lt; 1.5°)</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                     <span>Diviner regolith thermal logging</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                     <span>LOLA obstacle slope containment</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                     <span>Periodic DSN beacon telemetry</span>
                   </li>
                 </ul>
               </div>
               <Link href="/dashboard">
-                <Button variant="outline" className="w-full text-xs font-medium border-slate-300 hover:bg-slate-50 text-slate-800">
+                <Button variant="outline" className="w-full text-xs font-medium border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200">
                   Inspect Flight Profile
                 </Button>
               </Link>
             </div>
 
             {/* Mode 2 (Highlighted Science Mode) */}
-            <div className="p-6 rounded-xl border-2 border-[#4e6aff] bg-white shadow-md flex flex-col justify-between space-y-5 relative">
+            <div className="p-6 rounded-xl border-2 border-[#4e6aff] bg-white dark:bg-slate-900 shadow-md flex flex-col justify-between space-y-5 relative">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                 <Badge className="bg-[#4e6aff] text-white text-[10px] font-semibold px-2.5 py-0.5 shadow-xs">
                   HIGH-PRIORITY SCIENCE
                 </Badge>
               </div>
               <div className="space-y-3">
-                <Badge className="bg-blue-50 text-[#4e6aff] border-blue-200 text-xs font-medium">
+                <Badge className="bg-blue-50 dark:bg-blue-950/60 text-[#4e6aff] border-blue-200 dark:border-blue-900/60 text-xs font-medium">
                   Mode 02 // PSR Volatiles
                 </Badge>
-                <h3 className="text-xl font-bold text-slate-900 font-space-grotesk">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white font-sans">
                   In-Situ Resource Analysis (ISRU)
                 </h3>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-500 dark:text-slate-400">
                   Cryogenic cold trap sampling and volatile ice prospecting in permanently shadowed craters
                 </p>
-                <ul className="space-y-2 pt-3 border-t border-slate-200 text-xs text-slate-600 font-mono">
+                <ul className="space-y-2 pt-3 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 font-mono">
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-[#4e6aff] shrink-0" />
-                    <span className="font-semibold text-slate-900">PSR drill operations at 40 Kelvin</span>
+                    <span className="font-semibold text-slate-900 dark:text-slate-100">PSR drill operations at 40 Kelvin</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-[#4e6aff] shrink-0" />
@@ -738,38 +744,38 @@ export default function HomePage() {
             </div>
 
             {/* Mode 3 */}
-            <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm flex flex-col justify-between space-y-5 hover:border-slate-400 transition-all">
+            <div className="p-6 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col justify-between space-y-5 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
               <div className="space-y-3">
-                <Badge variant="outline" className="text-slate-800 bg-slate-100 border-slate-300 text-xs font-medium">
+                <Badge variant="outline" className="text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-xs font-medium">
                   Mode 03 // Powered Descent
                 </Badge>
-                <h3 className="text-xl font-bold text-slate-900 font-space-grotesk">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white font-sans">
                   Critical Descent Logistics
                 </h3>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-500 dark:text-slate-400">
                   Terminal guidance, hazard avoidance, and continuous carrier tracking to touchdown
                 </p>
-                <ul className="space-y-2 pt-3 border-t border-slate-200 text-xs text-slate-600 font-mono">
+                <ul className="space-y-2 pt-3 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 font-mono">
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-slate-700 shrink-0" />
+                    <Check className="w-4 h-4 text-slate-700 dark:text-slate-300 shrink-0" />
                     <span>LOLA DEM tip-over slope limit (&lt; 10°)</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-slate-700 shrink-0" />
+                    <Check className="w-4 h-4 text-slate-700 dark:text-slate-300 shrink-0" />
                     <span>Topographic crater shadow entry alert</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-slate-700 shrink-0" />
+                    <Check className="w-4 h-4 text-slate-700 dark:text-slate-300 shrink-0" />
                     <span>Earth libration angle tracking</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-slate-700 shrink-0" />
+                    <Check className="w-4 h-4 text-slate-700 dark:text-slate-300 shrink-0" />
                     <span>DSN tri-station handover timing</span>
                   </li>
                 </ul>
               </div>
               <Link href="/dashboard">
-                <Button variant="outline" className="w-full text-xs font-medium border-slate-300 hover:bg-slate-50 text-slate-800">
+                <Button variant="outline" className="w-full text-xs font-medium border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200">
                   Execute Simulation
                 </Button>
               </Link>
@@ -781,36 +787,36 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 7. BACKED BY REAL NUMBERS (CRISP BORDERS)                                */}
       {/* ========================================================================= */}
-      <section className="py-14 sm:py-16 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-300">
+      <section className="py-14 sm:py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 border-b border-slate-300 dark:border-slate-800">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-2xl mx-auto mb-10 space-y-1">
-            <Badge variant="outline" className="text-slate-800 bg-slate-50 border-slate-300 text-xs font-medium shadow-xs">
+            <Badge variant="outline" className="text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-xs font-medium shadow-xs">
               Platform Metrics
             </Badge>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-space-grotesk tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-sans tracking-tight">
               Backed by Real Numbers
             </h2>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto text-center">
-            <div className="p-5 rounded-xl border border-slate-300 bg-slate-50 shadow-sm hover:border-slate-400 transition-all">
-              <div className="text-3xl sm:text-4xl font-extrabold text-slate-900 font-mono">85°–90°S</div>
-              <div className="text-xs text-slate-600 font-medium mt-1">Lunar South Pole Target Focus</div>
+            <div className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 shadow-sm hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-mono">85°–90°S</div>
+              <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mt-1">Lunar South Pole Target Focus</div>
             </div>
 
-            <div className="p-5 rounded-xl border border-slate-300 bg-slate-50 shadow-sm hover:border-slate-400 transition-all">
-              <div className="text-3xl sm:text-4xl font-extrabold text-slate-900 font-mono">360°</div>
-              <div className="text-xs text-slate-600 font-medium mt-1">Continuous Horizon Masking</div>
+            <div className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 shadow-sm hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-mono">360°</div>
+              <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mt-1">Continuous Horizon Masking</div>
             </div>
 
-            <div className="p-5 rounded-xl border border-slate-300 bg-slate-50 shadow-sm hover:border-slate-400 transition-all">
+            <div className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 shadow-sm hover:border-slate-400 dark:hover:border-slate-700 transition-all">
               <div className="text-3xl sm:text-4xl font-extrabold text-[#4e6aff] font-mono">&lt; 50ms</div>
-              <div className="text-xs text-slate-600 font-medium mt-1">Real-Time Calculation Latency</div>
+              <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mt-1">Real-Time Calculation Latency</div>
             </div>
 
-            <div className="p-5 rounded-xl border border-slate-300 bg-slate-50 shadow-sm hover:border-slate-400 transition-all">
-              <div className="text-3xl sm:text-4xl font-extrabold text-emerald-600 font-mono">100%</div>
-              <div className="text-xs text-slate-600 font-medium mt-1">Authoritative NASA Open Data</div>
+            <div className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 shadow-sm hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="text-3xl sm:text-4xl font-extrabold text-emerald-600 dark:text-emerald-400 font-mono">100%</div>
+              <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mt-1">Authoritative NASA Open Data</div>
             </div>
           </div>
         </div>
@@ -819,72 +825,75 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 8. AUTHORITATIVE PLANETARY DATA SOURCES (CRISP BORDERS)                  */}
       {/* ========================================================================= */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 border-b border-slate-300">
+      {/* ========================================================================= */}
+      {/* 8. AUTHORITATIVE PLANETARY DATA SOURCES (CRISP BORDERS)                  */}
+      {/* ========================================================================= */}
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 dark:bg-slate-900/60 border-b border-slate-300 dark:border-slate-800">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
-            <Badge variant="outline" className="text-slate-800 bg-white border-slate-300 text-xs font-medium shadow-xs">
+            <Badge variant="outline" className="text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-xs font-medium shadow-xs">
               Data Integrity &amp; Verification
             </Badge>
-            <h2 className="text-3xl font-bold text-slate-900 font-space-grotesk tracking-tight">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white font-sans tracking-tight">
               Authoritative Planetary Data Sources
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base">
+            <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base">
               All topography, ephemeris calculations, and telemetry vectors are validated directly against official NASA science archives.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
             {/* Source 1 */}
-            <div className="p-5 rounded-xl bg-white border border-slate-300 shadow-sm space-y-2 hover:border-slate-400 transition-all">
-              <div className="flex items-center gap-2 font-bold text-sm text-slate-900 font-space-grotesk">
+            <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm space-y-2 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="flex items-center gap-2 font-bold text-sm text-slate-900 dark:text-white font-sans">
                 <Database className="w-4 h-4 text-[#4e6aff]" />
                 <span>NASA Planetary Data System (PDS)</span>
               </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Official repository for all lunar mission datasets, surface measurements, and orbital records.
               </p>
             </div>
 
             {/* Source 2 */}
-            <div className="p-5 rounded-xl bg-white border border-slate-300 shadow-sm space-y-2 hover:border-slate-400 transition-all">
-              <div className="flex items-center gap-2 font-bold text-sm text-slate-900 font-space-grotesk">
-                <Mountain className="w-4 h-4 text-slate-700" />
+            <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm space-y-2 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="flex items-center gap-2 font-bold text-sm text-slate-900 dark:text-white font-sans">
+                <Mountain className="w-4 h-4 text-slate-700 dark:text-slate-300" />
                 <span>NASA LRO LOLA Science Team</span>
               </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Lunar Orbiter Laser Altimeter Digital Elevation Models (DEM) for precision south pole topography.
               </p>
             </div>
 
             {/* Source 3 */}
-            <div className="p-5 rounded-xl bg-white border border-slate-300 shadow-sm space-y-2 hover:border-slate-400 transition-all">
-              <div className="flex items-center gap-2 font-bold text-sm text-slate-900 font-space-grotesk">
-                <Cpu className="w-4 h-4 text-slate-700" />
+            <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm space-y-2 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="flex items-center gap-2 font-bold text-sm text-slate-900 dark:text-white font-sans">
+                <Cpu className="w-4 h-4 text-slate-700 dark:text-slate-300" />
                 <span>NASA JPL Horizons System</span>
               </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 High-precision solar system ephemeris for exact Sun and Earth lunar topocentric coordinates.
               </p>
             </div>
 
             {/* Source 4 */}
-            <div className="p-5 rounded-xl bg-white border border-slate-300 shadow-sm space-y-2 hover:border-slate-400 transition-all">
-              <div className="flex items-center gap-2 font-bold text-sm text-slate-900 font-space-grotesk">
-                <Globe className="w-4 h-4 text-slate-700" />
+            <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm space-y-2 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="flex items-center gap-2 font-bold text-sm text-slate-900 dark:text-white font-sans">
+                <Globe className="w-4 h-4 text-slate-700 dark:text-slate-300" />
                 <span>USGS Astrogeology Science Center</span>
               </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Unified Lunar Control Network and Wide Angle Camera (WAC) global terrain mosaics.
               </p>
             </div>
 
             {/* Source 5 */}
-            <div className="p-5 rounded-xl bg-white border border-slate-300 shadow-sm space-y-2 md:col-span-2 lg:col-span-1 hover:border-slate-400 transition-all">
-              <div className="flex items-center gap-2 font-bold text-sm text-slate-900 font-space-grotesk">
-                <Rocket className="w-4 h-4 text-slate-700" />
+            <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm space-y-2 md:col-span-2 lg:col-span-1 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="flex items-center gap-2 font-bold text-sm text-slate-900 dark:text-white font-sans">
+                <Rocket className="w-4 h-4 text-slate-700 dark:text-slate-300" />
                 <span>NASA CLPS Mission Archives</span>
               </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Candidate landing site profiles and operational payload engineering specifications.
               </p>
             </div>
@@ -895,47 +904,47 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 9. TEAM & CFSBR SPACEWEB SHOWCASE (CRISP BORDERS)                         */}
       {/* ========================================================================= */}
-      <section id="team" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-300">
+      <section id="team" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 border-b border-slate-300 dark:border-slate-800">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-50 border border-slate-300 text-xs font-medium text-slate-800 shadow-xs">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs font-medium text-slate-800 dark:text-slate-200 shadow-xs">
               <Award className="w-3.5 h-3.5 text-amber-500" />
               <span>NASA Space Apps Regional 1st Runner-Up &amp; Global Nominee (2025) &bull; Advancing Lunar Exploration in 2026</span>
             </div>
-            <h2 className="text-3xl font-bold text-slate-900 font-space-grotesk tracking-tight mt-2">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white font-sans tracking-tight mt-2">
               Built by CFSBR SpaceWeb
             </h2>
-            <p className="text-slate-600 text-sm">
+            <p className="text-slate-600 dark:text-slate-300 text-sm">
               A cross-disciplinary team combining space telemetry, spatial computing, and intuitive product strategy.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {/* Member 1: Md Golam Mubasshir Rafi */}
-            <div className="p-6 rounded-xl bg-white border border-slate-300 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 transition-all">
+            <div className="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <Badge className="bg-slate-900 text-white text-[11px] font-medium px-2.5 py-0.5">
+                  <Badge className="bg-slate-900 dark:bg-slate-800 text-white text-[11px] font-medium px-2.5 py-0.5">
                     Lead: Product Architecture &amp; Spatial Analytics
                   </Badge>
-                  <span className="text-xs text-slate-600 font-mono font-medium">CFSBR SpaceWeb</span>
+                  <span className="text-xs text-slate-600 dark:text-slate-400 font-mono font-medium">CFSBR SpaceWeb</span>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900 font-space-grotesk">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white font-sans">
                     Md Golam Mubasshir Rafi
                   </h3>
                   <p className="text-xs text-[#4e6aff] font-medium mt-0.5">
                     Lead: Product Architecture &amp; Spatial Analytics
                   </p>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                   Spearheads spatial intelligence, ephemeris integration, Mapbox 3D rendering pipelines, and orbital data science architectures.
                 </p>
               </div>
-              <div className="pt-3 border-t border-slate-200 flex items-center justify-between">
-                <span className="text-xs text-slate-600 font-medium">Sylhet, Bangladesh</span>
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">Sylhet, Bangladesh</span>
                 <Link href="https://github.com/gmrafi" target="_blank">
-                  <Button variant="outline" size="sm" className="text-xs text-slate-800 hover:bg-slate-50 border-slate-300 h-8 px-3">
+                  <Button variant="outline" size="sm" className="text-xs text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 border-slate-300 dark:border-slate-700 h-8 px-3">
                     GitHub Profile <ExternalLink className="w-3.5 h-3.5 ml-1" />
                   </Button>
                 </Link>
@@ -943,30 +952,30 @@ export default function HomePage() {
             </div>
 
             {/* Member 2: Afshara Tasneem Zoa */}
-            <div className="p-6 rounded-xl bg-white border border-slate-300 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 transition-all">
+            <div className="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <Badge className="bg-slate-900 text-white text-[11px] font-medium px-2.5 py-0.5">
+                  <Badge className="bg-slate-900 dark:bg-slate-800 text-white text-[11px] font-medium px-2.5 py-0.5">
                     Co-Lead: Strategy &amp; Research
                   </Badge>
-                  <span className="text-xs text-slate-600 font-mono font-medium">CFSBR SpaceWeb</span>
+                  <span className="text-xs text-slate-600 dark:text-slate-400 font-mono font-medium">CFSBR SpaceWeb</span>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900 font-space-grotesk">
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white font-sans">
                     Afshara Tasneem Zoa
                   </h3>
                   <p className="text-xs text-[#4e6aff] font-medium mt-0.5">
                     Co-Lead: Strategy &amp; Research
                   </p>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                   Leads lunar mission research, CLPS regulatory and payload requirement evaluation, and AI decision assistant prompt engineering.
                 </p>
               </div>
-              <div className="pt-3 border-t border-slate-200 flex items-center justify-between">
-                <span className="text-xs text-slate-600 font-medium">Sylhet, Bangladesh</span>
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">Sylhet, Bangladesh</span>
                 <Link href="https://github.com/gmrafi" target="_blank">
-                  <Button variant="outline" size="sm" className="text-xs text-slate-800 hover:bg-slate-50 border-slate-300 h-8 px-3">
+                  <Button variant="outline" size="sm" className="text-xs text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 border-slate-300 dark:border-slate-700 h-8 px-3">
                     Research Dossier <ExternalLink className="w-3.5 h-3.5 ml-1" />
                   </Button>
                 </Link>
@@ -975,8 +984,8 @@ export default function HomePage() {
           </div>
 
           {/* About CFSBR SpaceWeb Box */}
-          <div className="mt-8 max-w-4xl mx-auto p-5 rounded-xl bg-slate-50 border border-slate-300 text-xs text-slate-700 leading-relaxed shadow-xs">
-            <span className="font-semibold text-slate-900">About CFSBR SpaceWeb: </span>
+          <div className="mt-8 max-w-4xl mx-auto p-5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 leading-relaxed shadow-xs">
+            <span className="font-semibold text-slate-900 dark:text-white">About CFSBR SpaceWeb: </span>
             An initiative under the Centre for Fintech &amp; Strategic Business Research (CFSBR), bridging advanced web architecture, orbital mechanics, and intuitive design to solve complex mission planning bottlenecks for NASA&apos;s Artemis and CLPS eras.
           </div>
         </div>
@@ -985,16 +994,16 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 10. CALL TO ACTION & FOOTER (CRISP BORDERS)                              */}
       {/* ========================================================================= */}
-      <section className="py-14 px-4 sm:px-6 lg:px-8 bg-slate-50/70">
+      <section className="py-14 px-4 sm:px-6 lg:px-8 bg-slate-50/70 dark:bg-slate-900/70">
         <div className="container mx-auto max-w-4xl">
-          <div className="rounded-2xl border border-slate-300 bg-white p-8 sm:p-12 text-center space-y-4 shadow-sm">
-            <Badge variant="outline" className="text-slate-800 bg-slate-50 border-slate-300 text-xs font-medium shadow-xs">
+          <div className="rounded-2xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 sm:p-12 text-center space-y-4 shadow-sm">
+            <Badge variant="outline" className="text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-xs font-medium shadow-xs">
               NASA Space Apps 2026
             </Badge>
-            <h2 className="text-2xl sm:text-3xl font-bold font-space-grotesk text-slate-900 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold font-sans text-slate-900 dark:text-white tracking-tight">
               Ready to Explore Lunar South Pole Landing Windows?
             </h2>
-            <p className="text-slate-600 text-sm max-w-lg mx-auto">
+            <p className="text-slate-600 dark:text-slate-300 text-sm max-w-lg mx-auto">
               Access the interactive dual-pane mission browser with real-time solar curves, 360° LOLA radar plots, and DSN RF link budget matrices.
             </p>
             <div className="pt-2 flex flex-col sm:flex-row justify-center gap-3">
@@ -1005,7 +1014,7 @@ export default function HomePage() {
                 </Button>
               </Link>
               <Link href="/dashboard/chat">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto border-slate-300 bg-white text-slate-800 hover:bg-slate-50 px-6 py-5 text-sm rounded-lg font-medium shadow-xs">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 px-6 py-5 text-sm rounded-lg font-medium shadow-xs">
                   <Sparkles className="w-4 h-4 mr-2 text-[#4e6aff]" />
                   Consult AI Strategist
                 </Button>
@@ -1016,7 +1025,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-10 border-t border-slate-300 bg-white text-xs text-slate-500">
+      <footer className="py-10 border-t border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-950 text-xs text-slate-500 dark:text-slate-400">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl space-y-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
@@ -1024,28 +1033,28 @@ export default function HomePage() {
                 <Satellite className="w-4 h-4" />
               </div>
               <div>
-                <span className="font-bold text-slate-900 font-space-grotesk text-sm">SelenSync</span>
-                <p className="text-[11px] text-slate-500">The Lunar South Pole Mission &amp; Communication Engine</p>
+                <span className="font-bold text-slate-900 dark:text-white font-sans text-sm">SelenSync</span>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">The Lunar South Pole Mission &amp; Communication Engine</p>
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-6 font-medium text-slate-700">
-              <Link href="/dashboard" className="hover:text-slate-900 transition-colors">Mission Control</Link>
-              <Link href="/#features" className="hover:text-slate-900 transition-colors">Features</Link>
-              <Link href="/#landing-sites" className="hover:text-slate-900 transition-colors">Landing Sites</Link>
-              <Link href="/#horizon-profiler" className="hover:text-slate-900 transition-colors">Horizon Profiler</Link>
-              <Link href="/dashboard/chat" className="hover:text-slate-900 transition-colors">AI Strategist</Link>
-              <Link href="https://github.com/gmrafi/cfsbr-selensync" target="_blank" className="hover:text-slate-900 transition-colors">GitHub</Link>
+            <div className="flex flex-wrap items-center justify-center gap-6 font-medium text-slate-700 dark:text-slate-300">
+              <Link href="/dashboard" className="hover:text-slate-900 dark:hover:text-white transition-colors">Mission Control</Link>
+              <Link href="/#features" className="hover:text-slate-900 dark:hover:text-white transition-colors">Features</Link>
+              <Link href="/#landing-sites" className="hover:text-slate-900 dark:hover:text-white transition-colors">Landing Sites</Link>
+              <Link href="/#horizon-profiler" className="hover:text-slate-900 dark:hover:text-white transition-colors">Horizon Profiler</Link>
+              <Link href="/dashboard/chat" className="hover:text-slate-900 dark:hover:text-white transition-colors">AI Strategist</Link>
+              <Link href="https://github.com/gmrafi/cfsbr-selensync" target="_blank" className="hover:text-slate-900 dark:hover:text-white transition-colors">GitHub</Link>
             </div>
           </div>
 
-          <div className="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-500">
+          <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-500 dark:text-slate-400">
             <p className="max-w-xl text-center sm:text-left">
               SelenSync: Empowering sustainable lunar exploration through intuitive solar power and communication window intelligence for the CLPS and Artemis generation.
             </p>
             <div className="text-center sm:text-right space-y-0.5">
               <p>&copy; 2026 SelenSync. Built for NASA Space Apps Challenge 2026. Powered by NASA Open Data.</p>
-              <p className="text-slate-600 font-mono">Designed and Developed by Md Golam Mubasshir Rafi | CFSBR SpaceWeb</p>
+              <p className="text-slate-600 dark:text-slate-400 font-mono">Designed and Developed by Md Golam Mubasshir Rafi | CFSBR SpaceWeb</p>
             </div>
           </div>
         </div>

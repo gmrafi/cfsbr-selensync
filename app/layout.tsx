@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter, Space_Grotesk } from "next/font/google"
+import { Inter } from "next/font/google"
+import { ThemeProvider } from "@/components/theme-provider"
 import FloatingAIAssistant from "@/components/floating-ai-assistant"
 import "./globals.css"
 
@@ -8,12 +9,6 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
-})
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-space-grotesk",
 })
 
 export const metadata: Metadata = {
@@ -29,10 +24,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}>
-      <body className="font-sans" suppressHydrationWarning>
-        {children}
-        <FloatingAIAssistant />
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} antialiased`}>
+      <body className="font-sans antialiased text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-950 transition-colors" suppressHydrationWarning>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          {children}
+          <FloatingAIAssistant />
+        </ThemeProvider>
       </body>
     </html>
   )

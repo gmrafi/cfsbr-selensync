@@ -69,7 +69,7 @@ export default function MissionClockBar({
           {/* Brand Badge */}
           <div className="flex items-center gap-1.5 pr-2 border-r border-slate-200">
             <span className="w-2.5 h-2.5 rounded-full bg-[#4e6aff] animate-pulse"></span>
-            <span className="font-space-grotesk font-extrabold text-sm text-slate-900 tracking-tight">
+            <span className="font-sans font-extrabold text-sm text-slate-900 tracking-tight">
               SelenSync <span className="text-[#4e6aff] font-mono text-xs">OPS</span>
             </span>
           </div>

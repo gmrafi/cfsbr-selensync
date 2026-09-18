@@ -10,9 +10,10 @@ import {
   Download, 
   AlertTriangle, 
   CheckCircle2, 
-  Home, 
-  Sparkles,
-  Terminal
+  ArrowLeft,
+  Sun,
+  Moon,
+  Home
 } from "lucide-react";
 import Link from "next/link";
 import { CLPS_LANDER_PROFILES, CLPSLanderProfile } from "@/lib/physics/lander-profiles";
@@ -28,6 +29,8 @@ interface CockpitHudBarProps {
   isSunInShadow: boolean;
   isEarthOccluded: boolean;
   onExportJSON: () => void;
+  isDarkMode: boolean;
+  onToggleDarkMode: () => void;
 }
 
 export default function CockpitHudBar({
@@ -40,6 +43,8 @@ export default function CockpitHudBar({
   isSunInShadow,
   isEarthOccluded,
   onExportJSON,
+  isDarkMode,
+  onToggleDarkMode,
 }: CockpitHudBarProps) {
   const days = Math.floor(timeOffsetHours / 24);
   const hours = Math.floor(timeOffsetHours % 24);
@@ -47,38 +52,46 @@ export default function CockpitHudBar({
   const utcFormatted = simulatedDate.toISOString().replace("T", " ").slice(0, 19) + " UTC";
 
   return (
-    <header className="h-11 shrink-0 border-b border-zinc-800 bg-zinc-950/95 px-3 flex items-center justify-between text-xs select-none z-20">
-      {/* Left: Mission ID & Payload Selector */}
-      <div className="flex items-center gap-2.5">
+    <header className={`h-12 shrink-0 border-b px-3 sm:px-4 flex items-center justify-between text-xs select-none z-20 transition-colors ${
+      isDarkMode ? "bg-slate-900 border-slate-800 text-slate-100" : "bg-white border-slate-300 text-slate-900 shadow-xs"
+    }`}>
+      {/* Left: Home Navigation, Mission Title & Lander Selector */}
+      <div className="flex items-center gap-3">
+        {/* Clear Return to Home Button */}
         <Link
           href="/"
-          className="text-zinc-400 hover:text-white p-1 rounded hover:bg-zinc-800 transition-colors"
-          title="Return to Mission Overview (Landing Page)"
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold border transition-all ${
+            isDarkMode 
+              ? "bg-slate-800 hover:bg-slate-700 text-white border-slate-700 shadow-xs" 
+              : "bg-slate-100 hover:bg-slate-200 text-slate-900 border-slate-300 shadow-2xs"
+          }`}
+          title="Return to Home Overview"
         >
-          <Home className="w-3.5 h-3.5" />
+          <Home className="w-3.5 h-3.5 text-[#4e6aff]" />
+          <span>← Home</span>
         </Link>
 
-        <div className="flex items-center gap-1.5 pr-2 border-r border-zinc-800">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span className="font-space-grotesk font-extrabold text-xs tracking-wider text-white">
-            SelenSync <span className="text-[#4e6aff] font-mono text-[10px]">FLIGHT CONSOLE</span>
+        {/* Mission Brand Title */}
+        <div className="flex items-center gap-1.5 pr-2 border-r border-slate-200 dark:border-slate-800">
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span className="font-sans font-extrabold text-sm tracking-tight text-slate-900 dark:text-white">
+            SelenSync <span className="text-[#4e6aff] font-mono text-xs font-bold">MISSION CONTROL</span>
           </span>
         </div>
 
-        <Badge variant="outline" className="hidden sm:inline-flex text-[9px] font-mono bg-emerald-950/60 text-emerald-400 border-emerald-500/40 py-0 px-1.5">
-          TELEMETRY LOCK
-        </Badge>
-
         {/* Payload Vehicle Selector */}
-        <div className="flex items-center gap-1 bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded text-[11px]">
-          <Rocket className="w-3 h-3 text-[#4e6aff]" />
+        <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md border text-xs font-medium ${
+          isDarkMode ? "bg-slate-800 border-slate-700" : "bg-slate-50 border-slate-300"
+        }`}>
+          <Rocket className="w-3.5 h-3.5 text-[#4e6aff]" />
+          <span className="text-slate-500 font-semibold text-[11px]">Vehicle:</span>
           <select
             value={activeLander.id}
             onChange={(e) => onSelectLander(e.target.value)}
-            className="bg-transparent font-mono font-bold text-zinc-100 focus:outline-none cursor-pointer text-[11px]"
+            className="bg-transparent font-bold text-slate-900 dark:text-slate-100 focus:outline-none cursor-pointer text-xs"
           >
             {CLPS_LANDER_PROFILES.map((l) => (
-              <option key={l.id} value={l.id} className="bg-zinc-900 text-white">
+              <option key={l.id} value={l.id} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
                 {l.name}
               </option>
             ))}
@@ -86,29 +99,36 @@ export default function CockpitHudBar({
         </div>
       </div>
 
-      {/* Center: Mission Clock (MET & UTC) */}
-      <div className="hidden md:flex items-center gap-3 font-mono">
-        <div className="flex items-center gap-1.5 text-zinc-300 bg-zinc-900/90 px-2 py-0.5 rounded border border-zinc-800 text-[11px]">
-          <Clock className="w-3 h-3 text-[#4e6aff]" />
-          <span className="text-white font-bold">{metString}</span>
+      {/* Center: Mission Clocks (Clear, Legible, High-Contrast) */}
+      <div className="hidden md:flex items-center gap-3">
+        <div className={`flex items-center gap-2 px-3 py-1 rounded-md border font-mono text-xs ${
+          isDarkMode ? "bg-slate-800/90 border-slate-700 text-white" : "bg-slate-900 text-white border-slate-800 shadow-xs"
+        }`}>
+          <Clock className="w-3.5 h-3.5 text-[#4e6aff]" />
+          <span className="font-bold tracking-wide">{metString}</span>
         </div>
-        <div className="text-[11px] text-emerald-400 font-bold bg-zinc-900/90 px-2 py-0.5 rounded border border-zinc-800">
+        <div className={`px-2.5 py-1 rounded-md border font-mono text-xs font-bold ${
+          isDarkMode ? "bg-slate-800/90 border-slate-700 text-emerald-400" : "bg-slate-100 border-slate-300 text-emerald-700"
+        }`}>
           {utcFormatted}
         </div>
       </div>
 
-      {/* Right: Landing Site & C&W Annunciator */}
-      <div className="flex items-center gap-2">
+      {/* Right: Site Selector, C&W Status, Dark/Light Toggle, Export */}
+      <div className="flex items-center gap-2.5">
         {/* Site Selector */}
-        <div className="flex items-center gap-1 bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded text-[11px]">
-          <MapPin className="w-3 h-3 text-cyan-400" />
+        <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md border text-xs font-medium ${
+          isDarkMode ? "bg-slate-800 border-slate-700" : "bg-slate-50 border-slate-300"
+        }`}>
+          <MapPin className="w-3.5 h-3.5 text-blue-600" />
+          <span className="text-slate-500 font-semibold text-[11px]">Site:</span>
           <select
             value={activeSite.id}
             onChange={(e) => onSelectSite(e.target.value)}
-            className="bg-transparent font-mono font-bold text-zinc-100 focus:outline-none cursor-pointer text-[11px]"
+            className="bg-transparent font-bold text-slate-900 dark:text-slate-100 focus:outline-none cursor-pointer text-xs"
           >
             {LUNAR_SOUTH_POLE_CANDIDATES.map((s) => (
-              <option key={s.id} value={s.id} className="bg-zinc-900 text-white">
+              <option key={s.id} value={s.id} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
                 {s.name.split("(")[0]} ({s.latitude}°S)
               </option>
             ))}
@@ -117,18 +137,18 @@ export default function CockpitHudBar({
 
         {/* Master Caution & Warning Annunciator */}
         <div
-          className={`px-2 py-0.5 rounded font-mono text-[10px] font-bold border flex items-center gap-1 ${
+          className={`px-2.5 py-1 rounded-md font-mono text-xs font-bold border flex items-center gap-1.5 ${
             isSunInShadow || isEarthOccluded
               ? isEarthOccluded && isSunInShadow
-                ? "bg-rose-950/80 text-rose-300 border-rose-500/50"
-                : "bg-amber-950/80 text-amber-300 border-amber-500/50"
-              : "bg-emerald-950/80 text-emerald-300 border-emerald-500/50"
+                ? "bg-rose-100 text-rose-800 border-rose-300"
+                : "bg-amber-100 text-amber-800 border-amber-300"
+              : "bg-emerald-100 text-emerald-800 border-emerald-300"
           }`}
         >
           {isSunInShadow || isEarthOccluded ? (
-            <AlertTriangle className="w-3 h-3 shrink-0" />
+            <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
           ) : (
-            <CheckCircle2 className="w-3 h-3 shrink-0" />
+            <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
           )}
           <span>
             {isSunInShadow && isEarthOccluded
@@ -136,17 +156,34 @@ export default function CockpitHudBar({
               : isSunInShadow
               ? "SHADOW"
               : isEarthOccluded
-              ? "LOS BLOCKED"
+              ? "LOS OCCLUDED"
               : "NOMINAL"}
           </span>
         </div>
 
+        {/* Dark/Light Mode Switcher */}
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={onToggleDarkMode}
+          className={`h-7 px-2 border text-xs font-medium ${
+            isDarkMode 
+              ? "border-slate-700 bg-slate-800 hover:bg-slate-700 text-amber-300" 
+              : "border-slate-300 bg-white hover:bg-slate-100 text-slate-700"
+          }`}
+          title={isDarkMode ? "Switch to High-Contrast Light Mode" : "Switch to Slate Night Mode"}
+        >
+          {isDarkMode ? <Sun className="w-3.5 h-3.5 mr-1" /> : <Moon className="w-3.5 h-3.5 mr-1" />}
+          {isDarkMode ? "Light" : "Dark"}
+        </Button>
+
+        {/* Export JSON */}
         <Button
           size="sm"
           onClick={onExportJSON}
-          className="h-6 px-2 text-[10px] bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 font-mono"
+          className="h-7 px-2.5 text-xs bg-slate-900 hover:bg-slate-800 text-white font-semibold gap-1 shadow-xs"
         >
-          <Download className="w-2.5 h-2.5 mr-1" />
+          <Download className="w-3 h-3" />
           JSON
         </Button>
       </div>

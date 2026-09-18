@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
+import { useTheme } from "next-themes";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { 
   Activity, 
@@ -33,6 +34,15 @@ export default function LunarMissionDashboard() {
   const [selectedSiteId, setSelectedSiteId] = useState<string>("malapert-mountain");
   const [selectedLanderId, setSelectedLanderId] = useState<string>("nova-c");
   const [activeTab, setActiveTab] = useState<string>("curves");
+  
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDarkMode = mounted ? resolvedTheme === "dark" : false;
+  const toggleDarkMode = () => setTheme(isDarkMode ? "light" : "dark");
   
   const [timeOffsetHours, setTimeOffsetHours] = useState<number>(0);
   const [maxTimeHours, setMaxTimeHours] = useState<number>(336); // 14-day lunar day window
@@ -228,9 +238,17 @@ export default function LunarMissionDashboard() {
     URL.revokeObjectURL(url);
   };
 
+  const rootBg = isDarkMode 
+    ? "bg-slate-950 text-slate-100" 
+    : "bg-slate-100/90 text-slate-900";
+
+  const panelBg = isDarkMode 
+    ? "bg-slate-900 border-slate-800" 
+    : "bg-white border-slate-300 shadow-xs";
+
   return (
-    <div className="h-full w-full overflow-hidden flex flex-col bg-zinc-950 text-zinc-100 font-sans select-none">
-      {/* 1. FIXED TOP HUD BAR (Fixed h-11) */}
+    <div className={`h-full w-full overflow-hidden flex flex-col font-sans select-none transition-colors ${rootBg}`}>
+      {/* 1. FIXED TOP HUD BAR WITH HOME NAVIGATION & LIGHT/DARK TOGGLE */}
       <CockpitHudBar
         simulatedDate={simulatedDate}
         timeOffsetHours={timeOffsetHours}
@@ -241,10 +259,12 @@ export default function LunarMissionDashboard() {
         isSunInShadow={isSunOccluded}
         isEarthOccluded={isEarthOccluded}
         onExportJSON={exportMissionReport}
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={toggleDarkMode}
       />
 
       {/* 2. MAIN 12-COLUMN TACTICAL SCREEN (flex-1 grid, zero-scroll locked) */}
-      <main className="flex-1 grid grid-cols-12 gap-2 p-2 overflow-hidden min-h-0">
+      <main className="flex-1 grid grid-cols-12 gap-3 p-3 overflow-hidden min-h-0">
         {/* COLUMN 1: Left Telemetry & System Gauges (3 Cols) */}
         <section className="col-span-12 lg:col-span-3 h-full overflow-hidden flex flex-col min-h-0">
           <CockpitTelemetryColumn
@@ -265,11 +285,12 @@ export default function LunarMissionDashboard() {
             }}
             thermalData={thermalStatus}
             batterySoCPercent={batterySoC}
+            isDarkMode={isDarkMode}
           />
         </section>
 
         {/* COLUMN 2: Center Dual-Stage Visualizer (5 Cols) */}
-        <section className="col-span-12 lg:col-span-5 h-full overflow-hidden flex flex-col gap-2 min-h-0">
+        <section className="col-span-12 lg:col-span-5 h-full overflow-hidden flex flex-col gap-3 min-h-0">
           {/* Top Half (54% height): 2.5D Polar Surface Simulator */}
           <div className="flex-[54] min-h-0 overflow-hidden">
             <LunarSurfaceVisualizer
@@ -302,41 +323,41 @@ export default function LunarMissionDashboard() {
         </section>
 
         {/* COLUMN 3: Right Intelligence & Mission Tabs (4 Cols) */}
-        <section className="col-span-12 lg:col-span-4 h-full overflow-hidden flex flex-col border border-zinc-800 rounded-lg bg-zinc-900/50 min-h-0">
+        <section className={`col-span-12 lg:col-span-4 h-full overflow-hidden flex flex-col border rounded-xl min-h-0 ${panelBg}`}>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col overflow-hidden">
-            <TabsList className="h-8 bg-zinc-900 border-b border-zinc-800 grid grid-cols-4 rounded-none p-0.5 text-[10px] font-mono shrink-0">
+            <TabsList className="h-9 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 grid grid-cols-4 rounded-none p-0.5 text-xs font-semibold shrink-0">
               <TabsTrigger
                 value="curves"
-                className="data-[state=active]:bg-zinc-800 data-[state=active]:text-white data-[state=active]:border-[#4e6aff] py-1 text-[10px]"
+                className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-[#4e6aff] py-1 text-xs"
               >
-                <Activity className="w-3 h-3 mr-1 text-emerald-400" />
+                <Activity className="w-3.5 h-3.5 mr-1" />
                 Curves
               </TabsTrigger>
               <TabsTrigger
                 value="mcda"
-                className="data-[state=active]:bg-zinc-800 data-[state=active]:text-white py-1 text-[10px]"
+                className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-[#4e6aff] py-1 text-xs"
               >
-                <Layers className="w-3 h-3 mr-1 text-[#4e6aff]" />
+                <Layers className="w-3.5 h-3.5 mr-1" />
                 MCDA
               </TabsTrigger>
               <TabsTrigger
                 value="thermal"
-                className="data-[state=active]:bg-zinc-800 data-[state=active]:text-white py-1 text-[10px]"
+                className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-[#4e6aff] py-1 text-xs"
               >
-                <Zap className="w-3 h-3 mr-1 text-amber-400" />
-                Thermal
+                <Zap className="w-3.5 h-3.5 mr-1 text-amber-500" />
+                Power/Cryo
               </TabsTrigger>
               <TabsTrigger
                 value="afshara"
-                className="data-[state=active]:bg-zinc-800 data-[state=active]:text-white py-1 text-[10px]"
+                className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-[#4e6aff] py-1 text-xs"
               >
-                <TerminalIcon className="w-3 h-3 mr-1 text-cyan-400" />
-                Afshara
+                <TerminalIcon className="w-3.5 h-3.5 mr-1 text-cyan-600" />
+                Afshara AI
               </TabsTrigger>
             </TabsList>
 
             {/* Tab 1: Synchronized Telemetry Recharts */}
-            <TabsContent value="curves" className="flex-1 overflow-hidden m-0 p-2 min-h-0">
+            <TabsContent value="curves" className="flex-1 overflow-hidden m-0 p-3 min-h-0">
               <TelemetryCharts
                 data={telemetrySeries}
                 currentHourOffset={timeOffsetHours}
@@ -349,11 +370,12 @@ export default function LunarMissionDashboard() {
               <CockpitMCDAMatrix
                 activeSiteId={selectedSiteId}
                 onSelectSite={(id) => setSelectedSiteId(id)}
+                isDarkMode={isDarkMode}
               />
             </TabsContent>
 
             {/* Tab 3: Thermal & Power Drawdown */}
-            <TabsContent value="thermal" className="flex-1 overflow-y-auto m-0 p-2 min-h-0 custom-scrollbar">
+            <TabsContent value="thermal" className="flex-1 overflow-y-auto m-0 p-3 min-h-0">
               <CockpitPowerThermal
                 lander={activeLander}
                 currentSolarWatts={solarOutput.netOutputWatts}
@@ -372,13 +394,14 @@ export default function LunarMissionDashboard() {
                 isEarthOccluded={isEarthOccluded}
                 solarWatts={solarOutput.netOutputWatts}
                 batterySoC={batterySoC}
+                isDarkMode={isDarkMode}
               />
             </TabsContent>
           </Tabs>
         </section>
       </main>
 
-      {/* 3. FIXED BOTTOM FLIGHT SCRUBBER DRAWER (Fixed h-14) */}
+      {/* 3. FIXED BOTTOM FLIGHT SCRUBBER DRAWER */}
       <CockpitTimeDrawer
         currentOffsetHours={timeOffsetHours}
         maxHours={maxTimeHours}
@@ -391,6 +414,7 @@ export default function LunarMissionDashboard() {
         speedMultiplier={speedMultiplier}
         onChangeSpeedMultiplier={(s) => setSpeedMultiplier(s)}
         isSunInShadow={isSunOccluded}
+        isDarkMode={isDarkMode}
       />
     </div>
   );
