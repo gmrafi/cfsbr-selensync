@@ -17,7 +17,8 @@ export interface DSNStationInfo {
 
 export interface DSNNetworkStatus {
   activeStation: DSNStationInfo;
-  stations: DSNStationInfo[];
+  nextStation: DSNStationInfo;
+  handoverCountdownHours: number;
   oneWayLightTimeSeconds: number;
   frequencyBand: string;
   totalUplinkPowerKw: number;
@@ -129,12 +130,19 @@ export function calculateDSNNetworkStatus(
     };
   });
 
-  // Pick station with highest elevation as active primary
+  // Pick station with highest elevation as active primary, and second as next station
   const sorted = [...stationResults].sort((a, b) => b.elevationDeg - a.elevationDeg);
   const activeStation = sorted[0];
+  const nextStation = sorted[1] || sorted[0];
+
+  // Earth rotates ~15 deg/hour. Estimate hours until active station dips below 10 degrees
+  const elevationAboveLimit = Math.max(0, activeStation.elevationDeg - 10);
+  const handoverCountdownHours = Number((elevationAboveLimit / 11.5).toFixed(1));
 
   return {
     activeStation,
+    nextStation,
+    handoverCountdownHours,
     stations: stationResults,
     oneWayLightTimeSeconds,
     frequencyBand: "X-Band (8.45 GHz Deep Space Research)",

@@ -639,150 +639,138 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 6. PLATFORM TIERS (CRISP BORDERS & PRO HIGHLIGHT)                        */}
+      {/* 6. MISSION OPERATIONAL MODES (NASA OPEN-SCIENCE OPERATIONAL PROFILES)     */}
       {/* ========================================================================= */}
       <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 border-b border-slate-300">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
             <Badge variant="outline" className="text-slate-800 bg-white border-slate-300 text-xs font-medium shadow-xs">
-              Mission Access Tiers
+              Operational Architecture
             </Badge>
             <h2 className="text-3xl font-bold text-slate-900 font-space-grotesk tracking-tight">
-              Choose Your Mission Tier
+              Mission Operational Modes
             </h2>
             <p className="text-slate-600 text-sm sm:text-base">
-              From open-access academic exploration to high-density commercial payload operations.
+              Standardized flight dynamics and surface telemetry profiles for CLPS robotic landers and Artemis lunar payloads.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto items-stretch">
-            {/* Tier 1 */}
+            {/* Mode 1 */}
             <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm flex flex-col justify-between space-y-5 hover:border-slate-400 transition-all">
               <div className="space-y-3">
                 <Badge variant="outline" className="text-slate-800 bg-slate-100 border-slate-300 text-xs font-medium">
-                  Free / Open Access
+                  Mode 01 // Surface Patrol
                 </Badge>
                 <h3 className="text-xl font-bold text-slate-900 font-space-grotesk">
-                  TIER 1: RESEARCH &amp; ACADEMIC
+                  Autonomous Reconnaissance
                 </h3>
                 <p className="text-xs text-slate-500">
-                  Perfect for students, educators, and space enthusiasts
+                  Low-power mobile rover traversal and continuous thermal boundary logging
                 </p>
-                <ul className="space-y-2 pt-3 border-t border-slate-200 text-xs text-slate-600">
+                <ul className="space-y-2 pt-3 border-t border-slate-200 text-xs text-slate-600 font-mono">
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Access to official CLPS presets</span>
+                    <span>Solar grazing tracking (θ &lt; 1.5°)</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>3D lunar surface viewer</span>
+                    <span>Diviner regolith thermal logging</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>7-day time scrubbing simulation</span>
+                    <span>LOLA obstacle slope containment</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Basic Sun/Earth elevation graphs</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Community support</span>
+                    <span>Periodic DSN beacon telemetry</span>
                   </li>
                 </ul>
               </div>
               <Link href="/dashboard">
                 <Button variant="outline" className="w-full text-xs font-medium border-slate-300 hover:bg-slate-50 text-slate-800">
-                  Start Exploring
+                  Inspect Flight Profile
                 </Button>
               </Link>
             </div>
 
-            {/* Tier 2 (Highlighted Pro Tier) */}
+            {/* Mode 2 (Highlighted Science Mode) */}
             <div className="p-6 rounded-xl border-2 border-[#4e6aff] bg-white shadow-md flex flex-col justify-between space-y-5 relative">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                 <Badge className="bg-[#4e6aff] text-white text-[10px] font-semibold px-2.5 py-0.5 shadow-xs">
-                  POPULAR FOR MISSION TEAMS
+                  HIGH-PRIORITY SCIENCE
                 </Badge>
               </div>
               <div className="space-y-3">
                 <Badge className="bg-blue-50 text-[#4e6aff] border-blue-200 text-xs font-medium">
-                  Pro Tier
+                  Mode 02 // PSR Volatiles
                 </Badge>
                 <h3 className="text-xl font-bold text-slate-900 font-space-grotesk">
-                  TIER 2: MISSION PLANNER
+                  In-Situ Resource Analysis (ISRU)
                 </h3>
                 <p className="text-xs text-slate-500">
-                  For aerospace researchers, mission planners, and engineers
+                  Cryogenic cold trap sampling and volatile ice prospecting in permanently shadowed craters
                 </p>
-                <ul className="space-y-2 pt-3 border-t border-slate-200 text-xs text-slate-600">
+                <ul className="space-y-2 pt-3 border-t border-slate-200 text-xs text-slate-600 font-mono">
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-[#4e6aff] shrink-0" />
-                    <span className="font-semibold text-slate-900">Custom coordinate inputs (-80° to -90°S)</span>
+                    <span className="font-semibold text-slate-900">PSR drill operations at 40 Kelvin</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-[#4e6aff] shrink-0" />
-                    <span>360° DEM horizon profiling</span>
+                    <span>Cryo line heater battery drawdown</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-[#4e6aff] shrink-0" />
-                    <span>Sub-meter slope &amp; shadow analysis</span>
+                    <span>8.45 GHz DSN high-rate downlink</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-[#4e6aff] shrink-0" />
-                    <span>Side-by-side site comparison matrix</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-[#4e6aff] shrink-0" />
-                    <span>CSV/JSON telemetry dataset export</span>
+                    <span>MCDA weighted site suitability</span>
                   </li>
                 </ul>
               </div>
               <Link href="/dashboard">
                 <Button className="w-full bg-[#4e6aff] hover:bg-[#3d59ef] text-white text-xs font-medium shadow-sm">
-                  Launch Planner
+                  Launch Mission Control
                 </Button>
               </Link>
             </div>
 
-            {/* Tier 3 */}
+            {/* Mode 3 */}
             <div className="p-6 rounded-xl border border-slate-300 bg-white shadow-sm flex flex-col justify-between space-y-5 hover:border-slate-400 transition-all">
               <div className="space-y-3">
                 <Badge variant="outline" className="text-slate-800 bg-slate-100 border-slate-300 text-xs font-medium">
-                  Custom Architecture
+                  Mode 03 // Powered Descent
                 </Badge>
                 <h3 className="text-xl font-bold text-slate-900 font-space-grotesk">
-                  TIER 3: AGENCY &amp; CLPS ENTERPRISE
+                  Critical Descent Logistics
                 </h3>
                 <p className="text-xs text-slate-500">
-                  Tailored for institutional missions and commercial operators
+                  Terminal guidance, hazard avoidance, and continuous carrier tracking to touchdown
                 </p>
-                <ul className="space-y-2 pt-3 border-t border-slate-200 text-xs text-slate-600">
+                <ul className="space-y-2 pt-3 border-t border-slate-200 text-xs text-slate-600 font-mono">
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-slate-700 shrink-0" />
-                    <span>Dedicated ephemeris API endpoints</span>
+                    <span>LOLA DEM tip-over slope limit (&lt; 10°)</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-slate-700 shrink-0" />
-                    <span>High-fidelity ray-casting simulations</span>
+                    <span>Topographic crater shadow entry alert</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-slate-700 shrink-0" />
-                    <span>Custom payload constraint modeling</span>
+                    <span>Earth libration angle tracking</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-slate-700 shrink-0" />
-                    <span>Real-time mission control integration</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-slate-700 shrink-0" />
-                    <span>Priority flight dynamics support</span>
+                    <span>DSN tri-station handover timing</span>
                   </li>
                 </ul>
               </div>
-              <Link href="/dashboard/chat">
+              <Link href="/dashboard">
                 <Button variant="outline" className="w-full text-xs font-medium border-slate-300 hover:bg-slate-50 text-slate-800">
-                  Contact Architecture Team
+                  Execute Simulation
                 </Button>
               </Link>
             </div>

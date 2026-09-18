@@ -1,32 +1,14 @@
 "use client";
 
-import React, { useState, useMemo, useEffect, useRef } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
+import React, { useState, useMemo, useEffect } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import {
-  Sun,
-  Globe,
-  Radio,
-  Zap,
-  Mountain,
-  Download,
-  Sliders,
-  Layers,
-  Sparkles,
-  MapPin,
-  CheckCircle2,
-  AlertTriangle,
-  Info,
-  ShieldCheck,
-  RotateCcw,
-  Activity,
-  Terminal,
-  Cpu,
-  Share2
+import { 
+  Activity, 
+  Layers, 
+  Zap, 
+  Terminal as TerminalIcon 
 } from "lucide-react";
+
 import { LUNAR_SOUTH_POLE_CANDIDATES, LunarCandidateSite } from "@/lib/gis/lunar-sites";
 import { getLunarSunEarthPositions, generateLunarEphemerisSeries } from "@/lib/celestial/lunar-engine";
 import { calculateSolarPower, DEFAULT_CLPS_SOLAR_SPECS } from "@/lib/physics/solar-power";
@@ -34,31 +16,29 @@ import { calculateDTERFLinkBudget, DEFAULT_CLPS_RF_SPECS } from "@/lib/physics/r
 import { generateSyntheticHorizonProfile, isBodyClearedOfTopography } from "@/lib/gis/horizon-elevation";
 import { CLPS_LANDER_PROFILES, CLPSLanderProfile } from "@/lib/physics/lander-profiles";
 import { calculateDSNNetworkStatus } from "@/lib/physics/dsn-stations";
+import { calculateLunarLibration } from "@/lib/celestial/lunar-libration";
+import { calculateDivinerThermal } from "@/lib/physics/diviner-thermal";
 
-import MissionClockBar from "./cockpit/mission-clock-bar";
-import CockpitPowerThermal from "./cockpit/cockpit-power-thermal";
-import CockpitDSNStations from "./cockpit/cockpit-dsn-stations";
-import CockpitTelemetryLog from "./cockpit/cockpit-telemetry-log";
+import CockpitHudBar from "./cockpit/cockpit-hud-bar";
+import CockpitTelemetryColumn from "./cockpit/cockpit-telemetry-column";
+import LunarSurfaceVisualizer from "./cockpit/lunar-surface-visualizer";
 import LunarHorizonPolarPlot from "./lunar-horizon-polar-plot";
-import SiteComparisonMatrix from "./site-comparison-matrix";
-import TimeScrubber from "./time-scrubber";
+import CockpitMCDAMatrix from "./cockpit/cockpit-mcda-matrix";
+import CockpitAITerminal from "./cockpit/cockpit-ai-terminal";
+import CockpitPowerThermal from "./cockpit/cockpit-power-thermal";
+import CockpitTimeDrawer from "./cockpit/cockpit-time-drawer";
 import TelemetryCharts, { TelemetryDataPoint } from "./telemetry-charts";
 
 export default function LunarMissionDashboard() {
   const [selectedSiteId, setSelectedSiteId] = useState<string>("malapert-mountain");
-  const [siteBId, setSiteBId] = useState<string>("shackleton-ridge");
   const [selectedLanderId, setSelectedLanderId] = useState<string>("nova-c");
-  const [activeTab, setActiveTab] = useState<string>("tactical");
+  const [activeTab, setActiveTab] = useState<string>("curves");
   
   const [timeOffsetHours, setTimeOffsetHours] = useState<number>(0);
-  const [maxTimeHours, setMaxTimeHours] = useState<number>(168); // 7 days window
+  const [maxTimeHours, setMaxTimeHours] = useState<number>(336); // 14-day lunar day window
   const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(false);
+  const [speedMultiplier, setSpeedMultiplier] = useState<number>(1);
   const [baseDate, setBaseDate] = useState<Date>(new Date("2026-06-21T00:00:00Z")); // Solstice baseline
-
-  // Custom coordinate overrides
-  const [customLat, setCustomLat] = useState<number>(-85.99);
-  const [customLon, setCustomLon] = useState<number>(2.93);
-  const [isCustomCoords, setIsCustomCoords] = useState<boolean>(false);
 
   // Active Lander vehicle profile
   const activeLander = useMemo(() => {
@@ -67,22 +47,8 @@ export default function LunarMissionDashboard() {
 
   // Active Lunar Landing Site
   const activeSite = useMemo(() => {
-    if (isCustomCoords) {
-      return {
-        id: "custom-site",
-        name: `Custom Landing Site (${(customLat ?? -85.99).toFixed(2)}°S, ${(customLon ?? 2.93).toFixed(2)}°E)`,
-        latitude: customLat ?? -85.99,
-        longitude: customLon ?? 2.93,
-        elevationMeters: 4000,
-        description: "User defined coordinate at lunar south pole.",
-        scientificInterest: "Custom topographic assessment zone.",
-        solarIlluminationPotential: "Dynamic calculated profile",
-        dteDirectToEarthStatus: "Dynamic topocentric LOS",
-        targetMissions: ["Custom CLPS Architecture"],
-      } as LunarCandidateSite;
-    }
     return LUNAR_SOUTH_POLE_CANDIDATES.find((s) => s.id === selectedSiteId) || LUNAR_SOUTH_POLE_CANDIDATES[0];
-  }, [selectedSiteId, isCustomCoords, customLat, customLon]);
+  }, [selectedSiteId]);
 
   // Current simulated timestamp
   const simulatedDate = useMemo(() => {
@@ -146,10 +112,35 @@ export default function LunarMissionDashboard() {
     return calculateDTERFLinkBudget(celestialData.earth.distanceKm, effectiveEarthElev, landerRF);
   }, [celestialData.earth, isEarthOccluded, activeLander]);
 
-  // Deep Space Network tracking status
+  // Lunar Libration Model
+  const librationData = useMemo(() => {
+    return calculateLunarLibration(simulatedDate);
+  }, [simulatedDate]);
+
+  // Deep Space Network tracking status with handover countdown
   const dsnStatus = useMemo(() => {
     return calculateDSNNetworkStatus(simulatedDate, celestialData.earth.distanceKm, isEarthOccluded);
   }, [simulatedDate, celestialData.earth.distanceKm, isEarthOccluded]);
+
+  // Simulated Battery State of Charge (%)
+  const batterySoC = useMemo(() => {
+    const netWatts = solarOutput.netOutputWatts - (activeLander.battery.nominalBaseLoadWatts + (isSunOccluded ? 85 : 15));
+    if (netWatts >= 0) return 100;
+    const hoursInShadow = timeOffsetHours % 14;
+    const consumed = Math.abs(netWatts) * hoursInShadow;
+    return Math.max(12, Number(((1 - consumed / activeLander.battery.capacityWh) * 100).toFixed(1)));
+  }, [solarOutput.netOutputWatts, activeLander, isSunOccluded, timeOffsetHours]);
+
+  // Diviner Cryogenic Thermal Model & Slope Hazard
+  const thermalStatus = useMemo(() => {
+    return calculateDivinerThermal(
+      celestialData.sun.altitudeDegrees,
+      isSunOccluded,
+      4.2, // Site average slope
+      batterySoC,
+      activeLander.battery.capacityWh
+    );
+  }, [celestialData.sun.altitudeDegrees, isSunOccluded, batterySoC, activeLander.battery.capacityWh]);
 
   // Time-series ephemeris dataset for Recharts
   const telemetrySeries = useMemo(() => {
@@ -198,17 +189,18 @@ export default function LunarMissionDashboard() {
     });
   }, [activeSite, baseDate, maxTimeHours, horizonProfileResult, activeLander]);
 
-  // Auto-play timeline loop
+  // Auto-play timeline loop with speed multiplier
   useEffect(() => {
     if (!isAutoPlaying) return;
+    const intervalMs = Math.max(50, Math.floor(700 / speedMultiplier));
     const interval = setInterval(() => {
       setTimeOffsetHours((prev) => {
         if (prev >= maxTimeHours) return 0;
         return prev + 1;
       });
-    }, 800);
+    }, intervalMs);
     return () => clearInterval(interval);
-  }, [isAutoPlaying, maxTimeHours]);
+  }, [isAutoPlaying, maxTimeHours, speedMultiplier]);
 
   const exportMissionReport = () => {
     const report = {
@@ -221,7 +213,9 @@ export default function LunarMissionDashboard() {
       celestialTelemetry: celestialData,
       solarPowerOutput: solarOutput,
       rfLinkBudget: rfLinkOutput,
+      libration: librationData,
       dsnNetworkStatus: dsnStatus,
+      divinerThermal: thermalStatus,
       horizonProfile: horizonProfileResult,
     };
 
@@ -235,318 +229,169 @@ export default function LunarMissionDashboard() {
   };
 
   return (
-    <div className="space-y-4">
-      {/* 1. Global Flight Bar & UTC/MET Clocks */}
-      <MissionClockBar
+    <div className="h-full w-full overflow-hidden flex flex-col bg-zinc-950 text-zinc-100 font-sans select-none">
+      {/* 1. FIXED TOP HUD BAR (Fixed h-11) */}
+      <CockpitHudBar
         simulatedDate={simulatedDate}
         timeOffsetHours={timeOffsetHours}
         activeSite={activeSite}
         activeLander={activeLander}
-        onSelectLander={(id) => setSelectedLanderId(id)}
-        isAutoPlaying={isAutoPlaying}
-        onToggleAutoPlay={() => setIsAutoPlaying(!isAutoPlaying)}
-        onResetTime={() => setTimeOffsetHours(0)}
-        solarElevationDeg={celestialData.sun.altitudeDegrees}
-        earthElevationDeg={celestialData.earth.altitudeDegrees}
+        onSelectSite={(siteId) => setSelectedSiteId(siteId)}
+        onSelectLander={(landerId) => setSelectedLanderId(landerId)}
         isSunInShadow={isSunOccluded}
         isEarthOccluded={isEarthOccluded}
+        onExportJSON={exportMissionReport}
       />
 
-      {/* 2. Tactical Site Selector & Operational Controls */}
-      <div className="bg-white p-3.5 rounded-xl border border-slate-300 shadow-xs flex items-center justify-between flex-wrap gap-3">
-        {/* Site Selector */}
-        <div className="flex items-center gap-3 flex-wrap">
-          <div className="flex items-center gap-2">
-            <MapPin className="w-4 h-4 text-[#4e6aff]" />
-            <span className="text-xs font-bold text-slate-900 uppercase tracking-wider">Target Landing Site:</span>
-          </div>
-
-          <select
-            value={isCustomCoords ? "custom" : selectedSiteId}
-            onChange={(e) => {
-              if (e.target.value === "custom") {
-                setIsCustomCoords(true);
-              } else {
-                setIsCustomCoords(false);
-                setSelectedSiteId(e.target.value);
-              }
+      {/* 2. MAIN 12-COLUMN TACTICAL SCREEN (flex-1 grid, zero-scroll locked) */}
+      <main className="flex-1 grid grid-cols-12 gap-2 p-2 overflow-hidden min-h-0">
+        {/* COLUMN 1: Left Telemetry & System Gauges (3 Cols) */}
+        <section className="col-span-12 lg:col-span-3 h-full overflow-hidden flex flex-col min-h-0">
+          <CockpitTelemetryColumn
+            lander={activeLander}
+            solarData={{
+              elevationDeg: celestialData.sun.altitudeDegrees,
+              azimuthDeg: celestialData.sun.azimuthDegrees,
+              isOccluded: isSunOccluded,
+              output: solarOutput,
             }}
-            className="text-xs font-semibold px-3 py-1.5 border border-slate-300 rounded-lg bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#4e6aff] text-slate-800"
-          >
-            {LUNAR_SOUTH_POLE_CANDIDATES.map((site) => (
-              <option key={site.id} value={site.id}>
-                {site.name} ({site.latitude}°S, {site.longitude}°E)
-              </option>
-            ))}
-            <option value="custom">⚙️ Custom Coordinates (-80° to -90°S)...</option>
-          </select>
+            dteData={{
+              elevationDeg: celestialData.earth.altitudeDegrees,
+              azimuthDeg: celestialData.earth.azimuthDegrees,
+              isOccluded: isEarthOccluded,
+              rfOutput: rfLinkOutput,
+              libration: librationData,
+              dsn: dsnStatus,
+            }}
+            thermalData={thermalStatus}
+            batterySoCPercent={batterySoC}
+          />
+        </section>
 
-          {isCustomCoords && (
-            <div className="flex items-center gap-2 bg-blue-50 p-1 rounded-lg border border-blue-200">
-              <span className="text-xs text-blue-900 font-semibold">Lat:</span>
-              <Input
-                type="number"
-                min={-90}
-                max={-80}
-                step={0.01}
-                value={customLat}
-                onChange={(e) => setCustomLat(Number(e.target.value))}
-                className="w-18 h-7 text-xs bg-white"
-              />
-              <span className="text-xs text-blue-900 font-semibold">Lon:</span>
-              <Input
-                type="number"
-                min={-180}
-                max={180}
-                step={0.01}
-                value={customLon}
-                onChange={(e) => setCustomLon(Number(e.target.value))}
-                className="w-18 h-7 text-xs bg-white"
-              />
-            </div>
-          )}
-        </div>
-
-        {/* Quick Actions */}
-        <div className="flex items-center gap-2.5">
-          <Badge variant="outline" className="text-xs font-mono bg-slate-50 border-slate-300 text-slate-700">
-            {activeSite.elevationMeters}m MSL
-          </Badge>
-          <Button
-            onClick={exportMissionReport}
-            size="sm"
-            className="bg-slate-900 hover:bg-slate-800 text-white text-xs gap-1.5 shadow-xs font-semibold"
-          >
-            <Download className="w-3.5 h-3.5" />
-            Export Telemetry (.JSON)
-          </Button>
-        </div>
-      </div>
-
-      {/* 3. Modular Cockpit Navigation Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="bg-slate-200/80 p-1 rounded-xl border border-slate-300/80 grid grid-cols-2 sm:grid-cols-5 gap-1 w-full text-xs">
-          <TabsTrigger
-            value="tactical"
-            className="data-[state=active]:bg-white data-[state=active]:text-[#4e6aff] data-[state=active]:shadow-xs font-bold gap-1.5 py-2 text-xs"
-          >
-            <Activity className="w-3.5 h-3.5" />
-            Tactical Flight Deck
-          </TabsTrigger>
-          <TabsTrigger
-            value="power-thermal"
-            className="data-[state=active]:bg-white data-[state=active]:text-[#4e6aff] data-[state=active]:shadow-xs font-bold gap-1.5 py-2 text-xs"
-          >
-            <Zap className="w-3.5 h-3.5" />
-            Power &amp; Cryo Battery
-          </TabsTrigger>
-          <TabsTrigger
-            value="dsn-network"
-            className="data-[state=active]:bg-white data-[state=active]:text-[#4e6aff] data-[state=active]:shadow-xs font-bold gap-1.5 py-2 text-xs"
-          >
-            <Radio className="w-3.5 h-3.5" />
-            NASA DSN Network
-          </TabsTrigger>
-          <TabsTrigger
-            value="trade-study"
-            className="data-[state=active]:bg-white data-[state=active]:text-[#4e6aff] data-[state=active]:shadow-xs font-bold gap-1.5 py-2 text-xs"
-          >
-            <Layers className="w-3.5 h-3.5" />
-            Site Trade Study
-          </TabsTrigger>
-          <TabsTrigger
-            value="telemetry-log"
-            className="data-[state=active]:bg-white data-[state=active]:text-[#4e6aff] data-[state=active]:shadow-xs font-bold gap-1.5 py-2 text-xs"
-          >
-            <Terminal className="w-3.5 h-3.5" />
-            Telemetry Log &amp; Uplink
-          </TabsTrigger>
-        </TabsList>
-
-        {/* TAB 1: TACTICAL FLIGHT DECK */}
-        <TabsContent value="tactical" className="space-y-4 mt-0">
-          {/* Quick Metrics Bar */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-            {/* Solar Elevation */}
-            <Card className="border border-slate-300 bg-white shadow-xs">
-              <CardContent className="p-3.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Solar Elevation (θ_elev)</span>
-                  <Sun className="w-4 h-4 text-amber-500" />
-                </div>
-                <div className="text-2xl font-bold font-mono text-slate-900 mt-1">
-                  {(celestialData?.sun?.altitudeDegrees ?? 0) > 0 ? `+${(celestialData?.sun?.altitudeDegrees ?? 0).toFixed(2)}°` : `${(celestialData?.sun?.altitudeDegrees ?? 0).toFixed(2)}°`}
-                </div>
-                <div className="text-[11px] mt-1 font-medium">
-                  {isSunOccluded ? (
-                    <span className="text-amber-600 flex items-center gap-1 font-semibold">
-                      <AlertTriangle className="w-3 h-3" /> Crater Rim Shadow
-                    </span>
-                  ) : (
-                    <span className="text-emerald-600 flex items-center gap-1 font-semibold">
-                      <CheckCircle2 className="w-3 h-3" /> Direct Solar Grazing
-                    </span>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Solar Generated Power */}
-            <Card className="border border-slate-300 bg-white shadow-xs">
-              <CardContent className="p-3.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Solar Power Gen</span>
-                  <Zap className="w-4 h-4 text-[#4e6aff]" />
-                </div>
-                <div className="text-2xl font-bold font-mono text-slate-900 mt-1">
-                  {(solarOutput?.netOutputWatts ?? 0).toFixed(1)} <span className="text-xs font-normal text-slate-500">Watts</span>
-                </div>
-                <div className="text-[11px] text-slate-500 mt-1 font-mono">
-                  Flux: {solarOutput?.solarFluxWm2 ?? 1361} W/m² (AM0)
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Earth Elevation */}
-            <Card className="border border-slate-300 bg-white shadow-xs">
-              <CardContent className="p-3.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Earth Horizon Elevation</span>
-                  <Globe className="w-4 h-4 text-emerald-500" />
-                </div>
-                <div className="text-2xl font-bold font-mono text-slate-900 mt-1">
-                  {(celestialData?.earth?.altitudeDegrees ?? 0) > 0 ? `+${(celestialData?.earth?.altitudeDegrees ?? 0).toFixed(2)}°` : `${(celestialData?.earth?.altitudeDegrees ?? 0).toFixed(2)}°`}
-                </div>
-                <div className="text-[11px] mt-1 font-medium">
-                  {isEarthOccluded ? (
-                    <span className="text-rose-600 flex items-center gap-1 font-semibold">
-                      <AlertTriangle className="w-3 h-3" /> RF Horizon Occluded
-                    </span>
-                  ) : (
-                    <span className="text-emerald-600 flex items-center gap-1 font-semibold">
-                      <CheckCircle2 className="w-3 h-3" /> Direct-to-Earth Open
-                    </span>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* DSN Link Margin */}
-            <Card className="border border-slate-300 bg-white shadow-xs">
-              <CardContent className="p-3.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">DSN Link Margin</span>
-                  <Radio className="w-4 h-4 text-purple-500" />
-                </div>
-                <div className="text-2xl font-bold font-mono text-slate-900 mt-1">
-                  {rfLinkOutput?.isLinkClosed ? `+${(rfLinkOutput?.linkMarginDb ?? 0).toFixed(1)} dB` : "NO CARRIER"}
-                </div>
-                <div className="text-[11px] text-slate-500 mt-1 font-mono">
-                  FSPL: {rfLinkOutput?.freeSpacePathLossDb ?? 0} dB @ 8.45 GHz
-                </div>
-              </CardContent>
-            </Card>
+        {/* COLUMN 2: Center Dual-Stage Visualizer (5 Cols) */}
+        <section className="col-span-12 lg:col-span-5 h-full overflow-hidden flex flex-col gap-2 min-h-0">
+          {/* Top Half (54% height): 2.5D Polar Surface Simulator */}
+          <div className="flex-[54] min-h-0 overflow-hidden">
+            <LunarSurfaceVisualizer
+              site={activeSite}
+              lander={activeLander}
+              sunElevationDeg={celestialData.sun.altitudeDegrees}
+              sunAzimuthDeg={celestialData.sun.azimuthDegrees}
+              earthElevationDeg={celestialData.earth.altitudeDegrees}
+              earthAzimuthDeg={celestialData.earth.azimuthDegrees}
+              isSunOccluded={isSunOccluded}
+              isEarthOccluded={isEarthOccluded}
+              solarWatts={solarOutput.netOutputWatts}
+              rfLinkMarginDb={rfLinkOutput.linkMarginDb}
+            />
           </div>
 
-          {/* Dual Pane Layout: Left Polar Plot & Site Info, Right Telemetry & Scrubber */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-            {/* LEFT (5 cols) */}
-            <div className="lg:col-span-5 space-y-4">
-              <LunarHorizonPolarPlot
-                siteName={activeSite.name.split("(")[0]}
-                sunAltitudeDeg={celestialData.sun.altitudeDegrees}
-                sunAzimuthDeg={celestialData.sun.azimuthDegrees}
-                earthAltitudeDeg={celestialData.earth.altitudeDegrees}
-                earthAzimuthDeg={celestialData.earth.azimuthDegrees}
-                horizonProfile={horizonProfileResult.profile}
-                isSunOccluded={isSunOccluded}
-                isEarthOccluded={isEarthOccluded}
-              />
+          {/* Bottom Half (46% height): 360° Polar Horizon Skyline Radar */}
+          <div className="flex-[46] min-h-0 overflow-hidden flex flex-col">
+            <LunarHorizonPolarPlot
+              siteName={activeSite.name}
+              sunAltitudeDeg={celestialData.sun.altitudeDegrees}
+              sunAzimuthDeg={celestialData.sun.azimuthDegrees}
+              earthAltitudeDeg={celestialData.earth.altitudeDegrees}
+              earthAzimuthDeg={celestialData.earth.azimuthDegrees}
+              horizonProfile={horizonProfileResult.profile}
+              isSunOccluded={isSunOccluded}
+              isEarthOccluded={isEarthOccluded}
+            />
+          </div>
+        </section>
 
-              <Card className="border border-slate-300 bg-white shadow-xs">
-                <CardHeader className="p-3.5 pb-2 border-b border-slate-100">
-                  <div className="flex items-center justify-between">
-                    <Badge className="bg-blue-50 text-[#4e6aff] border-blue-200 text-[10px] font-semibold">
-                      CLPS Target Dossier
-                    </Badge>
-                    <span className="text-xs font-mono text-slate-500">{activeLander.contractor}</span>
-                  </div>
-                  <CardTitle className="text-sm font-bold text-slate-900 mt-1">{activeSite.name}</CardTitle>
-                  <CardDescription className="text-xs text-slate-600">{activeSite.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="p-3.5 space-y-2 text-xs">
-                  <div>
-                    <strong className="text-slate-800">Scientific Significance:</strong>
-                    <p className="text-slate-600 mt-0.5">{activeSite.scientificInterest}</p>
-                  </div>
-                  <div className="pt-2 border-t border-slate-100 flex justify-between">
-                    <span className="text-slate-500">Target Missions:</span>
-                    <span className="font-semibold text-slate-800">{activeSite.targetMissions.join(", ")}</span>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+        {/* COLUMN 3: Right Intelligence & Mission Tabs (4 Cols) */}
+        <section className="col-span-12 lg:col-span-4 h-full overflow-hidden flex flex-col border border-zinc-800 rounded-lg bg-zinc-900/50 min-h-0">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col overflow-hidden">
+            <TabsList className="h-8 bg-zinc-900 border-b border-zinc-800 grid grid-cols-4 rounded-none p-0.5 text-[10px] font-mono shrink-0">
+              <TabsTrigger
+                value="curves"
+                className="data-[state=active]:bg-zinc-800 data-[state=active]:text-white data-[state=active]:border-[#4e6aff] py-1 text-[10px]"
+              >
+                <Activity className="w-3 h-3 mr-1 text-emerald-400" />
+                Curves
+              </TabsTrigger>
+              <TabsTrigger
+                value="mcda"
+                className="data-[state=active]:bg-zinc-800 data-[state=active]:text-white py-1 text-[10px]"
+              >
+                <Layers className="w-3 h-3 mr-1 text-[#4e6aff]" />
+                MCDA
+              </TabsTrigger>
+              <TabsTrigger
+                value="thermal"
+                className="data-[state=active]:bg-zinc-800 data-[state=active]:text-white py-1 text-[10px]"
+              >
+                <Zap className="w-3 h-3 mr-1 text-amber-400" />
+                Thermal
+              </TabsTrigger>
+              <TabsTrigger
+                value="afshara"
+                className="data-[state=active]:bg-zinc-800 data-[state=active]:text-white py-1 text-[10px]"
+              >
+                <TerminalIcon className="w-3 h-3 mr-1 text-cyan-400" />
+                Afshara
+              </TabsTrigger>
+            </TabsList>
 
-            {/* RIGHT (7 cols) */}
-            <div className="lg:col-span-7 space-y-4">
-              <TimeScrubber
-                currentOffsetHours={timeOffsetHours}
-                maxHours={maxTimeHours}
-                baseDate={baseDate}
-                onChangeOffsetHours={(h) => setTimeOffsetHours(h)}
-                onSetMaxHours={(m) => setMaxTimeHours(m)}
-              />
-
+            {/* Tab 1: Synchronized Telemetry Recharts */}
+            <TabsContent value="curves" className="flex-1 overflow-hidden m-0 p-2 min-h-0">
               <TelemetryCharts
                 data={telemetrySeries}
                 currentHourOffset={timeOffsetHours}
                 siteName={activeSite.name}
               />
-            </div>
-          </div>
-        </TabsContent>
+            </TabsContent>
 
-        {/* TAB 2: POWER & CRYO BATTERY */}
-        <TabsContent value="power-thermal" className="space-y-4 mt-0">
-          <CockpitPowerThermal
-            lander={activeLander}
-            currentSolarWatts={solarOutput.netOutputWatts}
-            isSunInShadow={isSunOccluded}
-            timeOffsetHours={timeOffsetHours}
-          />
-        </TabsContent>
+            {/* Tab 2: MCDA Decision Matrix */}
+            <TabsContent value="mcda" className="flex-1 overflow-hidden m-0 min-h-0">
+              <CockpitMCDAMatrix
+                activeSiteId={selectedSiteId}
+                onSelectSite={(id) => setSelectedSiteId(id)}
+              />
+            </TabsContent>
 
-        {/* TAB 3: NASA DSN NETWORK */}
-        <TabsContent value="dsn-network" className="space-y-4 mt-0">
-          <CockpitDSNStations
-            dsnStatus={dsnStatus}
-            lander={activeLander}
-            isLunarLOSOccluded={isEarthOccluded}
-            rfLinkMarginDb={rfLinkOutput.linkMarginDb}
-          />
-        </TabsContent>
+            {/* Tab 3: Thermal & Power Drawdown */}
+            <TabsContent value="thermal" className="flex-1 overflow-y-auto m-0 p-2 min-h-0 custom-scrollbar">
+              <CockpitPowerThermal
+                lander={activeLander}
+                currentSolarWatts={solarOutput.netOutputWatts}
+                isSunInShadow={isSunOccluded}
+                timeOffsetHours={timeOffsetHours}
+              />
+            </TabsContent>
 
-        {/* TAB 4: SITE TRADE STUDY */}
-        <TabsContent value="trade-study" className="space-y-4 mt-0">
-          <SiteComparisonMatrix
-            siteAId={selectedSiteId}
-            siteBId={siteBId}
-            onSelectSiteA={(id) => setSelectedSiteId(id)}
-            onSelectSiteB={(id) => setSiteBId(id)}
-          />
-        </TabsContent>
+            {/* Tab 4: Afshara AI Flight Terminal */}
+            <TabsContent value="afshara" className="flex-1 overflow-hidden m-0 min-h-0">
+              <CockpitAITerminal
+                site={activeSite}
+                lander={activeLander}
+                timeOffsetHours={timeOffsetHours}
+                isSunOccluded={isSunOccluded}
+                isEarthOccluded={isEarthOccluded}
+                solarWatts={solarOutput.netOutputWatts}
+                batterySoC={batterySoC}
+              />
+            </TabsContent>
+          </Tabs>
+        </section>
+      </main>
 
-        {/* TAB 5: TELEMETRY LOG & UPLINK */}
-        <TabsContent value="telemetry-log" className="space-y-4 mt-0">
-          <CockpitTelemetryLog
-            timeOffsetHours={timeOffsetHours}
-            siteName={activeSite.name}
-            isSunInShadow={isSunOccluded}
-            isEarthOccluded={isEarthOccluded}
-            rfLinkMarginDb={rfLinkOutput.linkMarginDb}
-          />
-        </TabsContent>
-      </Tabs>
+      {/* 3. FIXED BOTTOM FLIGHT SCRUBBER DRAWER (Fixed h-14) */}
+      <CockpitTimeDrawer
+        currentOffsetHours={timeOffsetHours}
+        maxHours={maxTimeHours}
+        simulatedDate={simulatedDate}
+        isAutoPlaying={isAutoPlaying}
+        onToggleAutoPlay={() => setIsAutoPlaying(!isAutoPlaying)}
+        onResetTime={() => setTimeOffsetHours(0)}
+        onChangeOffsetHours={(h) => setTimeOffsetHours(h)}
+        onSetMaxHours={(m) => setMaxTimeHours(m)}
+        speedMultiplier={speedMultiplier}
+        onChangeSpeedMultiplier={(s) => setSpeedMultiplier(s)}
+        isSunInShadow={isSunOccluded}
+      />
     </div>
   );
 }
