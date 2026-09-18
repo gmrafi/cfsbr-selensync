@@ -1,6 +1,22 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { 
+  Table, 
+  TableHeader, 
+  TableBody, 
+  TableHead, 
+  TableRow, 
+  TableCell 
+} from "@/components/ui/table"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
 import {
   Sun,
   Globe,
@@ -42,6 +58,7 @@ import Link from "next/link"
 import UniversalHeader from "@/components/universal-header"
 import Image from "next/image"
 import { LUNAR_SOUTH_POLE_CANDIDATES } from "@/lib/gis/lunar-sites"
+import HomeSiteComparison from "@/components/lunar/home-site-comparison"
 
 export default function HomePage() {
   return (
@@ -481,12 +498,93 @@ export default function HomePage() {
               </p>
             </div>
           </div>
+
+          {/* Deep Space Architecture Technical Specs (shadcn Accordion) */}
+          <div className="mt-12 p-6 sm:p-8 rounded-2xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900/90 shadow-sm space-y-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className="text-[10px] uppercase font-bold tracking-wider text-[#4e6aff] border-[#4e6aff]/40 bg-blue-50/50 dark:bg-blue-950/30">
+                  NASA Engineering Blueprint
+                </Badge>
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white font-sans">
+                Deep Space Mathematical &amp; Sensor Modeling Architecture
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                Detailed algorithmic breakdown of the Meeus vector ephemeris pipeline, topographic masking matrix, and DSN RF link budget.
+              </p>
+            </div>
+
+            <Accordion type="single" collapsible defaultValue="item-1" className="w-full space-y-2.5">
+              <AccordionItem value="item-1" className="border border-slate-200 dark:border-slate-800 rounded-xl px-4 bg-slate-50/60 dark:bg-slate-950">
+                <AccordionTrigger className="text-sm font-bold text-slate-900 dark:text-white hover:no-underline py-3">
+                  <div className="flex items-center gap-2.5 text-left">
+                    <Compass className="w-4 h-4 text-[#4e6aff] shrink-0" />
+                    <span>1. Precision Topocentric Ephemeris Engine (Meeus Astronomical Vector Algorithm)</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-xs text-slate-600 dark:text-slate-300 pb-4 leading-relaxed space-y-2">
+                  <p>
+                    SelenSync utilizes high-precision astronomical vector mathematics adhering to the International Astronomical Union (IAU) lunar pole coordinate frames. Topocentric conversion accounts for the Moon’s mean radius (1,737.4 km), correcting for selenographic latitude and longitude parallax with sub-second temporal resolution.
+                  </p>
+                  <div className="p-2.5 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 font-mono text-[11px] text-slate-800 dark:text-slate-200">
+                    Solar Sub-Altitude: sin(θ) = sin(δ) · sin(φ) + cos(δ) · cos(φ) · cos(H) - π_topo
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-2" className="border border-slate-200 dark:border-slate-800 rounded-xl px-4 bg-slate-50/60 dark:bg-slate-950">
+                <AccordionTrigger className="text-sm font-bold text-slate-900 dark:text-white hover:no-underline py-3">
+                  <div className="flex items-center gap-2.5 text-left">
+                    <Mountain className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>2. Topographic Horizon Profiling (NASA LOLA Altimetry at 30m/pixel Resolution)</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-xs text-slate-600 dark:text-slate-300 pb-4 leading-relaxed space-y-2">
+                  <p>
+                    Calculates full 360° azimuthal horizon skyline elevation obstacle angles using Digital Elevation Models (DEM) from the Lunar Orbiter Laser Altimeter (LOLA) on NASA's Lunar Reconnaissance Orbiter (LRO).
+                  </p>
+                  <p>
+                    If celestial body altitude falls below local ridge obstacle mask (θ_body ≤ θ_horizon), geometric line-of-sight occultation triggers, modeling critical power and DTE comms blackouts.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-3" className="border border-slate-200 dark:border-slate-800 rounded-xl px-4 bg-slate-50/60 dark:bg-slate-950">
+                <AccordionTrigger className="text-sm font-bold text-slate-900 dark:text-white hover:no-underline py-3">
+                  <div className="flex items-center gap-2.5 text-left">
+                    <Radio className="w-4 h-4 text-blue-500 shrink-0" />
+                    <span>3. Direct-To-Earth (DTE) RF Link Budget &amp; NASA DSN Ground Station Relays</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-xs text-slate-600 dark:text-slate-300 pb-4 leading-relaxed space-y-2">
+                  <p>
+                    Direct-to-Earth communications are evaluated across standard X-band (8.45 GHz) links connecting with NASA’s Deep Space Network (DSN) complexes: DSS-14 (Goldstone, USA), DSS-43 (Canberra, Australia), and DSS-65 (Madrid, Spain).
+                  </p>
+                  <div className="p-2.5 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 font-mono text-[11px] text-slate-800 dark:text-slate-200">
+                    FSPL = 20·log10(d) + 20·log10(f) + 92.45 dB | Mean Free Space Path Loss ≈ 216.5 dB
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-4" className="border border-slate-200 dark:border-slate-800 rounded-xl px-4 bg-slate-50/60 dark:bg-slate-950">
+                <AccordionTrigger className="text-sm font-bold text-slate-900 dark:text-white hover:no-underline py-3">
+                  <div className="flex items-center gap-2.5 text-left">
+                    <Zap className="w-4 h-4 text-amber-500 shrink-0" />
+                    <span>4. Diviner Cryogenic Thermal &amp; Battery Survival Modeling</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-xs text-slate-600 dark:text-slate-300 pb-4 leading-relaxed space-y-2">
+                  <p>
+                    Surface regolith temperatures in permanently shadowed regions (PSRs) plunge to 40 Kelvin (-233°C). The telemetry engine models internal survival heater power consumption (65 W) against usable Li-ion battery capacity, computing state-of-charge decay rates to assess lander survival during shadowed periods.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* 4. CANDIDATE LANDING SITES SECTION (CRISP BORDERS & CLEAR STATS)          */}
-      {/* ========================================================================= */}
       {/* ========================================================================= */}
       {/* 4. CANDIDATE LANDING SITES SECTION (CRISP BORDERS & CLEAR STATS)          */}
       {/* ========================================================================= */}
@@ -552,11 +650,221 @@ export default function HomePage() {
               </Card>
             ))}
           </div>
+
+          {/* Interactive Candidate Landing Site Comparison Table (shadcn Table) */}
+          <div className="mt-8 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
+            <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between flex-wrap gap-2">
+              <div>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white font-sans flex items-center gap-2">
+                  <Mountain className="w-4 h-4 text-[#4e6aff]" />
+                  Comparative Altimetry &amp; Telemetry Matrix
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Topographic elevation, persistent illumination windows, and Direct-to-Earth link status derived from NASA LOLA altimetry.
+                </p>
+              </div>
+              <Badge variant="outline" className="text-xs font-mono bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-700">
+                LOLA DEM 30m Altimetry
+              </Badge>
+            </div>
+            
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-slate-50/70 dark:bg-slate-950/60 hover:bg-slate-50/70 dark:hover:bg-slate-950/60">
+                  <TableHead className="font-bold text-slate-900 dark:text-slate-200 text-xs">Landing Site</TableHead>
+                  <TableHead className="font-bold text-slate-900 dark:text-slate-200 text-xs">Coordinates</TableHead>
+                  <TableHead className="font-bold text-slate-900 dark:text-slate-200 text-xs">Elevation</TableHead>
+                  <TableHead className="font-bold text-slate-900 dark:text-slate-200 text-xs">Solar Illumination</TableHead>
+                  <TableHead className="font-bold text-slate-900 dark:text-slate-200 text-xs">DTE Comms Link</TableHead>
+                  <TableHead className="font-bold text-slate-900 dark:text-slate-200 text-xs">Target Missions</TableHead>
+                  <TableHead className="text-right font-bold text-slate-900 dark:text-slate-200 text-xs">Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {LUNAR_SOUTH_POLE_CANDIDATES.map((site) => (
+                  <TableRow key={site.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/50">
+                    <TableCell className="font-bold text-slate-900 dark:text-white text-xs">
+                      <div>{site.name}</div>
+                      <div className="text-[10px] font-normal text-slate-500 line-clamp-1">{site.description}</div>
+                    </TableCell>
+                    <TableCell className="font-mono text-xs text-slate-700 dark:text-slate-300">
+                      {site.latitude}°S, {site.longitude}°E
+                    </TableCell>
+                    <TableCell className="font-mono font-bold text-xs text-[#4e6aff]">
+                      +{site.elevationMeters}m
+                    </TableCell>
+                    <TableCell className="text-xs">
+                      <Badge variant="outline" className="bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border-emerald-300 dark:border-emerald-800 text-[10px] font-semibold">
+                        {site.solarIlluminationPotential}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-xs">
+                      <Badge variant="outline" className="bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 border-blue-300 dark:border-blue-800 text-[10px] font-semibold">
+                        {site.dteDirectToEarthStatus}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-xs">
+                      <div className="flex flex-wrap gap-1">
+                        {site.targetMissions.slice(0, 2).map((m, idx) => (
+                          <span key={idx} className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700">
+                            {m}
+                          </span>
+                        ))}
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Link href="/dashboard">
+                        <Button size="sm" variant="outline" className="h-7 text-xs font-semibold hover:bg-[#4e6aff] hover:text-white transition-all">
+                          Inspect Site →
+                        </Button>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 5. WHO WE SERVE (5 CATEGORIES WITH CRISP BORDERS)                        */}
+      {/* 5. 360° TOPOGRAPHIC HORIZON PROFILER (#horizon-profiler)                   */}
+      {/* ========================================================================= */}
+      <section id="horizon-profiler" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 border-b border-slate-300 dark:border-slate-800 scroll-mt-16">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
+            <Badge variant="outline" className="text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-xs font-semibold shadow-xs">
+              LOLA 30m Digital Elevation Altimetry
+            </Badge>
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white font-sans tracking-tight">
+              360° Polar Horizon Profiler &amp; Shadow Masking
+            </h2>
+            <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base">
+              At the Lunar South Pole, the Sun grazes the horizon at extreme low angles (under 2°). Surrounding crater rims and mountain massifs cast vast geometric shadow masks that dictate power generation viability.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+            <div className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/60 space-y-2.5">
+              <div className="w-9 h-9 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600 border border-amber-200 dark:border-amber-900 flex items-center justify-center font-bold">
+                <Sun className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">Low-Elevation Polar Insolation</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Because the Moon has an axial tilt of only 1.54°, the Sun never climbs high in polar skies. A 1,000m ridge 30km away can block sunlight for weeks.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/60 space-y-2.5">
+              <div className="w-9 h-9 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 border border-blue-200 dark:border-blue-900 flex items-center justify-center font-bold">
+                <Mountain className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">360° Azimuthal Skyline Profiling</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Raymarching digital elevation maps (DEM) sampled every 1° of azimuth calculates the exact obstacle horizon angle θ_horiz(φ) from the lander's coordinates.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/60 space-y-2.5">
+              <div className="w-9 h-9 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 border border-emerald-200 dark:border-emerald-900 flex items-center justify-center font-bold">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">Occultation &amp; Battery Survival</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                When solar elevation drops below the obstacle skyline, power drops to 0W and cryogenic heaters engage, computing battery state-of-charge decay.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-5 rounded-xl bg-slate-900 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+              <div className="text-xs font-bold text-indigo-300 uppercase tracking-wider">Interactive 360° Radar Simulator</div>
+              <div className="text-sm font-semibold text-white">
+                Visualize real-time Sun and Earth positions against the crater rim horizon in our Tactical Cockpit.
+              </div>
+            </div>
+            <Link href="/dashboard">
+              <Button className="bg-[#4e6aff] hover:bg-[#3d59ef] text-white text-xs font-bold px-4 py-2 shadow-xs shrink-0">
+                Launch 360° Horizon Radar
+                <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 6. DIRECT-TO-EARTH (DTE) COMMUNICATIONS (#dte-windows)                    */}
+      {/* ========================================================================= */}
+      <section id="dte-windows" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/70 dark:bg-slate-900/60 border-b border-slate-300 dark:border-slate-800 scroll-mt-16">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
+            <Badge variant="outline" className="text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-xs font-semibold shadow-xs">
+              NASA Deep Space Network (DSN)
+            </Badge>
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white font-sans tracking-tight">
+              Direct-To-Earth (DTE) Communication Windows
+            </h2>
+            <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base">
+              Without an active orbital lunar relay satellite, commercial landers rely exclusively on direct RF line-of-sight to NASA’s 34-meter and 70-meter ground stations.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+            <div className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-2.5 shadow-xs">
+              <div className="w-9 h-9 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-[#4e6aff] border border-blue-200 dark:border-blue-900 flex items-center justify-center font-bold">
+                <Globe className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">Lunar Libration Wobble (±6.7°)</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Earth does not stay stationary in the lunar sky. The Moon’s orbital eccentricity and tilt cause the Earth to trace an apparent Lissajous loop, dipping below the horizon for days at a time.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-2.5 shadow-xs">
+              <div className="w-9 h-9 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600 border border-purple-200 dark:border-purple-900 flex items-center justify-center font-bold">
+                <Radio className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">DSN 3-Station Global Handover</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                SelenSync models real-time visibility across Goldstone (DSS-14, USA), Canberra (DSS-43, Australia), and Madrid (DSS-65, Spain) as Earth rotates every 24 hours.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-2.5 shadow-xs">
+              <div className="w-9 h-9 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 border border-emerald-200 dark:border-emerald-900 flex items-center justify-center font-bold">
+                <Activity className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">Link Budget Margin (+4.8 dB)</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                Computes carrier-to-noise ratio (C/N0), free-space path loss (FSPL ≈ 216.5 dB), and lander high-gain antenna pointing angles to ensure continuous command & telemetry uplink.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
+            <div>
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">NASA DSN Real-Time Telemetry</div>
+              <div className="text-sm font-semibold text-slate-900 dark:text-white">
+                Inspect live Earth line-of-sight elevation angles and DSN station coverage pass schedules.
+              </div>
+            </div>
+            <Link href="/dashboard">
+              <Button size="sm" variant="outline" className="text-xs font-bold border-slate-300 dark:border-slate-700 hover:bg-[#4e6aff] hover:text-white transition-colors shrink-0">
+                Explore DTE Passes in Cockpit →
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 7. INTERACTIVE CANDIDATE SITE COMPARISON (#site-comparison)               */}
+      {/* ========================================================================= */}
+      <HomeSiteComparison />
+
+      {/* ========================================================================= */}
+      {/* 8. WHO WE SERVE (5 CATEGORIES WITH CRISP BORDERS)                        */}
       {/* ========================================================================= */}
       <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 border-b border-slate-300 dark:border-slate-800">
         <div className="container mx-auto max-w-6xl">

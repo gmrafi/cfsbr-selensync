@@ -37,8 +37,8 @@ export async function GET(request: NextRequest) {
       try {
         const satrec = sat.twoline2satrec(line1, line2)
         const pv = sat.propagate(satrec, now)
-        if (!pv.position) continue
-        const geodetic = sat.eciToGeodetic(pv.position, gmst)
+        if (!pv || !pv.position || typeof pv.position === "boolean") continue
+        const geodetic = sat.eciToGeodetic(pv.position as any, gmst)
         const lat = (geodetic.latitude * 180) / Math.PI
         let lon = (geodetic.longitude * 180) / Math.PI
         // normalize lon

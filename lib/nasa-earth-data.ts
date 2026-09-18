@@ -44,9 +44,9 @@ export const fetchNASAEarthData = async (dataType: string, params: any = {}) => 
 }
 
 export const useNASASatelliteTracking = () => {
-  const [satellites, setSatellites] = useState([])
+  const [satellites, setSatellites] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchSatelliteData = async () => {
@@ -75,8 +75,8 @@ export const useNASASatelliteTracking = () => {
         const results = await Promise.all(satellitePromises)
         setSatellites(results.filter(Boolean))
         setError(null)
-      } catch (err) {
-        setError(err.message)
+      } catch (err: any) {
+        setError(err?.message || String(err))
         console.error("[v0] Satellite tracking error:", err)
       } finally {
         setLoading(false)

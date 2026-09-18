@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
+import { TooltipProvider } from "@/components/ui/tooltip"
 import FloatingAIAssistant from "@/components/floating-ai-assistant"
 import "./globals.css"
 
@@ -27,8 +28,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={`${inter.variable} antialiased`}>
       <body className="font-sans antialiased text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-950 transition-colors" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-          {children}
-          <FloatingAIAssistant />
+          <TooltipProvider delayDuration={150}>
+            {children}
+            <FloatingAIAssistant />
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>

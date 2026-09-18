@@ -7,7 +7,8 @@ import {
   Activity, 
   Layers, 
   Zap, 
-  Terminal as TerminalIcon 
+  Terminal as TerminalIcon,
+  Scale
 } from "lucide-react";
 
 import { LUNAR_SOUTH_POLE_CANDIDATES, LunarCandidateSite } from "@/lib/gis/lunar-sites";
@@ -29,9 +30,11 @@ import CockpitAITerminal from "./cockpit/cockpit-ai-terminal";
 import CockpitPowerThermal from "./cockpit/cockpit-power-thermal";
 import CockpitTimeDrawer from "./cockpit/cockpit-time-drawer";
 import TelemetryCharts, { TelemetryDataPoint } from "./telemetry-charts";
+import SiteComparisonMatrix from "./site-comparison-matrix";
 
 export default function LunarMissionDashboard() {
   const [selectedSiteId, setSelectedSiteId] = useState<string>("malapert-mountain");
+  const [compareSiteBId, setCompareSiteBId] = useState<string>("shackleton-connecting-ridge");
   const [selectedLanderId, setSelectedLanderId] = useState<string>("nova-c");
   const [activeTab, setActiveTab] = useState<string>("curves");
   
@@ -251,6 +254,8 @@ export default function LunarMissionDashboard() {
       {/* 1. FIXED TOP HUD BAR WITH HOME NAVIGATION & LIGHT/DARK TOGGLE */}
       <CockpitHudBar
         simulatedDate={simulatedDate}
+        baseDate={baseDate}
+        onChangeBaseDate={setBaseDate}
         timeOffsetHours={timeOffsetHours}
         activeSite={activeSite}
         activeLander={activeLander}
@@ -325,13 +330,20 @@ export default function LunarMissionDashboard() {
         {/* COLUMN 3: Right Intelligence & Mission Tabs (4 Cols) */}
         <section className={`col-span-12 lg:col-span-4 h-full overflow-hidden flex flex-col border rounded-xl min-h-0 ${panelBg}`}>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col overflow-hidden">
-            <TabsList className="h-9 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 grid grid-cols-4 rounded-none p-0.5 text-xs font-semibold shrink-0">
+            <TabsList className="h-9 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 grid grid-cols-5 rounded-none p-0.5 text-xs font-semibold shrink-0">
               <TabsTrigger
                 value="curves"
                 className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-[#4e6aff] py-1 text-xs"
               >
                 <Activity className="w-3.5 h-3.5 mr-1" />
                 Curves
+              </TabsTrigger>
+              <TabsTrigger
+                value="compare"
+                className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-[#4e6aff] py-1 text-xs"
+              >
+                <Scale className="w-3.5 h-3.5 mr-1" />
+                Compare
               </TabsTrigger>
               <TabsTrigger
                 value="mcda"
@@ -345,14 +357,14 @@ export default function LunarMissionDashboard() {
                 className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-[#4e6aff] py-1 text-xs"
               >
                 <Zap className="w-3.5 h-3.5 mr-1 text-amber-500" />
-                Power/Cryo
+                Power
               </TabsTrigger>
               <TabsTrigger
                 value="afshara"
                 className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-[#4e6aff] py-1 text-xs"
               >
                 <TerminalIcon className="w-3.5 h-3.5 mr-1 text-cyan-600" />
-                Afshara AI
+                Afshara
               </TabsTrigger>
             </TabsList>
 
@@ -362,6 +374,17 @@ export default function LunarMissionDashboard() {
                 data={telemetrySeries}
                 currentHourOffset={timeOffsetHours}
                 siteName={activeSite.name}
+              />
+            </TabsContent>
+
+            {/* Tab 2: Interactive Side-by-Side Site Comparison */}
+            <TabsContent value="compare" className="flex-1 overflow-y-auto m-0 p-3 min-h-0">
+              <SiteComparisonMatrix
+                siteAId={selectedSiteId}
+                siteBId={compareSiteBId}
+                onSelectSiteA={(id) => setSelectedSiteId(id)}
+                onSelectSiteB={(id) => setCompareSiteBId(id)}
+                isDarkMode={isDarkMode}
               />
             </TabsContent>
 

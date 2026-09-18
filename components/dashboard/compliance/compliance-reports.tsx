@@ -118,7 +118,7 @@ export default function ComplianceReports() {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          {complianceChecks.map((check, index) => {
+          {complianceChecks.map((check: any, index: number) => {
             const StatusIcon = getStatusIcon(check.status)
             return (
               <div key={index} className="p-4 border border-gray-200 rounded-lg">

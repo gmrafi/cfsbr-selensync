@@ -56,7 +56,7 @@ const PAGE_SUGGESTIONS: Record<string, string[]> = {
 }
 
 export default function FloatingAIAssistant() {
-  const user = null;
+  const user: any = null;
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)

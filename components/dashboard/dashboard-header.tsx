@@ -18,7 +18,7 @@ import { usePathname, useRouter } from "next/navigation"
 export default function DashboardHeader() {
   const pathname = usePathname()
   const router = useRouter()
-  const user = null;
+  const user: any = null;
   const signOut = async () => {};
 
   const isActive = (path: string) => {

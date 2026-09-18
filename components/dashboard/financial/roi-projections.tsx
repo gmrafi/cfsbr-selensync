@@ -67,7 +67,7 @@ export default function ROIProjections() {
                   border: "1px solid #e5e7eb",
                   borderRadius: "8px",
                 }}
-                formatter={(value: any, name: string) => {
+                formatter={(value: any, name: any) => {
                   if (name === "roi") return [`${value}%`, "ROI"]
                   return [
                     `$${(value / 1000).toFixed(0)}K`,

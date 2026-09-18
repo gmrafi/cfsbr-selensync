@@ -19,6 +19,7 @@ export interface DSNNetworkStatus {
   activeStation: DSNStationInfo;
   nextStation: DSNStationInfo;
   handoverCountdownHours: number;
+  stations: DSNStationInfo[];
   oneWayLightTimeSeconds: number;
   frequencyBand: string;
   totalUplinkPowerKw: number;
