@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Satellite, Moon, Menu, X, Rocket, Compass, Radio, Sparkles, Layers, ShieldCheck, ArrowRight } from "lucide-react"
+import { Satellite, Menu, X, Rocket, Compass, Radio, Sparkles, Layers, ShieldCheck, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
@@ -14,24 +14,24 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/95 backdrop-blur-md shadow-xs transition-all">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
+        <div className="flex items-center justify-between h-16 sm:h-18">
           {/* Brand Logo & Title */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#4e6aff] to-[#6d5bff] rounded-xl flex items-center justify-center shadow-md shadow-[#4e6aff]/20 group-hover:scale-105 transition-transform duration-200">
-              <Satellite className="w-5 h-5 text-white" />
+            <div className="w-9 h-9 bg-[#4e6aff] rounded-lg flex items-center justify-center text-white shadow-xs group-hover:bg-[#3d59ef] transition-colors">
+              <Satellite className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="text-xl font-bold font-space-grotesk tracking-tight bg-gradient-to-r from-[#4e6aff] to-[#6d5bff] bg-clip-text text-transparent">
+                <span className="text-lg font-bold font-space-grotesk tracking-tight text-slate-900">
                   SelenSync
                 </span>
-                <Badge className="bg-blue-50 text-[#4e6aff] border-blue-200 text-[10px] font-mono px-1.5 py-0 font-semibold">
+                <Badge variant="outline" className="text-[10px] font-mono px-1.5 py-0 font-medium text-slate-600 border-slate-300">
                   2026
                 </Badge>
               </div>
-              <p className="text-[11px] text-slate-500 font-medium hidden sm:block">
+              <p className="text-[11px] text-slate-500 font-normal hidden sm:block">
                 CLPS Lunar South Pole Mission &amp; Communication Browser
               </p>
             </div>
@@ -41,43 +41,43 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
           <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
             <Link
               href="/#features"
-              className="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-[#4e6aff] hover:bg-blue-50/60 rounded-lg transition-colors"
+              className="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
             >
               Mission Modules
             </Link>
             <Link
               href="/#landing-sites"
-              className="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-[#4e6aff] hover:bg-blue-50/60 rounded-lg transition-colors"
+              className="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
             >
               Candidate Sites
             </Link>
             <Link
               href="/#scientific-architecture"
-              className="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-[#4e6aff] hover:bg-blue-50/60 rounded-lg transition-colors"
+              className="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
             >
               Mathematical Models
             </Link>
             <Link
-              href="/#matrix"
-              className="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-[#4e6aff] hover:bg-blue-50/60 rounded-lg transition-colors"
-            >
-              Feasibility Matrix
-            </Link>
-            <Link
               href="/#team"
-              className="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-[#4e6aff] hover:bg-blue-50/60 rounded-lg transition-colors"
+              className="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
             >
               CFSBR SpaceWeb
+            </Link>
+            <Link
+              href="/dashboard"
+              className="px-3 py-1.5 text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
+            >
+              Dashboard
             </Link>
           </nav>
 
           {/* Action CTAs */}
-          <div className="hidden sm:flex items-center gap-3">
+          <div className="hidden sm:flex items-center gap-2.5">
             <Link href="/dashboard/chat">
               <Button
                 variant="outline"
                 size="sm"
-                className="text-xs font-semibold text-slate-700 hover:text-[#4e6aff] hover:bg-blue-50/50 border-slate-300"
+                className="text-xs font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-50 border-slate-300"
               >
                 <Sparkles className="w-3.5 h-3.5 mr-1.5 text-[#4e6aff]" />
                 AI Strategist
@@ -86,10 +86,10 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
             <Link href="/dashboard">
               <Button
                 size="sm"
-                className="bg-gradient-to-r from-[#4e6aff] to-[#6d5bff] hover:from-[#3d59ef] hover:to-[#5d4bef] text-white font-semibold text-xs px-4 shadow-md shadow-blue-500/20 transition-all hover:scale-[1.02]"
+                className="bg-[#4e6aff] hover:bg-[#3d59ef] text-white font-medium text-xs px-4 rounded-lg shadow-xs transition-colors"
               >
                 <Rocket className="w-3.5 h-3.5 mr-1.5" />
-                Launch Mission Control
+                Mission Control
                 <ArrowRight className="w-3 h-3 ml-1" />
               </Button>
             </Link>
@@ -99,59 +99,52 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
           <button
             className="lg:hidden p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle navigation menu"
+            aria-label="Toggle Menu"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-slate-200 space-y-2 bg-white rounded-b-2xl shadow-lg animate-in slide-in-from-top-2">
+          <div className="lg:hidden py-4 border-t border-slate-200 bg-white space-y-2">
             <Link
               href="/#features"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 text-sm font-medium text-slate-700 hover:text-[#4e6aff] hover:bg-blue-50 rounded-lg"
+              className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 rounded-md"
             >
               Mission Modules
             </Link>
             <Link
               href="/#landing-sites"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 text-sm font-medium text-slate-700 hover:text-[#4e6aff] hover:bg-blue-50 rounded-lg"
+              className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 rounded-md"
             >
               Candidate Sites
             </Link>
             <Link
               href="/#scientific-architecture"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 text-sm font-medium text-slate-700 hover:text-[#4e6aff] hover:bg-blue-50 rounded-lg"
+              className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 rounded-md"
             >
               Mathematical Models
             </Link>
             <Link
-              href="/#matrix"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 text-sm font-medium text-slate-700 hover:text-[#4e6aff] hover:bg-blue-50 rounded-lg"
-            >
-              Feasibility Matrix
-            </Link>
-            <Link
               href="/#team"
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 text-sm font-medium text-slate-700 hover:text-[#4e6aff] hover:bg-blue-50 rounded-lg"
+              className="block px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 rounded-md"
             >
-              CFSBR SpaceWeb Team
+              CFSBR SpaceWeb
             </Link>
-            <div className="pt-3 border-t border-slate-100 flex flex-col gap-2 px-2">
+            <div className="pt-2 flex flex-col gap-2">
               <Link href="/dashboard/chat" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="outline" className="w-full text-xs border-slate-300 text-slate-700">
+                <Button variant="outline" size="sm" className="w-full justify-center text-xs font-medium">
                   <Sparkles className="w-3.5 h-3.5 mr-1.5 text-[#4e6aff]" />
-                  Ask Afshara AI
+                  AI Mission Strategist
                 </Button>
               </Link>
               <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-                <Button className="w-full text-xs bg-gradient-to-r from-[#4e6aff] to-[#6d5bff] hover:from-[#3d59ef] hover:to-[#5d4bef] text-white">
+                <Button size="sm" className="w-full justify-center bg-[#4e6aff] hover:bg-[#3d59ef] text-white text-xs font-medium">
                   <Rocket className="w-3.5 h-3.5 mr-1.5" />
                   Launch Mission Control
                 </Button>
