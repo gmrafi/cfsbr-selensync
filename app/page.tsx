@@ -57,13 +57,13 @@ export default function HomePage() {
         <div className="container mx-auto max-w-6xl relative z-10">
           <div className="text-center max-w-4xl mx-auto space-y-4">
             {/* Top Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-slate-300 text-slate-800 text-xs font-medium shadow-xs">
-              <span className="text-amber-500">🏆</span>
-              <span className="font-semibold text-slate-900">NASA Space Apps 2026 Challenge</span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-300 text-slate-800 text-xs font-medium shadow-xs">
+              <span className="flex h-2 w-2 rounded-full bg-[#4e6aff]"></span>
+              <span className="font-semibold text-slate-900">NASA International Space Apps Challenge 2026</span>
               <span className="text-slate-300">•</span>
-              <span className="text-slate-700 font-medium">CLPS Lunar Mission Browser</span>
+              <span className="text-slate-600">CLPS Lunar Mission Browser</span>
               <span className="text-slate-300">•</span>
-              <span className="text-[#4e6aff] font-semibold">Global Nominees</span>
+              <span className="text-[#4e6aff] font-medium">Developed by 2025 Global Nominees</span>
             </div>
 
             {/* Main Title (H1) - Punchy, Balanced & High-Impact */}
