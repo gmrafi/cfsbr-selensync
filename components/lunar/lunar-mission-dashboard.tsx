@@ -215,32 +215,6 @@ export default function LunarMissionDashboard() {
     return () => clearInterval(interval);
   }, [isAutoPlaying, maxTimeHours, speedMultiplier]);
 
-  const exportMissionReport = () => {
-    const report = {
-      platform: "SelenSync - CLPS Lunar South Pole Mission Operations Cockpit",
-      generatedAtUTC: new Date().toISOString(),
-      activeLander: activeLander,
-      site: activeSite,
-      simulatedInstantUTC: simulatedDate.toISOString(),
-      metHours: timeOffsetHours,
-      celestialTelemetry: celestialData,
-      solarPowerOutput: solarOutput,
-      rfLinkBudget: rfLinkOutput,
-      libration: librationData,
-      dsnNetworkStatus: dsnStatus,
-      divinerThermal: thermalStatus,
-      horizonProfile: horizonProfileResult,
-    };
-
-    const blob = new Blob([JSON.stringify(report, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `selensync-${activeLander.id}-${activeSite.id}-t+${timeOffsetHours}h.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
   const rootBg = isDarkMode 
     ? "bg-slate-950 text-slate-100" 
     : "bg-slate-100/90 text-slate-900";
@@ -263,7 +237,6 @@ export default function LunarMissionDashboard() {
         onSelectLander={(landerId) => setSelectedLanderId(landerId)}
         isSunInShadow={isSunOccluded}
         isEarthOccluded={isEarthOccluded}
-        onExportJSON={exportMissionReport}
         isDarkMode={isDarkMode}
         onToggleDarkMode={toggleDarkMode}
       />
