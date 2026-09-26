@@ -466,4 +466,166 @@ export const CANONICAL_SITE_CRITERIA: Record<string, SiteEvaluationCriteria> = {
     volatileConfidencePercent: 94,
     scienceThemes: ["Ultra-Cold Volatile Retention (40 Kelvin)", "Neutron Spectrometry"],
   },
+  "shackleton-ridge": {
+    siteId: "shackleton-ridge",
+    siteName: "Shackleton Connecting Ridge",
+    latitude: -89.44,
+    longitude: 141.0,
+    elevationMeters: 4200,
+    annualSunPercent: 86.5,
+    continuousDaylightHours: 240,
+    longestBlackoutHours: 28,
+    meanSolarElevationDeg: 2.1,
+    dteVisibilityPercent: 84.0,
+    meanEarthElevationDeg: 3.4,
+    minEarthElevationDeg: -0.4,
+    meanSlopeDeg: 7.4,
+    maxSlopeDeg: 12.8,
+    psrDistanceKm: 1.2,
+    volatileConfidencePercent: 96,
+    scienceThemes: ["Permanently Shadowed Regions", "ISRU Water-Ice Drill Trials"],
+  },
+  "haworth-rim": {
+    siteId: "haworth-rim",
+    siteName: "Haworth Crater Rim",
+    latitude: -87.4,
+    longitude: -5.1,
+    elevationMeters: 2900,
+    annualSunPercent: 74.8,
+    continuousDaylightHours: 140,
+    longestBlackoutHours: 62,
+    meanSolarElevationDeg: 1.6,
+    dteVisibilityPercent: 76.2,
+    meanEarthElevationDeg: 2.1,
+    minEarthElevationDeg: -1.2,
+    meanSlopeDeg: 6.2,
+    maxSlopeDeg: 14.5,
+    psrDistanceKm: 0.8,
+    volatileConfidencePercent: 94,
+    scienceThemes: ["Ultra-Cold Volatile Retention (40 Kelvin)", "Neutron Spectrometry"],
+  },
+  "faustini-rim": {
+    siteId: "faustini-rim",
+    siteName: "Faustini Rim Plateau",
+    latitude: -87.3,
+    longitude: 77.0,
+    elevationMeters: 3200,
+    annualSunPercent: 77.0,
+    continuousDaylightHours: 160,
+    longestBlackoutHours: 48,
+    meanSolarElevationDeg: 1.8,
+    dteVisibilityPercent: 78.5,
+    meanEarthElevationDeg: 2.6,
+    minEarthElevationDeg: -0.8,
+    meanSlopeDeg: 4.8,
+    maxSlopeDeg: 6.8,
+    psrDistanceKm: 2.4,
+    volatileConfidencePercent: 82,
+    scienceThemes: ["ISRU Demonstration", "Wide Landing Ellipse", "Regolith Mineralogy"],
+  },
+  "nobile-rim": {
+    siteId: "nobile-rim",
+    siteName: "Nobile Crater Rim 1",
+    latitude: -85.2,
+    longitude: 53.5,
+    elevationMeters: 2800,
+    annualSunPercent: 74.0,
+    continuousDaylightHours: 130,
+    longestBlackoutHours: 54,
+    meanSolarElevationDeg: 2.0,
+    dteVisibilityPercent: 82.0,
+    meanEarthElevationDeg: 3.8,
+    minEarthElevationDeg: 0.5,
+    meanSlopeDeg: 5.2,
+    maxSlopeDeg: 8.0,
+    psrDistanceKm: 1.8,
+    volatileConfidencePercent: 88,
+    scienceThemes: ["VIPER Prospecting Corridor", "Micro-Cold Traps", "Subsurface Ice"],
+  },
+  "amundsen-rim": {
+    siteId: "amundsen-rim",
+    siteName: "Amundsen Rim Highlands",
+    latitude: -84.5,
+    longitude: 82.8,
+    elevationMeters: 3600,
+    annualSunPercent: 71.5,
+    continuousDaylightHours: 120,
+    longestBlackoutHours: 68,
+    meanSolarElevationDeg: 2.2,
+    dteVisibilityPercent: 85.0,
+    meanEarthElevationDeg: 4.2,
+    minEarthElevationDeg: 1.1,
+    meanSlopeDeg: 6.5,
+    maxSlopeDeg: 11.5,
+    psrDistanceKm: 4.2,
+    volatileConfidencePercent: 75,
+    scienceThemes: ["Highland Stratigraphy", "Impact Melt Chemistry", "Long DTE Arc"],
+  },
+  "leibnitz-beta": {
+    siteId: "leibnitz-beta",
+    siteName: "Leibnitz Beta Plateau",
+    latitude: -85.8,
+    longitude: 29.8,
+    elevationMeters: 5600,
+    annualSunPercent: 88.0,
+    continuousDaylightHours: 280,
+    longestBlackoutHours: 20,
+    meanSolarElevationDeg: 2.7,
+    dteVisibilityPercent: 92.5,
+    meanEarthElevationDeg: 4.5,
+    minEarthElevationDeg: 1.4,
+    meanSlopeDeg: 7.8,
+    maxSlopeDeg: 13.5,
+    psrDistanceKm: 5.1,
+    volatileConfidencePercent: 72,
+    scienceThemes: ["Peak of Constant Daylight", "Ultra-High Elevation Relay", "Solar Array Farms"],
+  },
 };
+
+/**
+ * Retrieve canonical criteria for a site, with graceful fallback
+ */
+export function getSiteCriteria(siteId: string): SiteEvaluationCriteria {
+  if (CANONICAL_SITE_CRITERIA[siteId]) {
+    return CANONICAL_SITE_CRITERIA[siteId];
+  }
+  // Fallback to Malapert
+  return CANONICAL_SITE_CRITERIA["malapert-mountain"];
+}
+
+export interface RankedFeasibilityScoreResult extends FeasibilityScoreResult {
+  rank: number;
+}
+
+/**
+ * Computes and returns sorted rankings across all canonical candidate sites
+ */
+export function getAllSiteFeasibilityRankings(): RankedFeasibilityScoreResult[] {
+  // Deduplicate keys (e.g. shackleton-connecting-ridge vs shackleton-ridge)
+  const uniqueSites = [
+    "malapert-mountain",
+    "leibnitz-beta",
+    "shackleton-ridge",
+    "de-gerlache-rim",
+    "faustini-rim",
+    "nobile-rim",
+    "haworth-rim",
+    "amundsen-rim",
+  ];
+
+  const results = uniqueSites
+    .map((id) => CANONICAL_SITE_CRITERIA[id])
+    .filter(Boolean)
+    .map((criteria) => evaluateSiteFeasibility(criteria));
+
+  results.sort((a, b) => b.feasibilityIndex - a.feasibilityIndex);
+
+  return results.map((item, index) => ({
+    ...item,
+    rank: index + 1,
+  }));
+}
+
+export const calculateSiteFeasibilityScore = evaluateSiteFeasibility;
+
+

@@ -57,7 +57,7 @@ export default function LunarSurfaceVisualizer({
   const shadowDirection = sunX < landerX ? 1 : -1; // Cast away from Sun
 
   return (
-    <div className="relative bg-slate-950 rounded-xl border border-slate-300 shadow-sm overflow-hidden select-none">
+    <div className="relative bg-slate-950 rounded-xl border border-slate-300 dark:border-slate-800 shadow-sm overflow-hidden select-none">
       {/* Top Telemetry HUD Overlay */}
       <div className="absolute top-2.5 left-3 right-3 flex items-center justify-between z-10 pointer-events-none">
         <div className="flex items-center gap-2">

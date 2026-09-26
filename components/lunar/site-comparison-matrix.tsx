@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LUNAR_SOUTH_POLE_CANDIDATES } from "@/lib/gis/lunar-sites";
+import { getSiteCriteria, calculateSiteFeasibilityScore } from "@/lib/strategy/site-scoring";
 import { Sun, Radio, ShieldAlert, Sparkles, Scale, ArrowRight, Mountain } from "lucide-react";
 import Link from "next/link";
 
@@ -104,6 +105,29 @@ export default function SiteComparisonMatrix({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+              {/* MCDA Composite Feasibility Index */}
+              <tr className="bg-slate-50/80 dark:bg-slate-900/80 font-bold">
+                <td className="p-3 flex items-center gap-2 text-slate-900 dark:text-white">
+                  <Scale className="w-4 h-4 text-[#4e6aff] shrink-0" />
+                  <span>MCDA Feasibility Index (0–100)</span>
+                </td>
+                <td className="p-3 bg-blue-50/50 dark:bg-blue-950/30 border-l border-r border-slate-200 dark:border-slate-800">
+                  <div className="flex items-baseline gap-1 font-mono">
+                    <span className="text-base text-[#4e6aff] font-extrabold">
+                      {calculateSiteFeasibilityScore(getSiteCriteria(siteA.id)).feasibilityIndex}
+                    </span>
+                    <span className="text-[10px] text-slate-500">/100</span>
+                  </div>
+                </td>
+                <td className="p-3 bg-purple-50/50 dark:bg-purple-950/30">
+                  <div className="flex items-baseline gap-1 font-mono">
+                    <span className="text-base text-purple-600 dark:text-purple-400 font-extrabold">
+                      {calculateSiteFeasibilityScore(getSiteCriteria(siteB.id)).feasibilityIndex}
+                    </span>
+                    <span className="text-[10px] text-slate-500">/100</span>
+                  </div>
+                </td>
+              </tr>
               <tr>
                 <td className="p-3 font-medium flex items-center gap-2 text-slate-800 dark:text-slate-200">
                   <Sun className="w-4 h-4 text-amber-500 shrink-0" />

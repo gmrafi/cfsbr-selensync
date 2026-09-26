@@ -63,15 +63,15 @@ export default function LunarHorizonPolarPlot({
   const earthXY = polarToXY(earthAzimuthDeg ?? 0, earthAltitudeDeg ?? 0);
 
   return (
-    <Card className="border border-slate-300 bg-white shadow-xs overflow-hidden">
-      <CardHeader className="py-2.5 px-3.5 bg-slate-900 text-white flex flex-row items-center justify-between border-b border-slate-800">
+    <Card className="border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs overflow-hidden">
+      <CardHeader className="py-2 px-3 bg-slate-900 text-white flex flex-row items-center justify-between border-b border-slate-800">
         <div className="flex items-center gap-2">
           <Compass className="w-4 h-4 text-[#4e6aff] animate-spin" style={{ animationDuration: '24s' }} />
           <div>
             <CardTitle className="text-xs font-bold font-mono tracking-wider uppercase text-white">
               360° Polar Horizon Skyline Radar
             </CardTitle>
-            <div className="text-[10px] text-slate-400 font-mono">Crater Rim Shadow Obstacle Mask</div>
+            <div className="text-[10px] text-slate-400 font-mono">Crater Rim Shadow Obstacle Mask (LOLA DEM)</div>
           </div>
         </div>
         <Badge variant="outline" className="text-[10px] font-mono bg-white/10 text-cyan-300 border-cyan-400/40">
@@ -79,7 +79,7 @@ export default function LunarHorizonPolarPlot({
         </Badge>
       </CardHeader>
 
-      <CardContent className="p-3 flex flex-col items-center">
+      <CardContent className="p-2.5 flex flex-col items-center">
         {/* SVG Polar Radar Canvas */}
         <div className="relative">
           <svg width={size} height={size} className="overflow-visible select-none">
@@ -113,7 +113,7 @@ export default function LunarHorizonPolarPlot({
             {terrainMaskPath && (
               <path
                 d={terrainMaskPath}
-                fill="rgba(56, 189, 248, 0.12)"
+                fill="rgba(56, 189, 248, 0.14)"
                 stroke="#38bdf8"
                 strokeWidth="1.5"
                 strokeDasharray="4 2"
@@ -149,17 +149,25 @@ export default function LunarHorizonPolarPlot({
         </div>
 
         {/* Live Vector Telemetry Readout */}
-        <div className="w-full grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-slate-100 font-mono text-[11px]">
-          <div className={`p-1.5 rounded border flex items-center gap-1.5 ${isSunOccluded ? "bg-amber-50 border-amber-200 text-amber-900" : "bg-emerald-50 border-emerald-200 text-emerald-900"}`}>
-            <Sun className={`w-3.5 h-3.5 shrink-0 ${isSunOccluded ? "text-amber-600" : "text-emerald-600"}`} />
+        <div className="w-full grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-slate-200 dark:border-slate-800 font-mono text-[11px]">
+          <div className={`p-1.5 rounded border flex items-center gap-1.5 ${
+            isSunOccluded 
+              ? "bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-800/60 text-amber-900 dark:text-amber-200" 
+              : "bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800/60 text-emerald-900 dark:text-emerald-200"
+          }`}>
+            <Sun className={`w-3.5 h-3.5 shrink-0 ${isSunOccluded ? "text-amber-600 dark:text-amber-400" : "text-emerald-600 dark:text-emerald-400"}`} />
             <div>
               <div className="font-bold leading-tight">{isSunOccluded ? "SHADOW" : "DIRECT SUN"}</div>
               <div className="text-[10px] opacity-75">El: {(sunAltitudeDeg ?? 0).toFixed(2)}° | Az: {(sunAzimuthDeg ?? 0).toFixed(1)}°</div>
             </div>
           </div>
 
-          <div className={`p-1.5 rounded border flex items-center gap-1.5 ${isEarthOccluded ? "bg-rose-50 border-rose-200 text-rose-900" : "bg-cyan-50 border-cyan-200 text-cyan-900"}`}>
-            <Globe className={`w-3.5 h-3.5 shrink-0 ${isEarthOccluded ? "text-rose-600" : "text-cyan-600"}`} />
+          <div className={`p-1.5 rounded border flex items-center gap-1.5 ${
+            isEarthOccluded 
+              ? "bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-800/60 text-rose-900 dark:text-rose-200" 
+              : "bg-cyan-50 dark:bg-cyan-950/40 border-cyan-200 dark:border-cyan-800/60 text-cyan-900 dark:text-cyan-200"
+          }`}>
+            <Globe className={`w-3.5 h-3.5 shrink-0 ${isEarthOccluded ? "text-rose-600 dark:text-rose-400" : "text-cyan-600 dark:text-cyan-400"}`} />
             <div>
               <div className="font-bold leading-tight">{isEarthOccluded ? "LOS OCCLUDED" : "DTE VECTOR OPEN"}</div>
               <div className="text-[10px] opacity-75">El: {(earthAltitudeDeg ?? 0).toFixed(2)}° | Az: {(earthAzimuthDeg ?? 0).toFixed(1)}°</div>
