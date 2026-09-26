@@ -347,6 +347,7 @@ export default function LunarMissionDashboard() {
                 data={telemetrySeries}
                 currentHourOffset={timeOffsetHours}
                 siteName={activeSite.name}
+                isDarkMode={isDarkMode}
               />
             </TabsContent>
 
@@ -371,12 +372,13 @@ export default function LunarMissionDashboard() {
             </TabsContent>
 
             {/* Tab 3: Thermal & Power Drawdown */}
-            <TabsContent value="thermal" className="flex-1 overflow-y-auto m-0 p-3 min-h-0">
+            <TabsContent value="thermal" className="flex-1 overflow-y-auto m-0 min-h-0">
               <CockpitPowerThermal
                 lander={activeLander}
                 currentSolarWatts={solarOutput.netOutputWatts}
                 isSunInShadow={isSunOccluded}
                 timeOffsetHours={timeOffsetHours}
+                isDarkMode={isDarkMode}
               />
             </TabsContent>
 

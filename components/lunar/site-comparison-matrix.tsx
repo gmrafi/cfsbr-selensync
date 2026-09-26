@@ -91,8 +91,8 @@ export default function SiteComparisonMatrix({
         </div>
 
         {/* Detailed Comparison Table */}
-        <div className="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden text-xs">
-          <table className="w-full text-left border-collapse">
+        <div className="border border-slate-200 dark:border-slate-800 rounded-xl overflow-x-auto text-xs">
+          <table className="w-full text-left border-collapse min-w-[340px]">
             <thead>
               <tr className="bg-slate-100/80 dark:bg-slate-950 text-slate-800 dark:text-slate-200 border-b border-slate-200 dark:border-slate-800">
                 <th className="p-3 font-bold">Evaluation Parameter</th>
