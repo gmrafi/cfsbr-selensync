@@ -55,6 +55,7 @@ interface LunarPolarMapCanvasProps {
   activeSite: LunarCandidateSite;
   onSelectSite: (site: LunarCandidateSite) => void;
   isDarkMode?: boolean;
+  showInspector?: boolean;
 }
 
 export default function LunarPolarMapCanvas({
@@ -62,6 +63,7 @@ export default function LunarPolarMapCanvas({
   activeSite,
   onSelectSite,
   isDarkMode = false,
+  showInspector = true,
 }: LunarPolarMapCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -485,39 +487,47 @@ export default function LunarPolarMapCanvas({
           </div>
 
           {/* Layer Filter Toggles */}
-          <div className="bg-slate-900/90 backdrop-blur-md p-2 rounded-lg border border-slate-700 shadow-md flex flex-wrap gap-1.5 text-[11px] font-medium max-w-xs">
-            <button
+          <div className="bg-slate-900/90 backdrop-blur-md p-1.5 rounded-lg border border-slate-700/80 shadow-md flex flex-wrap gap-1 text-[11px] font-medium max-w-xs">
+            <Button
+              size="sm"
+              variant={showLOLAHeatmap ? "default" : "outline"}
               onClick={() => setShowLOLAHeatmap(!showLOLAHeatmap)}
-              className={`px-2 py-1 rounded border transition-colors ${
-                showLOLAHeatmap ? "bg-amber-500/20 text-amber-300 border-amber-500/40" : "bg-slate-800 text-slate-400 border-slate-700"
+              className={`h-6 px-2 text-[11px] font-medium border-slate-700 ${
+                showLOLAHeatmap ? "bg-amber-600 hover:bg-amber-700 text-white" : "text-slate-300 hover:bg-slate-800"
               }`}
             >
-              ⛰️ Altimetry
-            </button>
-            <button
+              Altimetry
+            </Button>
+            <Button
+              size="sm"
+              variant={showPSROverlay ? "default" : "outline"}
               onClick={() => setShowPSROverlay(!showPSROverlay)}
-              className={`px-2 py-1 rounded border transition-colors ${
-                showPSROverlay ? "bg-cyan-500/20 text-cyan-300 border-cyan-500/40" : "bg-slate-800 text-slate-400 border-slate-700"
+              className={`h-6 px-2 text-[11px] font-medium border-slate-700 ${
+                showPSROverlay ? "bg-[#4e6aff] hover:bg-[#3d57e6] text-white" : "text-slate-300 hover:bg-slate-800"
               }`}
             >
-              🧊 PSR Ice Traps
-            </button>
-            <button
+              PSR Ice
+            </Button>
+            <Button
+              size="sm"
+              variant={showSolarRays ? "default" : "outline"}
               onClick={() => setShowSolarRays(!showSolarRays)}
-              className={`px-2 py-1 rounded border transition-colors ${
-                showSolarRays ? "bg-yellow-500/20 text-yellow-300 border-yellow-500/40" : "bg-slate-800 text-slate-400 border-slate-700"
+              className={`h-6 px-2 text-[11px] font-medium border-slate-700 ${
+                showSolarRays ? "bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold" : "text-slate-300 hover:bg-slate-800"
               }`}
             >
-              ☀️ Sun Vector
-            </button>
-            <button
+              Sun Vector
+            </Button>
+            <Button
+              size="sm"
+              variant={showDTEVector ? "default" : "outline"}
               onClick={() => setShowDTEVector(!showDTEVector)}
-              className={`px-2 py-1 rounded border transition-colors ${
-                showDTEVector ? "bg-blue-500/20 text-blue-300 border-blue-500/40" : "bg-slate-800 text-slate-400 border-slate-700"
+              className={`h-6 px-2 text-[11px] font-medium border-slate-700 ${
+                showDTEVector ? "bg-emerald-600 hover:bg-emerald-700 text-white" : "text-slate-300 hover:bg-slate-800"
               }`}
             >
-              🌍 DTE Beam
-            </button>
+              DTE Beam
+            </Button>
           </div>
         </div>
 
@@ -573,101 +583,103 @@ export default function LunarPolarMapCanvas({
       </div>
 
       {/* 2. Right Side: Interactive Coordinate Inspector & Mission Launch Hub (320px) */}
-      <aside className="w-80 border-l border-slate-800 bg-slate-900/95 backdrop-blur-md flex flex-col justify-between p-4 overflow-y-auto z-10">
-        <div className="space-y-4">
-          <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-            <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-[#4e6aff]" />
-              <span className="font-bold text-xs uppercase tracking-wider text-white">Coordinate Inspector</span>
+      {showInspector && (
+        <aside className="w-80 border-l border-slate-800 bg-slate-900/95 backdrop-blur-md flex flex-col justify-between p-4 overflow-y-auto z-10 shrink-0">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-[#4e6aff]" />
+                <span className="font-bold text-xs uppercase tracking-wider text-white">Coordinate Inspector</span>
+              </div>
+              {inspectedLocation.isCustom && (
+                <Badge variant="outline" className="text-[10px] text-red-400 border-red-500/40">PIN DROPPED</Badge>
+              )}
             </div>
-            {inspectedLocation.isCustom && (
-              <Badge variant="outline" className="text-[10px] text-red-400 border-red-500/40">PIN DROPPED</Badge>
-            )}
-          </div>
 
-          {/* Inspected Target Card */}
-          <div className="p-3.5 rounded-xl border border-slate-800 bg-slate-950/80 space-y-2.5">
-            <div className="font-bold text-sm text-white">
-              {inspectedLocation.name}
-            </div>
-            <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-              <div className="p-2 bg-slate-900 rounded border border-slate-800">
-                <span className="text-slate-500 text-[10px] block">Latitude</span>
-                <span className="font-bold text-slate-200">{inspectedLocation.lat}° S</span>
+            {/* Inspected Target Card */}
+            <div className="p-3.5 rounded-xl border border-slate-800 bg-slate-950/80 space-y-2.5">
+              <div className="font-bold text-sm text-white">
+                {inspectedLocation.name}
               </div>
-              <div className="p-2 bg-slate-900 rounded border border-slate-800">
-                <span className="text-slate-500 text-[10px] block">Longitude</span>
-                <span className="font-bold text-slate-200">{inspectedLocation.lon}° E</span>
+              <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+                <div className="p-2 bg-slate-900 rounded border border-slate-800">
+                  <span className="text-slate-500 text-[10px] block">Latitude</span>
+                  <span className="font-bold text-slate-200">{inspectedLocation.lat}° S</span>
+                </div>
+                <div className="p-2 bg-slate-900 rounded border border-slate-800">
+                  <span className="text-slate-500 text-[10px] block">Longitude</span>
+                  <span className="font-bold text-slate-200">{inspectedLocation.lon}° E</span>
+                </div>
+                <div className="p-2 bg-slate-900 rounded border border-slate-800">
+                  <span className="text-slate-500 text-[10px] block">LOLA Elevation</span>
+                  <span className="font-bold text-[#4e6aff]">+{inspectedLocation.elevationMeters}m</span>
+                </div>
+                <div className="p-2 bg-slate-900 rounded border border-slate-800">
+                  <span className="text-slate-500 text-[10px] block">Sub-Solar Angle</span>
+                  <span className={`font-bold ${inspectedLocation.solarAltitudeDeg > 0 ? "text-emerald-400" : "text-rose-400"}`}>
+                    {inspectedLocation.solarAltitudeDeg > 0 ? `+${inspectedLocation.solarAltitudeDeg}°` : `${inspectedLocation.solarAltitudeDeg}°`}
+                  </span>
+                </div>
               </div>
-              <div className="p-2 bg-slate-900 rounded border border-slate-800">
-                <span className="text-slate-500 text-[10px] block">LOLA Elevation</span>
-                <span className="font-bold text-[#4e6aff]">+{inspectedLocation.elevationMeters}m</span>
-              </div>
-              <div className="p-2 bg-slate-900 rounded border border-slate-800">
-                <span className="text-slate-500 text-[10px] block">Sub-Solar Angle</span>
-                <span className={`font-bold ${inspectedLocation.solarAltitudeDeg > 0 ? "text-emerald-400" : "text-rose-400"}`}>
-                  {inspectedLocation.solarAltitudeDeg > 0 ? `+${inspectedLocation.solarAltitudeDeg}°` : `${inspectedLocation.solarAltitudeDeg}°`}
+
+              <div className="p-2 bg-slate-900/60 rounded border border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
+                <span>Direct-to-Earth Line-of-Sight:</span>
+                <span className={`font-bold font-mono ${inspectedLocation.earthAltitudeDeg > 0 ? "text-emerald-400" : "text-rose-400"}`}>
+                  {inspectedLocation.earthAltitudeDeg > 0 ? "CLEAR (+5.2 dB)" : "OCCLUDED"}
                 </span>
               </div>
             </div>
 
-            <div className="p-2 bg-slate-900/60 rounded border border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
-              <span>Direct-to-Earth Line-of-Sight:</span>
-              <span className={`font-bold font-mono ${inspectedLocation.earthAltitudeDeg > 0 ? "text-emerald-400" : "text-rose-400"}`}>
-                {inspectedLocation.earthAltitudeDeg > 0 ? "CLEAR (+5.2 dB)" : "OCCLUDED"}
+            {/* Quick Artemis Candidate Site Shortcuts */}
+            <div className="space-y-2">
+              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+                Artemis Candidate Sites (Select to Fly):
               </span>
+              <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">
+                {LUNAR_SOUTH_POLE_CANDIDATES.map((site) => (
+                  <button
+                    key={site.id}
+                    onClick={() => {
+                      onSelectSite(site);
+                      setInspectedLocation({
+                        lat: site.latitude,
+                        lon: site.longitude,
+                        elevationMeters: site.elevationMeters,
+                        name: site.name,
+                        solarAltitudeDeg: 1.4,
+                        earthAltitudeDeg: 5.2,
+                        isCustom: false,
+                      });
+                    }}
+                    className={`w-full text-left p-2 rounded-lg border text-xs flex items-center justify-between transition-colors ${
+                      activeSite.id === site.id
+                        ? "bg-[#4e6aff]/20 border-[#4e6aff] text-white font-bold"
+                        : "bg-slate-950/60 border-slate-800 text-slate-300 hover:bg-slate-800"
+                    }`}
+                  >
+                    <span className="truncate">{site.name.split(" ")[0]}</span>
+                    <span className="font-mono text-[10px] text-slate-500">+{site.elevationMeters}m</span>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Quick Artemis Candidate Site Shortcuts */}
-          <div className="space-y-2">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
-              Artemis Candidate Sites (Select to Fly):
-            </span>
-            <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">
-              {LUNAR_SOUTH_POLE_CANDIDATES.map((site) => (
-                <button
-                  key={site.id}
-                  onClick={() => {
-                    onSelectSite(site);
-                    setInspectedLocation({
-                      lat: site.latitude,
-                      lon: site.longitude,
-                      elevationMeters: site.elevationMeters,
-                      name: site.name,
-                      solarAltitudeDeg: 1.4,
-                      earthAltitudeDeg: 5.2,
-                      isCustom: false,
-                    });
-                  }}
-                  className={`w-full text-left p-2 rounded-lg border text-xs flex items-center justify-between transition-colors ${
-                    activeSite.id === site.id
-                      ? "bg-[#4e6aff]/20 border-[#4e6aff] text-white font-bold"
-                      : "bg-slate-950/60 border-slate-800 text-slate-300 hover:bg-slate-800"
-                  }`}
-                >
-                  <span className="truncate">{site.name.split(" ")[0]}</span>
-                  <span className="font-mono text-[10px] text-slate-500">+{site.elevationMeters}m</span>
-                </button>
-              ))}
-            </div>
+          {/* Mission Action CTA */}
+          <div className="pt-4 border-t border-slate-800 space-y-2">
+            <Link href={`/dashboard?site=${activeSite.id}`} className="w-full block">
+              <Button className="w-full bg-[#4e6aff] hover:bg-[#3d59ef] text-white font-bold text-xs py-2.5 shadow-md gap-1.5">
+                <Rocket className="w-4 h-4" />
+                Engage in Mission Control
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Button>
+            </Link>
+            <p className="text-[10px] text-slate-500 text-center">
+              Transfers selected coordinates &amp; terrain elevation directly to the Tactical Cockpit.
+            </p>
           </div>
-        </div>
-
-        {/* Mission Action CTA */}
-        <div className="pt-4 border-t border-slate-800 space-y-2">
-          <Link href={`/dashboard?site=${activeSite.id}`} className="w-full block">
-            <Button className="w-full bg-[#4e6aff] hover:bg-[#3d59ef] text-white font-bold text-xs py-2.5 shadow-md gap-1.5">
-              <Rocket className="w-4 h-4" />
-              Engage in Mission Control
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Button>
-          </Link>
-          <p className="text-[10px] text-slate-500 text-center">
-            Transfers selected coordinates &amp; terrain elevation directly to the Tactical Cockpit.
-          </p>
-        </div>
-      </aside>
+        </aside>
+      )}
     </div>
   );
 }
