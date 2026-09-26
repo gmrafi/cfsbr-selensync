@@ -32,6 +32,7 @@ import {
   MessageSquare
 } from "lucide-react";
 import Link from "next/link";
+import LunarPolarMapCanvas from "@/components/lunar/map/lunar-polar-map-canvas";
 
 // Dynamically import Leaflet GIS (client-only)
 const LunarLeafletGIS = dynamic(
@@ -41,7 +42,21 @@ const LunarLeafletGIS = dynamic(
     loading: () => (
       <div className="w-full h-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 gap-3">
         <div className="w-8 h-8 rounded-full border-2 border-cyan-500 border-t-transparent animate-spin" />
-        <span className="text-xs font-mono tracking-wider">Connecting to USGS Astrogeology & NASA LRO Tile Server...</span>
+        <span className="text-xs font-mono tracking-wider">Connecting to USGS Astrogeology &amp; NASA LRO Tile Server...</span>
+      </div>
+    )
+  }
+);
+
+// Dynamically import 3D Lunar Globe (client-only)
+const Lunar3DGlobe = dynamic(
+  () => import("@/components/lunar/map/lunar-3d-globe"),
+  { 
+    ssr: false, 
+    loading: () => (
+      <div className="w-full h-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-950 flex flex-col items-center justify-center text-slate-400 gap-3">
+        <div className="w-8 h-8 rounded-full border-2 border-[#4e6aff] border-t-transparent animate-spin" />
+        <span className="text-xs font-mono tracking-wider">Loading 3D Photorealistic NASA Moon Sphere...</span>
       </div>
     )
   }
@@ -122,7 +137,7 @@ const POLAR_TRANSECT: TransectPoint[] = [
 export default function LunarMapPage() {
   const [activeSite, setActiveSite] = useState<LunarCandidateSite>(LUNAR_SOUTH_POLE_CANDIDATES[0]);
   const [simulatedDate, setSimulatedDate] = useState<Date>(new Date("2026-06-21T00:00:00Z"));
-  const [activeTab, setActiveTab] = useState<string>("real-gis");
+  const [activeTab, setActiveTab] = useState<string>("3d-globe");
 
   // Light/Dark mode state synced with system
   const { resolvedTheme, setTheme } = useTheme();
@@ -155,51 +170,55 @@ export default function LunarMapPage() {
         isDarkMode ? "bg-slate-900 border-slate-800 text-slate-100" : "bg-white border-slate-200 text-slate-900 shadow-xs"
       }`}>
         {/* Left: Home Navigation & Mission Cockpit Switch */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <Link
-            href="/"
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold border transition-all ${
-              isDarkMode 
-                ? "bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700" 
-                : "bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300"
-            }`}
+        <div className="flex items-center gap-2">
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="h-7 text-xs font-medium border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-xs"
           >
-            <Home className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-            <span>Home</span>
-          </Link>
+            <Link href="/" className="flex items-center gap-1.5">
+              <Home className="w-3.5 h-3.5 text-[#4e6aff]" />
+              <span>Home</span>
+            </Link>
+          </Button>
 
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-cyan-600 hover:bg-cyan-500 text-slate-950 shadow-xs transition-all"
+          <Button
+            asChild
+            variant="default"
+            size="sm"
+            className="h-7 text-xs font-semibold bg-[#4e6aff] hover:bg-[#3d57e6] text-white shadow-xs"
           >
-            <Rocket className="w-3.5 h-3.5" />
-            <span>Mission Cockpit</span>
-          </Link>
+            <Link href="/dashboard" className="flex items-center gap-1.5">
+              <Rocket className="w-3.5 h-3.5" />
+              <span>Mission Cockpit</span>
+            </Link>
+          </Button>
 
           {/* Mission Brand Title */}
           <div className="flex items-center gap-1.5 px-2 border-l border-r border-slate-200 dark:border-slate-800">
-            <Compass className="w-4 h-4 text-cyan-500" />
-            <span className="font-bold text-sm tracking-tight text-slate-900 dark:text-white">
+            <Compass className="w-4 h-4 text-[#4e6aff]" />
+            <span className="font-bold text-xs tracking-tight text-slate-900 dark:text-white">
               SelenSync
             </span>
-            <Badge variant="outline" className="hidden lg:inline-flex text-[10px] font-semibold py-0 px-1.5 border-slate-300 dark:border-slate-700">
+            <Badge variant="outline" className="hidden lg:inline-flex text-[9px] font-mono font-semibold py-0 px-1.5 border-slate-300 dark:border-slate-700">
               PLANETARY GIS
             </Badge>
           </div>
 
           {/* Target Candidate Site Selector */}
-          <div className={`flex items-center gap-1.5 px-2 py-1 rounded-md border text-xs ${
-            isDarkMode ? "bg-slate-800/80 border-slate-700" : "bg-slate-50 border-slate-200"
+          <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-xs shadow-xs ${
+            isDarkMode ? "bg-slate-900 border-slate-800" : "bg-slate-50 border-slate-200"
           }`}>
             <MapPin className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-            <span className="text-slate-500 font-medium text-[11px] hidden sm:inline">Region:</span>
+            <span className="text-slate-500 font-medium text-[10px] hidden sm:inline">Site:</span>
             <select
               value={activeSite.id}
               onChange={(e) => {
                 const found = LUNAR_SOUTH_POLE_CANDIDATES.find(s => s.id === e.target.value);
                 if (found) setActiveSite(found);
               }}
-              className="bg-transparent font-semibold text-slate-900 dark:text-slate-100 focus:outline-none cursor-pointer text-xs max-w-[150px] sm:max-w-[180px] truncate"
+              className="bg-transparent font-semibold text-slate-900 dark:text-slate-100 focus:outline-none cursor-pointer text-xs max-w-[150px] sm:max-w-[180px] truncate py-1"
             >
               {LUNAR_SOUTH_POLE_CANDIDATES.map((site) => (
                 <option key={site.id} value={site.id} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
@@ -211,35 +230,35 @@ export default function LunarMapPage() {
         </div>
 
         {/* Center: Mission Epoch Date & Preset Targets */}
-        <div className="hidden md:flex items-center gap-2">
-          <div className={`flex items-center gap-1.5 px-2 py-1 rounded-md border text-xs ${
-            isDarkMode ? "bg-slate-800/80 border-slate-700" : "bg-slate-50 border-slate-200"
+        <div className="hidden md:flex items-center gap-1.5">
+          <div className={`flex items-center gap-1.5 px-2.5 py-0.5 rounded-md border text-xs shadow-xs ${
+            isDarkMode ? "bg-slate-900 border-slate-800" : "bg-slate-50 border-slate-200"
           }`}>
             <Calendar className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-            <span className="text-slate-500 font-medium text-[11px]">Epoch:</span>
+            <span className="text-slate-500 font-medium text-[10px]">Epoch:</span>
             <input
               type="date"
               value={simulatedDate.toISOString().slice(0, 10)}
               onChange={(e) => {
                 if (e.target.value) setSimulatedDate(new Date(e.target.value + "T00:00:00Z"));
               }}
-              className="bg-transparent font-semibold text-slate-900 dark:text-slate-100 focus:outline-none cursor-pointer text-xs font-mono"
+              className="bg-transparent font-semibold text-slate-900 dark:text-slate-100 focus:outline-none cursor-pointer text-xs font-mono py-1"
             />
           </div>
 
           <Button
             size="sm"
             variant="outline"
-            className="h-7 text-xs border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200"
+            className="h-7 px-2.5 text-xs font-medium border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 shadow-xs"
             onClick={() => setSimulatedDate(new Date("2026-06-21T00:00:00Z"))}
           >
-            Solstice
+            Solstice &apos;26
           </Button>
 
           <Button
             size="sm"
             variant="outline"
-            className="h-7 text-xs border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200"
+            className="h-7 px-2.5 text-xs font-medium border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 shadow-xs"
             onClick={() => setSimulatedDate(new Date("2026-09-18T00:00:00Z"))}
           >
             Artemis III
@@ -248,35 +267,32 @@ export default function LunarMapPage() {
 
         {/* Right: NASA JPL Stream Indicator, AI Chat, Light/Dark Toggle */}
         <div className="flex items-center gap-2">
-          <div className="hidden xl:flex items-center gap-1.5 px-2 py-1 rounded-md bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-[11px] text-emerald-800 dark:text-emerald-300 font-mono">
+          <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-700 dark:text-emerald-300 font-mono shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
             <span>NASA JPL Live</span>
           </div>
 
-          <Link
-            href="/dashboard/chat"
-            className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold border transition-all ${
-              isDarkMode 
-                ? "bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700" 
-                : "bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300"
-            }`}
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="h-7 text-xs font-medium border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-xs"
           >
-            <MessageSquare className="w-3.5 h-3.5 text-purple-500" />
-            <span className="hidden sm:inline">AI Strategist</span>
-          </Link>
+            <Link href="/dashboard/chat" className="flex items-center gap-1.5">
+              <MessageSquare className="w-3.5 h-3.5 text-purple-500" />
+              <span className="hidden sm:inline">AI Strategist</span>
+            </Link>
+          </Button>
 
           {/* Clean Light/Dark Mode Switcher */}
           <Button
             size="sm"
             variant="outline"
             onClick={toggleDarkMode}
-            className={`h-7 px-2.5 border text-xs font-semibold ${
-              isDarkMode 
-                ? "border-slate-700 bg-slate-800 hover:bg-slate-700 text-amber-300" 
-                : "border-slate-300 bg-white hover:bg-slate-100 text-slate-800"
-            }`}
+            className="h-7 px-2.5 text-xs font-medium border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 shadow-xs"
+            title={isDarkMode ? "Switch to Light mode" : "Switch to Dark mode"}
           >
-            {isDarkMode ? <Sun className="w-3.5 h-3.5 mr-1" /> : <Moon className="w-3.5 h-3.5 mr-1" />}
+            {isDarkMode ? <Sun className="w-3.5 h-3.5 mr-1 text-amber-400" /> : <Moon className="w-3.5 h-3.5 mr-1 text-slate-600" />}
             <span>{isDarkMode ? "Light" : "Dark"}</span>
           </Button>
         </div>
@@ -358,12 +374,17 @@ export default function LunarMapPage() {
               </div>
 
               {/* Direct Cockpit Launch */}
-              <Link href="/dashboard" className="block w-full pt-1">
-                <Button className="w-full bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold text-xs gap-2">
-                  <Compass className="w-4 h-4" />
-                  Engage in Mission Cockpit
+              <div className="pt-1">
+                <Button 
+                  asChild
+                  className="w-full bg-[#4e6aff] hover:bg-[#3d57e6] text-white font-medium text-xs gap-2 shadow-xs h-8"
+                >
+                  <Link href="/dashboard">
+                    <Compass className="w-3.5 h-3.5" />
+                    <span>Engage in Mission Cockpit</span>
+                  </Link>
                 </Button>
-              </Link>
+              </div>
             </CardContent>
           </Card>
 
@@ -413,28 +434,71 @@ export default function LunarMapPage() {
         <section className="col-span-12 lg:col-span-8 h-full overflow-hidden flex flex-col min-h-0">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col space-y-2">
             <div className="flex items-center justify-between shrink-0">
-              <TabsList className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-                <TabsTrigger value="real-gis" className="gap-2 text-xs data-[state=active]:bg-cyan-500/20 data-[state=active]:text-cyan-700 dark:data-[state=active]:text-cyan-300">
+              <TabsList className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-0.5 h-8">
+                <TabsTrigger 
+                  value="3d-globe" 
+                  className="gap-1.5 text-xs px-2.5 py-1 font-medium data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-[#4e6aff] dark:data-[state=active]:text-cyan-300 data-[state=active]:shadow-xs"
+                >
                   <Globe className="w-3.5 h-3.5" />
-                  NASA LROC Photographic GIS
+                  <span>3D Lunar Globe</span>
                 </TabsTrigger>
-                <TabsTrigger value="dsn-relay" className="gap-2 text-xs data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-700 dark:data-[state=active]:text-emerald-300">
-                  <Radio className="w-3.5 h-3.5" />
-                  NASA DSN Ground Relay
+                <TabsTrigger 
+                  value="real-gis" 
+                  className="gap-1.5 text-xs px-2.5 py-1 font-medium data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-slate-900 dark:data-[state=active]:text-white data-[state=active]:shadow-xs"
+                >
+                  <Compass className="w-3.5 h-3.5" />
+                  <span>Photographic 2D GIS</span>
                 </TabsTrigger>
-                <TabsTrigger value="transect" className="gap-2 text-xs data-[state=active]:bg-purple-500/20 data-[state=active]:text-purple-700 dark:data-[state=active]:text-purple-300">
+                <TabsTrigger 
+                  value="polar-gis" 
+                  className="gap-1.5 text-xs px-2.5 py-1 font-medium data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-slate-900 dark:data-[state=active]:text-white data-[state=active]:shadow-xs"
+                >
                   <Layers className="w-3.5 h-3.5" />
-                  Altimetric Transect & Slopes
+                  <span>Polar Stereographic</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="dsn-relay" 
+                  className="gap-1.5 text-xs px-2.5 py-1 font-medium data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-emerald-600 dark:data-[state=active]:text-emerald-400 data-[state=active]:shadow-xs"
+                >
+                  <Radio className="w-3.5 h-3.5" />
+                  <span>NASA DSN Relay</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="transect" 
+                  className="gap-1.5 text-xs px-2.5 py-1 font-medium data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-purple-600 dark:data-[state=active]:text-purple-400 data-[state=active]:shadow-xs"
+                >
+                  <Mountain className="w-3.5 h-3.5" />
+                  <span>Altimetric Transect</span>
                 </TabsTrigger>
               </TabsList>
             </div>
 
-            {/* TAB 1: PHOTOGRAPHIC GIS MAP (Fills 100% of height) */}
-            <TabsContent value="real-gis" className="m-0 flex-1 min-h-0 overflow-hidden">
+            {/* TAB 1: 3D PHOTOREALISTIC LUNAR GLOBE */}
+            <TabsContent value="3d-globe" className="m-0 flex-1 min-h-0 overflow-hidden h-full rounded-xl border border-slate-200 dark:border-slate-800">
+              <Lunar3DGlobe
+                activeSite={activeSite}
+                onSelectSite={setActiveSite}
+                simulatedDate={simulatedDate}
+              />
+            </TabsContent>
+
+            {/* TAB 2: PHOTOGRAPHIC 2D GIS MAP */}
+            <TabsContent value="real-gis" className="m-0 flex-1 min-h-0 overflow-hidden h-full">
               <LunarLeafletGIS
                 activeSite={activeSite}
                 onSelectSite={setActiveSite}
                 simulatedDate={simulatedDate}
+              />
+            </TabsContent>
+
+            {/* TAB 3: ORIGINAL LUNAR POLAR STEREOGRAPHIC MAP */}
+            <TabsContent value="polar-gis" className="m-0 flex-1 min-h-0 overflow-hidden h-full rounded-xl border border-slate-200 dark:border-slate-800">
+              <LunarPolarMapCanvas
+                simulatedDate={simulatedDate}
+                activeSite={activeSite}
+                onSelectSite={setActiveSite}
+                isDarkMode={isDarkMode}
+                showInspector={false}
               />
             </TabsContent>
 
