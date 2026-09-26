@@ -169,3 +169,20 @@
     box-shadow: 0 0 30px rgba(168, 85, 247, 0.6), 0 0 60px rgba(96, 165, 250, 0.5);
   }
 }
+
+/* Lunar GIS Leaflet Tweaks */
+.leaflet-container {
+  background-color: #030712 !important;
+  outline: none;
+}
+.leaflet-tile-pane {
+  filter: contrast(1.08) brightness(1.02);
+}
+.dark .leaflet-tile-pane {
+  filter: contrast(1.15) brightness(1.05);
+}
+.custom-lunar-pin {
+  background: transparent !important;
+  border: none !important;
+}
+
