@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Satellite, Settings, User, Bell, LogOut } from "lucide-react"
 import Link from "next/link"
-import { useUser, useClerk } from '@clerk/nextjs'
 import { Badge } from "@/components/ui/badge"
 import { usePathname, useRouter } from "next/navigation"
 

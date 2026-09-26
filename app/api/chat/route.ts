@@ -1,27 +1,14 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import Groq from 'groq-sdk';
 import { NextResponse } from 'next/server';
+import { AFSHARA_SYSTEM_PROMPT } from '@/lib/ai/system-prompt';
 
 // Initialize both AI providers
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || '' });
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY || '');
 
-const SELENSYNC_SYSTEM_INSTRUCTION = `
-You are Afshara, the AI Lunar Mission Strategist for SelenSync — an advanced mission planning engine designed for NASA's Artemis and Commercial Lunar Payload Services (CLPS) missions at the lunar south pole.
-
-**DOMAIN EXPERTISE:**
-- Lunar South Pole illumination cycles, low sun elevation angles (1.5° to 3.5°), and long seasonal shadows.
-- Artemis and CLPS commercial lander payloads (e.g., Intuitive Machines Nova-C, Astrobotic Griffin/Peregrine, Firefly Blue Ghost).
-- Direct-to-Earth (DTE) RF communication windows, Deep Space Network (DSN 34m/70m) link budgets, and X/Ka-band propagation.
-- Permanently Shadowed Regions (PSRs), volatile cold traps, water ice prospecting, and in-situ resource utilization (ISRU).
-- Candidate landing sites: Malapert Mountain (85.99°S, 2.93°E), Shackleton Connecting Ridge (89.9°S, 0.0°E), de Gerlache Rim (88.5°S, 88.3°W), and Haworth Crater Rim (87.4°S, 5.1°W).
-
-**COMMUNICATION STYLE:**
-- Write in concise, authoritative, professional aerospace paragraphs.
-- Use **bold text** for critical orbital and engineering parameters (e.g. **DTE LOS**, **$\theta_{elev}$**, **Link Margin > 3 dB**).
-- Provide actionable mission feasibility insights, thermal/power trade-offs, and survival strategies.
-- Emphasize solar panel orientation (vertical cylindrical vs horizontal) and blackout mitigation.
-`;
+// Use deepened knowledge-base system prompt from Afshara AI strategist module
+const SELENSYNC_SYSTEM_INSTRUCTION = AFSHARA_SYSTEM_PROMPT;
 
 export async function POST(req: Request) {
   try {
