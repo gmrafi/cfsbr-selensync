@@ -6,13 +6,13 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 
 const SLIDES = [
-  { id: "hero", label: "Slide 1: Mission Overview & Cockpit", selector: "header, section:first-of-type" },
-  { id: "features", label: "Slide 2: Core Computational Engine", selector: "#features" },
-  { id: "landing-sites", label: "Slide 3: Artemis Sites Comparison", selector: "#landing-sites" },
-  { id: "horizon-profiler", label: "Slide 4: Topography & Shadow Masking", selector: "#horizon-profiler" },
-  { id: "data-sources", label: "Slide 5: NASA Planetary Data Architecture", selector: "#data-sources" },
-  { id: "sdgs", label: "Slide 6: UN Sustainable Development Goals", selector: "#sdgs" },
-  { id: "team", label: "Slide 7: CFSBR SpaceWeb Team", selector: "#team" }
+  { id: "hero", label: "Slide 1: Mission Overview & Cockpit", selector: "section:first-of-type" },
+  { id: "team", label: "Slide 2: CFSBR SpaceWeb Team", selector: "#team" },
+  { id: "features", label: "Slide 3: Core Computational Solutions", selector: "#features" },
+  { id: "landing-sites", label: "Slide 4: Artemis Sites Comparison", selector: "#landing-sites" },
+  { id: "horizon-profiler", label: "Slide 5: Topography & Shadow Masking", selector: "#horizon-profiler" },
+  { id: "data-sources", label: "Slide 6: NASA Planetary Data Architecture", selector: "#data-sources" },
+  { id: "sdgs", label: "Slide 7: UN Sustainable Development Goals", selector: "#sdgs" }
 ]
 
 export default function HomeSlideController() {

@@ -63,7 +63,7 @@ import HomeSlideController from "@/components/lunar/home-slide-controller"
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-[#4e6aff]/20 transition-colors">
+    <div className="min-h-screen bg-[#f8fafc] dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-[#4e6aff]/20 transition-colors">
       <UniversalHeader variant="light" />
 
       {/* ========================================================================= */}
@@ -257,9 +257,201 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 2. CORE SOLUTIONS (6 CARDS WITH CRISP BORDERS)                            */}
+      {/* 2. TEAM SHOWCASE (SLIDE 2: RIGHT AFTER HERO)                              */}
       {/* ========================================================================= */}
-      <section id="features" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 dark:bg-slate-900/60 border-b border-slate-300 dark:border-slate-800">
+      <section id="team" className="py-14 sm:py-18 px-4 sm:px-6 lg:px-8 bg-slate-50/70 dark:bg-slate-900/60 border-b border-slate-300 dark:border-slate-800">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center max-w-3xl mx-auto mb-10 space-y-2">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-xs">
+              <Award className="w-3.5 h-3.5 text-amber-500" />
+              <span>NASA Space Apps 2025 Global Nominees &bull; Advancing Artemis &amp; CLPS in 2026</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white font-sans tracking-tight">
+              Meet the Engineering Team
+            </h2>
+            <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">
+              CFSBR SpaceWeb: A multidisciplinary 6-member team uniting orbital telemetry, 3D WebGL computing, and lunar mission strategy.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
+            {/* Member 1: Md Golam Mubasshir Rafi */}
+            <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-[#4e6aff]/60 transition-all">
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <Badge className="bg-[#4e6aff] text-white text-[11px] font-semibold px-2.5 py-0.5">
+                    Lead Architect
+                  </Badge>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 font-mono font-medium">CFSBR SpaceWeb</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">
+                    Md Golam Mubasshir Rafi
+                  </h3>
+                  <p className="text-xs text-[#4e6aff] font-medium mt-0.5">
+                    Lead: Product Architecture &amp; Spatial Analytics
+                  </p>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Directs orbital ephemeris pipelines, 3D WebGL celestial sphere architectures, real-time DTE line-of-sight algorithms, and core system design.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">Sylhet, Bangladesh</span>
+                <Link href="https://github.com/gmrafi" target="_blank">
+                  <Button variant="outline" size="sm" className="text-xs text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 border-slate-300 dark:border-slate-700 h-8 px-3">
+                    GitHub Profile <ExternalLink className="w-3.5 h-3.5 ml-1" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+
+            {/* Member 2: Afshara Tasneem Zoa */}
+            <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-[#4e6aff]/60 transition-all">
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <Badge className="bg-slate-900 dark:bg-slate-800 text-white text-[11px] font-semibold px-2.5 py-0.5">
+                    Co-Lead Research
+                  </Badge>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 font-mono font-medium">CFSBR SpaceWeb</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">
+                    Afshara Tasneem Zoa
+                  </h3>
+                  <p className="text-xs text-[#4e6aff] font-medium mt-0.5">
+                    Co-Lead: Strategy &amp; Research
+                  </p>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Leads lunar surface exploration research, CLPS regulatory requirements, Artemis candidate site evaluation, and decision assistant prompts.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">Sylhet, Bangladesh</span>
+                <Link href="https://github.com/gmrafi" target="_blank">
+                  <Button variant="outline" size="sm" className="text-xs text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 border-slate-300 dark:border-slate-700 h-8 px-3">
+                    Research Dossier <ExternalLink className="w-3.5 h-3.5 ml-1" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+
+            {/* Member 3: Team Specialist */}
+            <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <Badge className="bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-200 text-[11px] font-medium px-2.5 py-0.5">
+                    Frontend &amp; UI
+                  </Badge>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 font-mono font-medium">CFSBR SpaceWeb</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">
+                    Core Contributor
+                  </h3>
+                  <p className="text-xs text-[#4e6aff] font-medium mt-0.5">
+                    UI/UX &amp; Aerospace Interface Systems
+                  </p>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Collaborates on shadcn UI components, telemetry widgets, responsive cockpit layouts, and clinical dark/light design systems.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
+                <span>Bangladesh</span>
+                <span className="font-mono">Team SpaceWeb</span>
+              </div>
+            </div>
+
+            {/* Member 4: Team Specialist */}
+            <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <Badge className="bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-200 text-[11px] font-medium px-2.5 py-0.5">
+                    Data &amp; GIS
+                  </Badge>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 font-mono font-medium">CFSBR SpaceWeb</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">
+                    Core Contributor
+                  </h3>
+                  <p className="text-xs text-[#4e6aff] font-medium mt-0.5">
+                    Planetary GIS &amp; Altimetry Modeling
+                  </p>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Specializes in LOLA DEM elevation data parsing, stereographic polar projections, raster tiles, and coordinate transforms.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
+                <span>Bangladesh</span>
+                <span className="font-mono">Team SpaceWeb</span>
+              </div>
+            </div>
+
+            {/* Member 5: Team Specialist */}
+            <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <Badge className="bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-200 text-[11px] font-medium px-2.5 py-0.5">
+                    Mission Analytics
+                  </Badge>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 font-mono font-medium">CFSBR SpaceWeb</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">
+                    Core Contributor
+                  </h3>
+                  <p className="text-xs text-[#4e6aff] font-medium mt-0.5">
+                    MCDA Feasibility &amp; Trajectory Analysis
+                  </p>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Analyzes Multi-Criteria Decision Analysis parameters, landing zone risk weighting, and mission duration metrics.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
+                <span>Bangladesh</span>
+                <span className="font-mono">Team SpaceWeb</span>
+              </div>
+            </div>
+
+            {/* Member 6: Team Specialist */}
+            <div className="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <Badge className="bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-200 text-[11px] font-medium px-2.5 py-0.5">
+                    Comms &amp; Outreach
+                  </Badge>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 font-mono font-medium">CFSBR SpaceWeb</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">
+                    Core Contributor
+                  </h3>
+                  <p className="text-xs text-[#4e6aff] font-medium mt-0.5">
+                    Documentation &amp; Mission Presentation
+                  </p>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Synthesizes technical documentation, UN SDG impact narratives, video storyboards, and project outreach.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
+                <span>Bangladesh</span>
+                <span className="font-mono">Team SpaceWeb</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 3. CORE SOLUTIONS (6 CARDS WITH CRISP BORDERS)                            */}
+      {/* ========================================================================= */}
+      <section id="features" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 border-b border-slate-300 dark:border-slate-800">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
             <Badge variant="outline" className="text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-xs font-medium shadow-xs">
@@ -1137,7 +1329,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 8. AUTHORITATIVE PLANETARY DATA SOURCES (CRISP BORDERS)                  */}
       {/* ========================================================================= */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 dark:bg-slate-900/60 border-b border-slate-300 dark:border-slate-800">
+      <section id="data-sources" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/60 dark:bg-slate-900/60 border-b border-slate-300 dark:border-slate-800">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
             <Badge variant="outline" className="text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-xs font-medium shadow-xs">
@@ -1313,203 +1505,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* 9. TEAM & CFSBR SPACEWEB SHOWCASE (CRISP BORDERS)                         */}
-      {/* ========================================================================= */}
-      <section id="team" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 border-b border-slate-300 dark:border-slate-800">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs font-medium text-slate-800 dark:text-slate-200 shadow-xs">
-              <Award className="w-3.5 h-3.5 text-amber-500" />
-              <span>NASA Space Apps Regional 1st Runner-Up &amp; Global Nominee (2025) &bull; Advancing Lunar Exploration in 2026</span>
-            </div>
-            <h2 className="text-3xl font-bold text-slate-900 dark:text-white font-sans tracking-tight mt-2">
-              Built by CFSBR SpaceWeb
-            </h2>
-            <p className="text-slate-600 dark:text-slate-300 text-sm">
-              A cross-disciplinary team combining space telemetry, spatial computing, and intuitive product strategy.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {/* Member 1: Md Golam Mubasshir Rafi */}
-            <div className="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
-              <div className="space-y-2.5">
-                <div className="flex items-center justify-between">
-                  <Badge className="bg-slate-900 dark:bg-slate-800 text-white text-[11px] font-medium px-2.5 py-0.5">
-                    Lead: Architecture
-                  </Badge>
-                  <span className="text-xs text-slate-600 dark:text-slate-400 font-mono font-medium">CFSBR SpaceWeb</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">
-                    Md Golam Mubasshir Rafi
-                  </h3>
-                  <p className="text-xs text-[#4e6aff] font-medium mt-0.5">
-                    Lead: Product Architecture &amp; Spatial Analytics
-                  </p>
-                </div>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Spearheads spatial intelligence, ephemeris integration, WebGL 3D rendering pipelines, and orbital data science architectures.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
-                <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">Sylhet, Bangladesh</span>
-                <Link href="https://github.com/gmrafi" target="_blank">
-                  <Button variant="outline" size="sm" className="text-xs text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 border-slate-300 dark:border-slate-700 h-8 px-3">
-                    GitHub Profile <ExternalLink className="w-3.5 h-3.5 ml-1" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-
-            {/* Member 2: Afshara Tasneem Zoa */}
-            <div className="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
-              <div className="space-y-2.5">
-                <div className="flex items-center justify-between">
-                  <Badge className="bg-slate-900 dark:bg-slate-800 text-white text-[11px] font-medium px-2.5 py-0.5">
-                    Co-Lead: Research
-                  </Badge>
-                  <span className="text-xs text-slate-600 dark:text-slate-400 font-mono font-medium">CFSBR SpaceWeb</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">
-                    Afshara Tasneem Zoa
-                  </h3>
-                  <p className="text-xs text-[#4e6aff] font-medium mt-0.5">
-                    Co-Lead: Strategy &amp; Research
-                  </p>
-                </div>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Leads lunar mission research, CLPS regulatory and payload requirement evaluation, and AI decision assistant prompt engineering.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
-                <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">Sylhet, Bangladesh</span>
-                <Link href="https://github.com/gmrafi" target="_blank">
-                  <Button variant="outline" size="sm" className="text-xs text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 border-slate-300 dark:border-slate-700 h-8 px-3">
-                    Research Dossier <ExternalLink className="w-3.5 h-3.5 ml-1" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-
-            {/* Member 3: Team Specialist */}
-            <div className="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
-              <div className="space-y-2.5">
-                <div className="flex items-center justify-between">
-                  <Badge className="bg-slate-900 dark:bg-slate-800 text-white text-[11px] font-medium px-2.5 py-0.5">
-                    Frontend &amp; UI
-                  </Badge>
-                  <span className="text-xs text-slate-600 dark:text-slate-400 font-mono font-medium">CFSBR SpaceWeb</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">
-                    Core Contributor
-                  </h3>
-                  <p className="text-xs text-[#4e6aff] font-medium mt-0.5">
-                    UI/UX &amp; Aerospace Interface Systems
-                  </p>
-                </div>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Collaborates on shadcn UI components, telemetry widgets, responsive dashboard layouts, and design systems.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
-                <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">Bangladesh</span>
-                <span className="text-xs text-slate-500 font-mono">Team SpaceWeb</span>
-              </div>
-            </div>
-
-            {/* Member 4: Team Specialist */}
-            <div className="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
-              <div className="space-y-2.5">
-                <div className="flex items-center justify-between">
-                  <Badge className="bg-slate-900 dark:bg-slate-800 text-white text-[11px] font-medium px-2.5 py-0.5">
-                    Data &amp; GIS
-                  </Badge>
-                  <span className="text-xs text-slate-600 dark:text-slate-400 font-mono font-medium">CFSBR SpaceWeb</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">
-                    Core Contributor
-                  </h3>
-                  <p className="text-xs text-[#4e6aff] font-medium mt-0.5">
-                    Planetary GIS &amp; Altimetry Modeling
-                  </p>
-                </div>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Specializes in LOLA DEM elevation models, raster processing, and lunar stereographic coordinate transformations.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
-                <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">Bangladesh</span>
-                <span className="text-xs text-slate-500 font-mono">Team SpaceWeb</span>
-              </div>
-            </div>
-
-            {/* Member 5: Team Specialist */}
-            <div className="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
-              <div className="space-y-2.5">
-                <div className="flex items-center justify-between">
-                  <Badge className="bg-slate-900 dark:bg-slate-800 text-white text-[11px] font-medium px-2.5 py-0.5">
-                    Mission Analytics
-                  </Badge>
-                  <span className="text-xs text-slate-600 dark:text-slate-400 font-mono font-medium">CFSBR SpaceWeb</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">
-                    Core Contributor
-                  </h3>
-                  <p className="text-xs text-[#4e6aff] font-medium mt-0.5">
-                    MCDA Feasibility &amp; Trajectory Analysis
-                  </p>
-                </div>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Analyzes Multi-Criteria Decision Analysis parameters, landing zone risk weighting, and mission duration metrics.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
-                <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">Bangladesh</span>
-                <span className="text-xs text-slate-500 font-mono">Team SpaceWeb</span>
-              </div>
-            </div>
-
-            {/* Member 6: Team Specialist */}
-            <div className="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
-              <div className="space-y-2.5">
-                <div className="flex items-center justify-between">
-                  <Badge className="bg-slate-900 dark:bg-slate-800 text-white text-[11px] font-medium px-2.5 py-0.5">
-                    Comms &amp; Outreach
-                  </Badge>
-                  <span className="text-xs text-slate-600 dark:text-slate-400 font-mono font-medium">CFSBR SpaceWeb</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">
-                    Core Contributor
-                  </h3>
-                  <p className="text-xs text-[#4e6aff] font-medium mt-0.5">
-                    Documentation &amp; Mission Presentation
-                  </p>
-                </div>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Synthesizes technical documentation, UN SDG impact narratives, video storyboards, and project outreach.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
-                <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">Bangladesh</span>
-                <span className="text-xs text-slate-500 font-mono">Team SpaceWeb</span>
-              </div>
-            </div>
-          </div>
-
-          {/* About CFSBR SpaceWeb Box */}
-          <div className="mt-8 max-w-4xl mx-auto p-5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 leading-relaxed shadow-xs">
-            <span className="font-semibold text-slate-900 dark:text-white">About CFSBR SpaceWeb: </span>
-            An initiative under the Centre for Fintech &amp; Strategic Business Research (CFSBR), bridging advanced web architecture, orbital mechanics, and intuitive design to solve complex mission planning bottlenecks for NASA&apos;s Artemis and CLPS eras.
-          </div>
-        </div>
-      </section>
 
       {/* ========================================================================= */}
       {/* 10. CALL TO ACTION & FOOTER (CRISP BORDERS)                              */}
