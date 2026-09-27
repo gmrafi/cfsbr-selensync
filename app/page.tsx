@@ -352,7 +352,7 @@ export default function HomePage() {
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-1.5 flex-wrap">
                     <Badge className="bg-blue-600 text-white text-[10px] font-bold px-2 py-0 shadow-xs">Comms</Badge>
-                    <span className="text-[9px] font-bold bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-400 border border-teal-200 dark:border-teal-800 px-1.5 py-0.5 rounded">EEE</span>
+                    <span className="text-[9px] font-bold bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-400 border border-teal-200 dark:border-teal-800 px-1.5 py-0.5 rounded">CSE</span>
                   </div>
                   <h3 className="text-sm font-bold text-slate-900 dark:text-white font-sans leading-snug">Nishat Jahan Nowshin</h3>
                   <p className="text-xs text-slate-600 dark:text-slate-400 font-semibold leading-tight">Mission Communications &amp; Public Outreach</p>
