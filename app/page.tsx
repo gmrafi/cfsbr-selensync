@@ -212,7 +212,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 2. TEAM SHOWCASE (SLIDE 2: FULL SCREEN VIEW WITH VIBRANT BORDERS)         */}
       {/* ========================================================================= */}
-      <section id="team" className="min-h-screen flex flex-col justify-center py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-indigo-50/40 via-slate-50 to-blue-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-indigo-400/40">
+      <section id="team" className="min-h-screen flex flex-col justify-center py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-indigo-50 via-blue-50/70 to-indigo-100/60 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-indigo-400/40">
         <div className="container mx-auto max-w-6xl my-auto">
           <div className="text-center max-w-3xl mx-auto mb-8 space-y-2">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white dark:bg-slate-900 border-2 border-indigo-300 dark:border-indigo-700 text-xs font-bold text-indigo-900 dark:text-indigo-200 shadow-sm">
@@ -405,7 +405,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 3. CORE SOLUTIONS (SLIDE 3: 6 CARDS WITH CRISP COLORFUL 2PX BORDERS)      */}
       {/* ========================================================================= */}
-      <section id="features" className="min-h-screen flex flex-col justify-center py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50/20 via-slate-50 to-indigo-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-[#4e6aff]/40">
+      <section id="features" className="min-h-screen flex flex-col justify-center py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50 via-blue-50/50 to-indigo-100/60 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-[#4e6aff]/40">
         <div className="container mx-auto max-w-6xl my-auto">
           <div className="text-center max-w-3xl mx-auto mb-8 space-y-2">
             <Badge variant="outline" className="text-indigo-900 dark:text-indigo-200 bg-indigo-50 dark:bg-indigo-950/60 border-2 border-indigo-300 dark:border-indigo-700 text-xs font-bold shadow-xs">
@@ -421,7 +421,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Card 1 */}
-            <Card className="bg-white dark:bg-slate-900 border-2 border-indigo-300 dark:border-indigo-700/70 hover:border-indigo-500 shadow-md rounded-xl flex flex-col justify-between transition-all">
+            <Card className="bg-indigo-50/70 dark:bg-slate-900 border-2 border-indigo-300 dark:border-indigo-700/70 hover:border-indigo-500 shadow-md rounded-xl flex flex-col justify-between transition-all">
               <CardHeader className="p-4 pb-2">
                 <div className="w-9 h-9 rounded-lg bg-indigo-100 dark:bg-indigo-950/80 border border-indigo-300 dark:border-indigo-700 flex items-center justify-center mb-2.5 text-indigo-700 dark:text-indigo-300">
                   <Mountain className="w-5 h-5" />
@@ -442,7 +442,7 @@ export default function HomePage() {
             </Card>
 
             {/* Card 2 */}
-            <Card className="bg-white dark:bg-slate-900 border-2 border-blue-300 dark:border-blue-700/70 hover:border-blue-500 shadow-md rounded-xl flex flex-col justify-between transition-all">
+            <Card className="bg-blue-50/70 dark:bg-slate-900 border-2 border-blue-300 dark:border-blue-700/70 hover:border-blue-500 shadow-md rounded-xl flex flex-col justify-between transition-all">
               <CardHeader className="p-4 pb-2">
                 <div className="w-9 h-9 rounded-lg bg-blue-100 dark:bg-blue-950/80 border border-blue-300 dark:border-blue-700 flex items-center justify-center mb-2.5 text-[#4e6aff]">
                   <Radio className="w-5 h-5" />
@@ -463,7 +463,7 @@ export default function HomePage() {
             </Card>
 
             {/* Card 3 */}
-            <Card className="bg-white dark:bg-slate-900 border-2 border-amber-300 dark:border-amber-700/70 hover:border-amber-500 shadow-md rounded-xl flex flex-col justify-between transition-all">
+            <Card className="bg-amber-50/70 dark:bg-slate-900 border-2 border-amber-300 dark:border-amber-700/70 hover:border-amber-500 shadow-md rounded-xl flex flex-col justify-between transition-all">
               <CardHeader className="p-4 pb-2">
                 <div className="w-9 h-9 rounded-lg bg-amber-100 dark:bg-amber-950/80 border border-amber-300 dark:border-amber-700 flex items-center justify-center mb-2.5 text-amber-700 dark:text-amber-400">
                   <Zap className="w-5 h-5" />
@@ -484,7 +484,7 @@ export default function HomePage() {
             </Card>
 
             {/* Card 4 */}
-            <Card className="bg-white dark:bg-slate-900 border-2 border-teal-300 dark:border-teal-700/70 hover:border-teal-500 shadow-md rounded-xl flex flex-col justify-between transition-all">
+            <Card className="bg-teal-50/70 dark:bg-slate-900 border-2 border-teal-300 dark:border-teal-700/70 hover:border-teal-500 shadow-md rounded-xl flex flex-col justify-between transition-all">
               <CardHeader className="p-4 pb-2">
                 <div className="w-9 h-9 rounded-lg bg-teal-100 dark:bg-teal-950/80 border border-teal-300 dark:border-teal-700 flex items-center justify-center mb-2.5 text-teal-700 dark:text-teal-300">
                   <Compass className="w-5 h-5" />
@@ -505,7 +505,7 @@ export default function HomePage() {
             </Card>
 
             {/* Card 5 */}
-            <Card className="bg-white dark:bg-slate-900 border-2 border-purple-300 dark:border-purple-700/70 hover:border-purple-500 shadow-md rounded-xl flex flex-col justify-between transition-all">
+            <Card className="bg-purple-50/70 dark:bg-slate-900 border-2 border-purple-300 dark:border-purple-700/70 hover:border-purple-500 shadow-md rounded-xl flex flex-col justify-between transition-all">
               <CardHeader className="p-4 pb-2">
                 <div className="w-9 h-9 rounded-lg bg-purple-100 dark:bg-purple-950/80 border border-purple-300 dark:border-purple-700 flex items-center justify-center mb-2.5 text-purple-700 dark:text-purple-300">
                   <Scale className="w-5 h-5" />
@@ -526,7 +526,7 @@ export default function HomePage() {
             </Card>
 
             {/* Card 6 */}
-            <Card className="bg-white dark:bg-slate-900 border-2 border-emerald-300 dark:border-emerald-700/70 hover:border-emerald-500 shadow-md rounded-xl flex flex-col justify-between transition-all">
+            <Card className="bg-emerald-50/70 dark:bg-slate-900 border-2 border-emerald-300 dark:border-emerald-700/70 hover:border-emerald-500 shadow-md rounded-xl flex flex-col justify-between transition-all">
               <CardHeader className="p-4 pb-2">
                 <div className="w-9 h-9 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700 flex items-center justify-center mb-2.5 text-emerald-700 dark:text-emerald-300">
                   <Rocket className="w-5 h-5" />
@@ -735,7 +735,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 4. CANDIDATE LANDING SITES SECTION (SLIDE 4: CRISP 2PX BORDERS & CLEAR STATS) */}
       {/* ========================================================================= */}
-      <section id="landing-sites" className="min-h-screen flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-indigo-50/20 via-slate-50 to-blue-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-indigo-400/40">
+      <section id="landing-sites" className="min-h-screen flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-indigo-50 via-indigo-50/50 to-blue-100/60 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-indigo-400/40">
         <div className="container mx-auto max-w-6xl my-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-3">
             <div>
@@ -761,7 +761,7 @@ export default function HomePage() {
             {LUNAR_SOUTH_POLE_CANDIDATES.map((site) => (
               <Card
                 key={site.id}
-                className="bg-white dark:bg-slate-900 border-2 border-indigo-300/80 dark:border-indigo-700/70 hover:border-[#4e6aff] shadow-md rounded-xl flex flex-col justify-between transition-all"
+                className="bg-indigo-50/60 dark:bg-slate-900 border-2 border-indigo-300/80 dark:border-indigo-700/70 hover:border-[#4e6aff] shadow-md rounded-xl flex flex-col justify-between transition-all"
               >
                 <CardHeader className="p-3.5 pb-2">
                   <div className="flex items-center justify-between mb-1">
@@ -799,7 +799,7 @@ export default function HomePage() {
           </div>
 
           {/* Interactive Candidate Landing Site Comparison Table (shadcn Table) */}
-          <div className="mt-4 bg-white dark:bg-slate-900 border-2 border-indigo-200 dark:border-indigo-800/80 rounded-xl overflow-hidden shadow-md">
+          <div className="mt-4 bg-indigo-50/40 dark:bg-slate-900 border-2 border-indigo-200 dark:border-indigo-800/80 rounded-xl overflow-hidden shadow-md">
             <div className="p-3 border-b border-indigo-100 dark:border-slate-800 flex items-center justify-between flex-wrap gap-2 bg-indigo-50/30 dark:bg-slate-950/40">
               <h3 className="text-xs font-bold text-slate-900 dark:text-white font-sans flex items-center gap-1.5">
                 <Mountain className="w-3.5 h-3.5 text-[#4e6aff]" />
@@ -871,7 +871,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 5. 360° TOPOGRAPHIC HORIZON PROFILER (SLIDE 5: CRISP 2PX BORDERS & VIBRANT CARDS) */}
       {/* ========================================================================= */}
-      <section id="horizon-profiler" className="min-h-screen flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50/20 via-slate-50 to-teal-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-teal-500/40 scroll-mt-16">
+      <section id="horizon-profiler" className="min-h-screen flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-teal-50 via-cyan-50/60 to-teal-100/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-teal-500/40 scroll-mt-16">
         <div className="container mx-auto max-w-6xl my-auto">
           <div className="text-center max-w-3xl mx-auto mb-8 space-y-2">
             <Badge variant="outline" className="text-teal-900 dark:text-teal-200 bg-teal-50 dark:bg-teal-950/60 border-2 border-teal-400 dark:border-teal-700 text-xs font-bold shadow-xs">
@@ -1274,7 +1274,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 6. AUTHORITATIVE PLANETARY DATA SOURCES (SLIDE 6: CRISP 2PX BORDERS)      */}
       {/* ========================================================================= */}
-      <section id="data-sources" className="min-h-screen flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 via-blue-50/20 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-[#4e6aff]/40">
+      <section id="data-sources" className="min-h-screen flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-sky-50 via-blue-50/60 to-sky-100/60 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-[#4e6aff]/40">
         <div className="container mx-auto max-w-6xl my-auto">
           <div className="text-center max-w-3xl mx-auto mb-8 space-y-2">
             <Badge variant="outline" className="text-blue-900 dark:text-blue-200 bg-blue-50 dark:bg-slate-900 border-2 border-blue-300 dark:border-blue-700 text-xs font-bold shadow-xs">
@@ -1290,7 +1290,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
             {/* Source 1 */}
-            <div className="p-4 rounded-xl bg-blue-50/30 dark:bg-slate-900/90 border-2 border-blue-400 dark:border-blue-600 shadow-md space-y-2 hover:border-blue-500 transition-all">
+            <div className="p-4 rounded-xl bg-blue-50/60 dark:bg-slate-900/90 border-2 border-blue-400 dark:border-blue-600 shadow-md space-y-2 hover:border-blue-500 transition-all">
               <div className="flex items-center gap-2 font-bold text-sm text-slate-900 dark:text-white font-sans">
                 <Database className="w-4 h-4 text-[#4e6aff] shrink-0" />
                 <span>NASA Planetary Data System (PDS)</span>
@@ -1301,7 +1301,7 @@ export default function HomePage() {
             </div>
 
             {/* Source 2 */}
-            <div className="p-4 rounded-xl bg-indigo-50/30 dark:bg-slate-900/90 border-2 border-indigo-400 dark:border-indigo-600 shadow-md space-y-2 hover:border-indigo-500 transition-all">
+            <div className="p-4 rounded-xl bg-indigo-50/60 dark:bg-slate-900/90 border-2 border-indigo-400 dark:border-indigo-600 shadow-md space-y-2 hover:border-indigo-500 transition-all">
               <div className="flex items-center gap-2 font-bold text-sm text-slate-900 dark:text-white font-sans">
                 <Mountain className="w-4 h-4 text-indigo-600 shrink-0" />
                 <span>NASA LRO LOLA Science Team</span>
@@ -1312,7 +1312,7 @@ export default function HomePage() {
             </div>
 
             {/* Source 3 */}
-            <div className="p-4 rounded-xl bg-purple-50/30 dark:bg-slate-900/90 border-2 border-purple-400 dark:border-purple-600 shadow-md space-y-2 hover:border-purple-500 transition-all">
+            <div className="p-4 rounded-xl bg-purple-50/60 dark:bg-slate-900/90 border-2 border-purple-400 dark:border-purple-600 shadow-md space-y-2 hover:border-purple-500 transition-all">
               <div className="flex items-center gap-2 font-bold text-sm text-slate-900 dark:text-white font-sans">
                 <Cpu className="w-4 h-4 text-purple-600 shrink-0" />
                 <span>NASA JPL Horizons System</span>
@@ -1323,7 +1323,7 @@ export default function HomePage() {
             </div>
 
             {/* Source 4 */}
-            <div className="p-4 rounded-xl bg-emerald-50/30 dark:bg-slate-900/90 border-2 border-emerald-400 dark:border-emerald-600 shadow-md space-y-2 hover:border-emerald-500 transition-all">
+            <div className="p-4 rounded-xl bg-emerald-50/60 dark:bg-slate-900/90 border-2 border-emerald-400 dark:border-emerald-600 shadow-md space-y-2 hover:border-emerald-500 transition-all">
               <div className="flex items-center gap-2 font-bold text-sm text-slate-900 dark:text-white font-sans">
                 <Globe className="w-4 h-4 text-emerald-600 shrink-0" />
                 <span>USGS Astrogeology Science Center</span>
@@ -1334,7 +1334,7 @@ export default function HomePage() {
             </div>
 
             {/* Source 5 */}
-            <div className="p-4 rounded-xl bg-amber-50/30 dark:bg-slate-900/90 border-2 border-amber-400 dark:border-amber-600 shadow-md space-y-2 md:col-span-2 lg:col-span-1 hover:border-amber-500 transition-all">
+            <div className="p-4 rounded-xl bg-amber-50/60 dark:bg-slate-900/90 border-2 border-amber-400 dark:border-amber-600 shadow-md space-y-2 md:col-span-2 lg:col-span-1 hover:border-amber-500 transition-all">
               <div className="flex items-center gap-2 font-bold text-sm text-slate-900 dark:text-white font-sans">
                 <Rocket className="w-4 h-4 text-amber-600 shrink-0" />
                 <span>NASA CLPS Mission Archives</span>
@@ -1350,7 +1350,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 7. UNITED NATIONS SUSTAINABLE DEVELOPMENT GOALS (SLIDE 7: CRISP 2PX BORDERS) */}
       {/* ========================================================================= */}
-      <section id="sdgs" className="min-h-screen flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-orange-50/20 via-amber-50/20 to-blue-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-amber-500/40">
+      <section id="sdgs" className="min-h-screen flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-orange-50 via-amber-50/70 to-yellow-50/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-amber-500/40">
         <div className="container mx-auto max-w-6xl my-auto">
           <div className="text-center max-w-3xl mx-auto mb-8 space-y-2">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white dark:bg-slate-900 border-2 border-indigo-300 dark:border-indigo-700 text-xs font-bold text-slate-900 dark:text-slate-100 shadow-xs">
@@ -1367,7 +1367,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
             {/* SDG 9: Industry, Innovation, and Infrastructure */}
-            <div className="p-5 rounded-xl bg-white dark:bg-slate-900/90 border-2 border-[#fd6925] shadow-md flex flex-col justify-between space-y-3 hover:shadow-lg transition-all">
+            <div className="p-5 rounded-xl bg-orange-50/70 dark:bg-slate-900/90 border-2 border-[#fd6925] shadow-md flex flex-col justify-between space-y-3 hover:shadow-lg transition-all">
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
                   <Badge className="bg-[#fd6925] hover:bg-[#fd6925] text-white text-[11px] font-bold px-2.5 py-0.5 border-none shadow-xs">
@@ -1394,7 +1394,7 @@ export default function HomePage() {
             </div>
 
             {/* SDG 7: Affordable and Clean Energy */}
-            <div className="p-5 rounded-xl bg-white dark:bg-slate-900/90 border-2 border-[#fcc30b] shadow-md flex flex-col justify-between space-y-3 hover:shadow-lg transition-all">
+            <div className="p-5 rounded-xl bg-amber-50/70 dark:bg-slate-900/90 border-2 border-[#fcc30b] shadow-md flex flex-col justify-between space-y-3 hover:shadow-lg transition-all">
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
                   <Badge className="bg-[#fcc30b] hover:bg-[#fcc30b] text-slate-950 text-[11px] font-bold px-2.5 py-0.5 border-none shadow-xs">
@@ -1421,7 +1421,7 @@ export default function HomePage() {
             </div>
 
             {/* SDG 17: Partnerships for the Goals */}
-            <div className="p-5 rounded-xl bg-white dark:bg-slate-900/90 border-2 border-[#19486a] dark:border-blue-500 shadow-md flex flex-col justify-between space-y-3 hover:shadow-lg transition-all">
+            <div className="p-5 rounded-xl bg-sky-50/70 dark:bg-slate-900/90 border-2 border-[#19486a] dark:border-blue-500 shadow-md flex flex-col justify-between space-y-3 hover:shadow-lg transition-all">
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
                   <Badge className="bg-[#19486a] dark:bg-blue-600 hover:bg-[#19486a] text-white text-[11px] font-bold px-2.5 py-0.5 border-none shadow-xs">
