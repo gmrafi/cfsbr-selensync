@@ -1210,6 +1210,109 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
+      {/* 8.5 UNITED NATIONS SUSTAINABLE DEVELOPMENT GOALS (SDGs) ALIGNMENT         */}
+      {/* ========================================================================= */}
+      <section id="sdgs" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50/70 dark:bg-slate-900/40 border-b border-slate-300 dark:border-slate-800">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs font-medium text-slate-800 dark:text-slate-200 shadow-xs">
+              <span className="flex h-2 w-2 rounded-full bg-[#4e6aff]"></span>
+              <span>United Nations 2030 Agenda for Sustainable Development</span>
+            </div>
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white font-sans tracking-tight mt-2">
+              UN Sustainable Development Goals (SDG) Alignment
+            </h2>
+            <p className="text-slate-600 dark:text-slate-300 text-sm">
+              How SelenSync’s lunar ephemeris intelligence and open aerospace infrastructure directly contribute to global sustainable innovation.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {/* SDG 9: Industry, Innovation, and Infrastructure */}
+            <div className="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <Badge className="bg-[#fd6925] hover:bg-[#fd6925] text-white text-[11px] font-bold px-2.5 py-0.5 border-none">
+                    SDG 9
+                  </Badge>
+                  <span className="text-xs text-slate-600 dark:text-slate-400 font-mono font-medium">Target 9.5 &bull; 9.b</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">
+                    Industry, Innovation &amp; Infrastructure
+                  </h3>
+                  <p className="text-xs text-[#4e6aff] font-medium mt-0.5">
+                    Democratizing Open Space Infrastructure
+                  </p>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Eliminates reliance on proprietary, cost-prohibitive mission planning software. SelenSync provides a browser-native, open-access spatial platform that lowers barriers for emerging space startups, academic institutions, and developing space nations.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400">
+                <span>Space Telemetry Access</span>
+                <span className="font-semibold text-emerald-600 dark:text-emerald-400">100% Open Access</span>
+              </div>
+            </div>
+
+            {/* SDG 7: Affordable and Clean Energy */}
+            <div className="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <Badge className="bg-[#fcc30b] hover:bg-[#fcc30b] text-slate-900 text-[11px] font-bold px-2.5 py-0.5 border-none">
+                    SDG 7
+                  </Badge>
+                  <span className="text-xs text-slate-600 dark:text-slate-400 font-mono font-medium">Target 7.a &bull; 7.b</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">
+                    Affordable &amp; Clean Energy
+                  </h3>
+                  <p className="text-xs text-amber-600 dark:text-amber-400 font-medium mt-0.5">
+                    Extreme Solar Harvest Optimization
+                  </p>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Calculates solar illumination angles and shadow masks at lunar Peaks of Eternal Light. Our predictive models minimize cryo-battery waste and maximize renewable solar energy collection in the most extreme, unlivable off-world environments.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400">
+                <span>Solar Yield Modeling</span>
+                <span className="font-semibold text-amber-600 dark:text-amber-400">Zero-Emission Solar</span>
+              </div>
+            </div>
+
+            {/* SDG 17: Partnerships for the Goals */}
+            <div className="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4 hover:border-slate-400 dark:hover:border-slate-700 transition-all">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <Badge className="bg-[#19486a] hover:bg-[#19486a] text-white text-[11px] font-bold px-2.5 py-0.5 border-none">
+                    SDG 17
+                  </Badge>
+                  <span className="text-xs text-slate-600 dark:text-slate-400 font-mono font-medium">Target 17.6 &bull; 17.16</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white font-sans">
+                    Partnerships for the Goals
+                  </h3>
+                  <p className="text-xs text-[#4e6aff] font-medium mt-0.5">
+                    Multilateral Space Science Cooperation
+                  </p>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Synthesizes multilateral datasets across NASA PDS, USGS Astrogeology, and JPL Horizons. Supports interoperable standards connecting commercial CLPS landers, international space agencies (ESA, JAXA, ISRO), and academic researchers.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400">
+                <span>Data Interoperability</span>
+                <span className="font-semibold text-blue-600 dark:text-blue-400">NASA PDS &bull; USGS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
       {/* 9. TEAM & CFSBR SPACEWEB SHOWCASE (CRISP BORDERS)                         */}
       {/* ========================================================================= */}
       <section id="team" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 border-b border-slate-300 dark:border-slate-800">
@@ -1351,6 +1454,7 @@ export default function HomePage() {
               <Link href="/#features" className="hover:text-slate-900 dark:hover:text-white transition-colors">Features</Link>
               <Link href="/#landing-sites" className="hover:text-slate-900 dark:hover:text-white transition-colors">Landing Sites</Link>
               <Link href="/#horizon-profiler" className="hover:text-slate-900 dark:hover:text-white transition-colors">Horizon Profiler</Link>
+              <Link href="/#sdgs" className="hover:text-slate-900 dark:hover:text-white transition-colors">UN SDGs</Link>
               <Link href="/dashboard/chat" className="hover:text-slate-900 dark:hover:text-white transition-colors">AI Strategist</Link>
               <Link href="https://github.com/gmrafi/cfsbr-selensync" target="_blank" className="hover:text-slate-900 dark:hover:text-white transition-colors">GitHub</Link>
             </div>
