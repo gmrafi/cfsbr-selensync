@@ -88,8 +88,8 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
             </Link>
           </nav>
 
-          {/* Action CTAs + Theme Switcher */}
-          <div className="hidden sm:flex items-center gap-2">
+          {/* Action CTAs + Theme Switcher (Desktop) */}
+          <div className="hidden lg:flex items-center gap-2">
             {/* Theme Toggle Button (Light/Dark) */}
             <Button
               variant="outline"
@@ -133,8 +133,14 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
             </Link>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <div className="flex items-center gap-1 sm:hidden">
+          {/* Tablet & Mobile Menu Toggle */}
+          <div className="flex items-center gap-1.5 lg:hidden">
+            <Link href="/dashboard" className="hidden sm:inline-flex">
+              <Button size="sm" className="bg-[#4e6aff] hover:bg-[#3d59ef] text-white font-semibold text-xs px-3 h-8 rounded-lg shadow-xs">
+                <Rocket className="w-3 h-3 mr-1" />
+                Cockpit
+              </Button>
+            </Link>
             <Button
               variant="outline"
               size="sm"

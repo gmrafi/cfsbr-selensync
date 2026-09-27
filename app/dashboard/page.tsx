@@ -7,7 +7,7 @@ export const metadata = {
 
 export default function DashboardPage() {
   return (
-    <div className="h-screen w-screen overflow-hidden flex flex-col bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-[#4e6aff]/20">
+    <div className="min-h-screen lg:h-screen w-full overflow-y-auto lg:overflow-hidden flex flex-col bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-[#4e6aff]/20">
       <LunarMissionDashboard />
     </div>
   )

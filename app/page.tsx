@@ -72,51 +72,51 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 1. HERO SECTION (FULL SCREEN SLIDE 1: PUNCHY COLORS, HIGH-CONTRAST BORDERS) */}
       {/* ========================================================================= */}
-      <section className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-center py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50/70 via-slate-100 to-indigo-50/40 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-[#4e6aff]/40">
+      <section className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-center py-6 sm:py-8 lg:py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50/70 via-slate-100 to-indigo-50/40 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-[#4e6aff]/40">
         <div className="absolute inset-0 bg-[radial-gradient(#4e6aff_0.75px,transparent_0.75px)] opacity-15 pointer-events-none [background-size:24px_24px]" />
         
-        <div className="container mx-auto max-w-6xl relative z-10 flex flex-col justify-between my-auto space-y-6">
-          <div className="text-center max-w-4xl mx-auto space-y-3">
+        <div className="container mx-auto max-w-6xl relative z-10 flex flex-col justify-between my-auto space-y-4 sm:space-y-5 lg:space-y-6">
+          <div className="text-center max-w-4xl mx-auto space-y-2.5 sm:space-y-3">
             {/* Top Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-slate-900 border-2 border-[#4e6aff]/40 text-slate-900 dark:text-slate-100 text-xs font-bold shadow-sm">
-              <span className="flex h-2.5 w-2.5 rounded-full bg-[#4e6aff] animate-pulse"></span>
+            <div className="inline-flex items-center justify-center flex-wrap gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-white dark:bg-slate-900 border-2 border-[#4e6aff]/40 text-slate-900 dark:text-slate-100 text-[11px] sm:text-xs font-bold shadow-sm">
+              <span className="flex h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-[#4e6aff] animate-pulse"></span>
               <span className="font-bold">NASA Space Apps Challenge 2026</span>
-              <span className="text-slate-300 dark:text-slate-600">•</span>
+              <span className="text-slate-300 dark:text-slate-600 hidden xs:inline">•</span>
               <span className="text-[#4e6aff]">CLPS Lunar Mission Browser</span>
-              <span className="text-slate-300 dark:text-slate-600">•</span>
+              <span className="text-slate-300 dark:text-slate-600 hidden sm:inline">•</span>
               <span className="text-amber-600 dark:text-amber-400 font-semibold">2025 Global Nominees</span>
             </div>
 
             {/* Main Title (H1) */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 dark:text-white font-sans leading-tight">
-              Navigate Lunar South Pole Payloads <br className="hidden sm:inline" />
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 dark:text-white font-sans leading-tight">
+              Navigate Lunar South Pole Payloads <br className="hidden md:inline" />
               with <span className="text-[#4e6aff] underline decoration-[#4e6aff]/40 decoration-4 underline-offset-4">Real-Time Solar &amp; Comms Precision</span>
             </h1>
 
             {/* Sub-Title */}
-            <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 max-w-2xl mx-auto font-medium">
+            <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 max-w-2xl mx-auto font-medium px-2 sm:px-0 leading-relaxed">
               Simulate Sun illumination cycles, crater rim topographic shadow masking, and Direct-to-Earth (DTE) communication windows for NASA Artemis &amp; CLPS commercial landers.
             </p>
 
             {/* Call-to-Actions (CTAs) */}
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+            <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 pt-1">
               <Link href="/dashboard">
                 <Button
                   size="default"
-                  className="bg-[#4e6aff] hover:bg-[#3d59ef] text-white font-bold px-6 py-2 text-xs rounded-lg shadow-md transition-all hover:scale-105"
+                  className="bg-[#4e6aff] hover:bg-[#3d59ef] text-white font-bold px-5 sm:px-6 py-2 text-xs rounded-lg shadow-md transition-all hover:scale-105"
                 >
-                  <Rocket className="w-4 h-4 mr-2" />
+                  <Rocket className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-2" />
                   Launch Mission Cockpit
-                  <ArrowRight className="w-4 h-4 ml-1.5" />
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-1.5" />
                 </Button>
               </Link>
               <Link href="/dashboard/map">
                 <Button
                   size="default"
                   variant="outline"
-                  className="border-2 border-indigo-400/50 bg-white dark:bg-slate-900 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-50 font-bold px-6 py-2 text-xs rounded-lg shadow-sm transition-all"
+                  className="border-2 border-indigo-400/50 bg-white dark:bg-slate-900 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-50 font-bold px-5 sm:px-6 py-2 text-xs rounded-lg shadow-sm transition-all"
                 >
-                  <Globe className="w-4 h-4 mr-2 text-[#4e6aff]" />
+                  <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-2 text-[#4e6aff]" />
                   Open 3D Moon Globe
                 </Button>
               </Link>
@@ -126,40 +126,41 @@ export default function HomePage() {
           {/* Hero Live Telemetry Cockpit Preview */}
           <div className="max-w-4xl mx-auto w-full rounded-2xl border-2 border-indigo-300 dark:border-indigo-900/60 bg-white dark:bg-slate-900 shadow-xl overflow-hidden">
             {/* Cockpit Header Bar */}
-            <div className="px-4 py-2.5 bg-slate-900 text-white flex items-center justify-between flex-wrap gap-2 text-xs border-b border-slate-800">
-              <div className="flex items-center gap-2">
-                <div className="flex gap-1.5">
+            <div className="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-slate-900 text-white flex items-center justify-between flex-wrap gap-2 text-xs border-b border-slate-800">
+              <div className="flex items-center gap-2 min-w-0">
+                <div className="flex gap-1.5 shrink-0">
                   <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                   <div className="w-2.5 h-2.5 rounded-full bg-amber-500"></div>
                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
                 </div>
-                <span className="font-mono font-bold text-white ml-1.5 tracking-wide">
+                <span className="font-mono font-bold text-white ml-1 tracking-wide text-[10px] sm:text-xs truncate">
                   MISSION COCKPIT &bull; MALAPERT MASSIF (-85.99°S, 2.93°E)
                 </span>
               </div>
-              <Badge className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[10px] font-mono">
+              <Badge className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[9px] sm:text-[10px] font-mono shrink-0">
                 <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-1.5 inline-block animate-ping"></span>
                 ACTIVE TELEMETRY
               </Badge>
             </div>
 
             {/* Cockpit Telemetry Grid */}
-            <div className="p-4 grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-50 dark:bg-slate-950">
+            <div className="p-3 sm:p-4 grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-3 lg:gap-4 bg-slate-50 dark:bg-slate-950">
               {/* Telemetry Block 1: Solar */}
               <div className="bg-amber-50/60 dark:bg-amber-950/20 border-2 border-amber-300/70 dark:border-amber-700/50 rounded-xl p-3 space-y-1.5 shadow-sm">
                 <div className="flex items-center justify-between text-xs font-bold text-amber-900 dark:text-amber-200">
                   <span className="flex items-center gap-1.5">
-                    <Sun className="w-4 h-4 text-amber-600" /> Sun Elevation (θ)
+                    <Sun className="w-4 h-4 text-amber-600 shrink-0" /> Sun Elevation (θ)
                   </span>
-                  <span className="text-emerald-700 dark:text-emerald-300 text-[10px] bg-emerald-100 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded border border-emerald-300 font-bold">Unobstructed</span>
+                  <span className="text-emerald-700 dark:text-emerald-300 text-[10px] bg-emerald-100 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded border border-emerald-300 font-bold shrink-0">Unobstructed</span>
                 </div>
-                <div className="text-3xl font-black font-mono text-amber-950 dark:text-amber-100">
-                  +2.84° <span className="text-xs text-amber-700 font-normal">Az: 142.6°</span>
+                <div className="text-2xl sm:text-xl lg:text-2xl xl:text-3xl font-black font-mono text-amber-950 dark:text-amber-100 flex items-baseline justify-between">
+                  <span>+2.84°</span>
+                  <span className="text-xs text-amber-700 dark:text-amber-300 font-normal">Az: 142.6°</span>
                 </div>
                 <div className="w-full bg-amber-200 dark:bg-amber-900/40 h-2 rounded-full overflow-hidden">
                   <div className="bg-amber-500 h-full w-[78%]"></div>
                 </div>
-                <div className="flex justify-between text-[11px] text-amber-800 dark:text-amber-300 font-medium">
+                <div className="flex justify-between text-[10px] sm:text-[11px] text-amber-800 dark:text-amber-300 font-medium">
                   <span>Horizon Margin: +2.04°</span>
                   <span className="font-bold">614 W Output</span>
                 </div>
@@ -169,18 +170,19 @@ export default function HomePage() {
               <div className="bg-blue-50/60 dark:bg-blue-950/20 border-2 border-blue-300/70 dark:border-blue-700/50 rounded-xl p-3 space-y-1.5 shadow-sm">
                 <div className="flex items-center justify-between text-xs font-bold text-blue-900 dark:text-blue-200">
                   <span className="flex items-center gap-1.5">
-                    <Radio className="w-4 h-4 text-[#4e6aff]" /> DSN 34m X-Band
+                    <Radio className="w-4 h-4 text-[#4e6aff] shrink-0" /> DSN 34m X-Band
                   </span>
-                  <span className="text-emerald-700 dark:text-emerald-300 text-[10px] bg-emerald-100 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded border border-emerald-300 font-bold">Link Closed</span>
+                  <span className="text-emerald-700 dark:text-emerald-300 text-[10px] bg-emerald-100 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded border border-emerald-300 font-bold shrink-0">Link Closed</span>
                 </div>
-                <div className="text-3xl font-black font-mono text-blue-950 dark:text-blue-100">
-                  +4.8 dB <span className="text-xs text-blue-700 font-normal">Margin</span>
+                <div className="text-2xl sm:text-xl lg:text-2xl xl:text-3xl font-black font-mono text-blue-950 dark:text-blue-100 flex items-baseline justify-between">
+                  <span>+4.8 dB</span>
+                  <span className="text-xs text-blue-700 dark:text-blue-300 font-normal">Margin</span>
                 </div>
                 <div className="w-full bg-blue-200 dark:bg-blue-900/40 h-2 rounded-full overflow-hidden">
                   <div className="bg-[#4e6aff] h-full w-[88%]"></div>
                 </div>
-                <div className="flex justify-between text-[11px] text-blue-800 dark:text-blue-300 font-medium">
-                  <span>FSPL: 216.5 dB</span>
+                <div className="flex justify-between text-[10px] sm:text-[11px] text-blue-800 dark:text-blue-300 font-medium">
+                  <span>FSPL: 222.7 dB</span>
                   <span className="font-bold">Goldstone Locked</span>
                 </div>
               </div>
@@ -189,17 +191,18 @@ export default function HomePage() {
               <div className="bg-indigo-50/60 dark:bg-indigo-950/20 border-2 border-indigo-300/70 dark:border-indigo-700/50 rounded-xl p-3 space-y-1.5 shadow-sm">
                 <div className="flex items-center justify-between text-xs font-bold text-indigo-900 dark:text-indigo-200">
                   <span className="flex items-center gap-1.5">
-                    <Mountain className="w-4 h-4 text-indigo-600" /> Horizon Relief
+                    <Mountain className="w-4 h-4 text-indigo-600 shrink-0" /> Horizon Relief
                   </span>
-                  <span className="text-indigo-700 dark:text-indigo-300 text-[10px] bg-indigo-100 dark:bg-indigo-900/60 px-1.5 py-0.5 rounded border border-indigo-300 font-bold">5000m Elev</span>
+                  <span className="text-indigo-700 dark:text-indigo-300 text-[10px] bg-indigo-100 dark:bg-indigo-900/60 px-1.5 py-0.5 rounded border border-indigo-300 font-bold shrink-0">5000m Elev</span>
                 </div>
-                <div className="text-3xl font-black font-mono text-indigo-950 dark:text-indigo-100">
-                  0.80° <span className="text-xs text-indigo-700 font-normal">Max Obstacle</span>
+                <div className="text-2xl sm:text-xl lg:text-2xl xl:text-3xl font-black font-mono text-indigo-950 dark:text-indigo-100 flex items-baseline justify-between">
+                  <span>0.80°</span>
+                  <span className="text-xs text-indigo-700 dark:text-indigo-300 font-normal">Max Obstacle</span>
                 </div>
                 <div className="w-full bg-indigo-200 dark:bg-indigo-900/40 h-2 rounded-full overflow-hidden">
                   <div className="bg-indigo-500 h-full w-[35%]"></div>
                 </div>
-                <div className="flex justify-between text-[11px] text-indigo-800 dark:text-indigo-300 font-medium">
+                <div className="flex justify-between text-[10px] sm:text-[11px] text-indigo-800 dark:text-indigo-300 font-medium">
                   <span>Crater Mask: Clear</span>
                   <span className="font-bold">Artemis Baseline</span>
                 </div>
@@ -676,7 +679,7 @@ export default function HomePage() {
                     Direct-to-Earth communications are evaluated across standard X-band (8.45 GHz) links connecting with NASA’s Deep Space Network (DSN) complexes: DSS-14 (Goldstone, USA), DSS-43 (Canberra, Australia), and DSS-65 (Madrid, Spain).
                   </p>
                   <div className="p-2.5 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 font-mono text-[11px] text-slate-800 dark:text-slate-200">
-                    FSPL = 20·log10(d) + 20·log10(f) + 92.45 dB | Mean Free Space Path Loss ≈ 216.5 dB
+                    FSPL = 20·log10(d_km) + 20·log10(f_GHz) + 92.45 dB | Mean Free Space Path Loss ≈ 222.7 dB (8.45 GHz)
                   </div>
                 </AccordionContent>
               </AccordionItem>
@@ -945,7 +948,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-base font-bold text-slate-900 dark:text-white">Link Budget Margin (+4.8 dB)</h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                Computes carrier-to-noise ratio (C/N0), free-space path loss (FSPL ≈ 216.5 dB), and lander high-gain antenna pointing angles to ensure continuous command & telemetry uplink.
+                Computes carrier-to-noise ratio (C/N0), free-space path loss (FSPL ≈ 222.7 dB), and lander high-gain antenna pointing angles to ensure continuous command & telemetry uplink.
               </p>
             </div>
           </div>
