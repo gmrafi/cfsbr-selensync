@@ -32,17 +32,24 @@ export const DEFAULT_CLPS_SOLAR_SPECS: SolarPanelSpecs = {
 
 /**
  * Calculates solar wattage output based on sun altitude and solar panel specifications.
- * At the lunar South Pole, the sun skims the horizon at low elevation angles (1.5° to 3.5°),
- * making vertical panels exceptionally efficient.
+ * At the lunar South Pole, the sun skims the horizon at low elevation angles (1.5° to 3.5°).
+ * Incorporates finite solar disk diameter (0.53°) emergence ramp to prevent instantaneous 
+ * step-function jumps, producing a physically realistic continuous sunrise/sunset power curve.
  */
 export function calculateSolarPower(
   sunAltitudeDeg: number,
   sunAzimuthDeg: number,
-  specs: SolarPanelSpecs = DEFAULT_CLPS_SOLAR_SPECS
+  specs: SolarPanelSpecs = DEFAULT_CLPS_SOLAR_SPECS,
+  obstacleAltitudeDeg: number = 0
 ): SolarPowerOutput {
   const SOLAR_CONSTANT_WM2 = 1361; // W/m^2 (AM0 space solar irradiance)
+  const SUN_ANGULAR_DIAMETER_DEG = 0.53; // Angular diameter of the solar disk
 
-  if (sunAltitudeDeg <= 0) {
+  // Clearance above obstacle horizon
+  const deltaElev = sunAltitudeDeg - obstacleAltitudeDeg;
+
+  // If the entire solar disk is below the obstacle horizon
+  if (deltaElev <= -SUN_ANGULAR_DIAMETER_DEG / 2) {
     return {
       sunAltitudeDeg,
       sunAzimuthDeg,
@@ -54,33 +61,38 @@ export function calculateSolarPower(
     };
   }
 
+  // Smooth solar disk emergence fraction between [-0.265°, +0.265°]
+  const rawDiskFraction = (deltaElev + SUN_ANGULAR_DIAMETER_DEG / 2) / SUN_ANGULAR_DIAMETER_DEG;
+  // Apply cubic smoothstep for physically realistic atmospheric-free solar disk emergence
+  const clampedFraction = Math.max(0, Math.min(1, rawDiskFraction));
+  const diskFraction = clampedFraction * clampedFraction * (3 - 2 * clampedFraction);
+
   // Incident angle calculations depending on array geometry
-  let cosineFactor = 0;
+  let geometricFactor = 0;
   if (specs.orientation === "vertical-cylinder") {
-    // For a vertical cylindrical array, the angle with the horizon determines projected area:
-    // Effective projection = cos(elevation)
-    const elevRad = (sunAltitudeDeg * Math.PI) / 180;
-    cosineFactor = Math.cos(elevRad);
+    // Vertical cylinder receives cos(elevation) projected flux, modulated by disk visibility fraction
+    const elevRad = (Math.max(0, sunAltitudeDeg) * Math.PI) / 180;
+    geometricFactor = Math.cos(elevRad) * diskFraction;
   } else if (specs.orientation === "horizontal-flat") {
     // Flat top panel receives sin(elevation)
-    const elevRad = (sunAltitudeDeg * Math.PI) / 180;
-    cosineFactor = Math.sin(elevRad);
+    const elevRad = (Math.max(0, sunAltitudeDeg) * Math.PI) / 180;
+    geometricFactor = Math.sin(elevRad) * diskFraction;
   } else {
     // Articulated tracking (optimally tracks sun)
-    cosineFactor = 0.98;
+    geometricFactor = 0.98 * diskFraction;
   }
 
-  const effectiveIncidentAngleDeg = Math.acos(Math.max(0, Math.min(1, cosineFactor))) * (180 / Math.PI);
-  const grossGeneratedWatts = SOLAR_CONSTANT_WM2 * specs.totalAreaM2 * specs.cellEfficiency * cosineFactor;
+  const effectiveIncidentAngleDeg = Math.acos(Math.max(0, Math.min(1, geometricFactor))) * (180 / Math.PI);
+  const grossGeneratedWatts = SOLAR_CONSTANT_WM2 * specs.totalAreaM2 * specs.cellEfficiency * geometricFactor;
   const netOutputWatts = grossGeneratedWatts * specs.dustDegradationFactor;
 
   return {
     sunAltitudeDeg,
     sunAzimuthDeg,
-    solarFluxWm2: SOLAR_CONSTANT_WM2,
+    solarFluxWm2: Number((SOLAR_CONSTANT_WM2 * diskFraction).toFixed(1)),
     effectiveIncidentAngleDeg: Number(effectiveIncidentAngleDeg.toFixed(2)),
     grossGeneratedWatts: Number(grossGeneratedWatts.toFixed(2)),
     netOutputWatts: Number(netOutputWatts.toFixed(2)),
-    isGenerating: netOutputWatts > 0,
+    isGenerating: netOutputWatts > 0.5,
   };
 }
