@@ -153,7 +153,7 @@ export default function HomePage() {
                   </span>
                   <span className="text-emerald-700 dark:text-emerald-300 text-[10px] bg-emerald-100 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded border border-emerald-300 font-bold">Unobstructed</span>
                 </div>
-                <div className="text-xl font-black font-mono text-amber-950 dark:text-amber-100">
+                <div className="text-3xl font-black font-mono text-amber-950 dark:text-amber-100">
                   +2.84° <span className="text-xs text-amber-700 font-normal">Az: 142.6°</span>
                 </div>
                 <div className="w-full bg-amber-200 dark:bg-amber-900/40 h-2 rounded-full overflow-hidden">
@@ -173,7 +173,7 @@ export default function HomePage() {
                   </span>
                   <span className="text-emerald-700 dark:text-emerald-300 text-[10px] bg-emerald-100 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded border border-emerald-300 font-bold">Link Closed</span>
                 </div>
-                <div className="text-xl font-black font-mono text-blue-950 dark:text-blue-100">
+                <div className="text-3xl font-black font-mono text-blue-950 dark:text-blue-100">
                   +4.8 dB <span className="text-xs text-blue-700 font-normal">Margin</span>
                 </div>
                 <div className="w-full bg-blue-200 dark:bg-blue-900/40 h-2 rounded-full overflow-hidden">
@@ -193,7 +193,7 @@ export default function HomePage() {
                   </span>
                   <span className="text-indigo-700 dark:text-indigo-300 text-[10px] bg-indigo-100 dark:bg-indigo-900/60 px-1.5 py-0.5 rounded border border-indigo-300 font-bold">5000m Elev</span>
                 </div>
-                <div className="text-xl font-black font-mono text-indigo-950 dark:text-indigo-100">
+                <div className="text-3xl font-black font-mono text-indigo-950 dark:text-indigo-100">
                   0.80° <span className="text-xs text-indigo-700 font-normal">Max Obstacle</span>
                 </div>
                 <div className="w-full bg-indigo-200 dark:bg-indigo-900/40 h-2 rounded-full overflow-hidden">
@@ -210,195 +210,162 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 2. TEAM SHOWCASE (SLIDE 2: FULL SCREEN VIEW WITH VIBRANT BORDERS)         */}
+      {/* 2. TEAM SHOWCASE (SLIDE 2: HORIZONTAL CARDS 3×2, PHOTO-LEFT INFO-RIGHT)   */}
       {/* ========================================================================= */}
-      <section id="team" className="min-h-screen flex flex-col justify-center py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-indigo-50 via-blue-50/70 to-indigo-100/60 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-indigo-400/40">
+      <section id="team" className="min-h-screen flex flex-col justify-center py-6 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-indigo-50 via-blue-50/70 to-indigo-100/60 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-indigo-400/40">
         <div className="container mx-auto max-w-6xl my-auto">
-          <div className="text-center max-w-3xl mx-auto mb-8 space-y-2">
+          <div className="text-center max-w-3xl mx-auto mb-5 space-y-1.5">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white dark:bg-slate-900 border-2 border-indigo-300 dark:border-indigo-700 text-xs font-bold text-indigo-900 dark:text-indigo-200 shadow-sm">
               <Award className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-              <span>NASA Space Apps 2025 Global Nominees &bull; Artemis &amp; CLPS Mission Team</span>
+              <span>NASA Space Apps 2025 Global Nominees &bull; CFSBR SpaceWeb</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white font-sans tracking-tight">
-              Meet the Engineering Team
+              Meet Our Team
             </h2>
-            <p className="text-slate-700 dark:text-slate-300 text-xs sm:text-sm max-w-2xl mx-auto font-medium">
-              CFSBR SpaceWeb: A multidisciplinary 6-member engineering unit uniting orbital ephemeris pipelines, 3D WebGL computation, and lunar exploration strategy.
+            <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm max-w-2xl mx-auto font-medium">
+              A multidisciplinary 6-member team blending <span className="font-semibold text-slate-900 dark:text-white">Computer Science &amp; Engineering</span>, <span className="font-semibold text-slate-900 dark:text-white">Electrical &amp; Electronic Engineering</span>, and <span className="font-semibold text-slate-900 dark:text-white">Finance</span>.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
             {/* Member 1: Md Golam Mubasshir Rafi */}
-            <div className="p-4 rounded-xl bg-blue-50/40 dark:bg-slate-900/90 border-2 border-blue-400 dark:border-blue-600 shadow-md flex flex-col justify-between space-y-3 hover:shadow-lg hover:border-blue-500 transition-all">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Badge className="bg-blue-600 text-white text-[11px] font-bold px-2.5 py-0.5 shadow-xs">
-                    Lead Architect
-                  </Badge>
-                  <span className="text-[11px] text-blue-700 dark:text-blue-300 font-mono font-semibold">CFSBR SpaceWeb</span>
-                </div>
-                <div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white font-sans">
-                    Md Golam Mubasshir Rafi
-                  </h3>
-                  <p className="text-xs text-blue-700 dark:text-blue-400 font-semibold mt-0.5">
-                    Lead: Product Architecture &amp; Spatial Analytics
-                  </p>
-                </div>
-                <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
-                  Architects the Meeus orbital ephemeris engine, 3D WebGL celestial sphere, DTE line-of-sight algorithms, and core system design.
-                </p>
+            <div className="rounded-xl bg-white dark:bg-slate-900/90 border-2 border-slate-200 dark:border-slate-800 h-64 shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-slate-700 transition-all overflow-hidden flex flex-row">
+              <div className="relative w-44 shrink-0 bg-slate-100 dark:bg-slate-800">
+                <Image src="/team/rafi.jpg" alt="Md Golam Mubasshir Rafi" fill className="object-cover object-top" sizes="176px" />
               </div>
-              <div className="pt-2.5 border-t border-blue-200 dark:border-blue-900 flex items-center justify-between text-xs">
-                <span className="text-slate-600 dark:text-slate-400 font-medium">Sylhet, Bangladesh</span>
-                <Link href="https://github.com/gmrafi" target="_blank">
-                  <Button variant="outline" size="sm" className="text-xs text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-950 border-blue-300 dark:border-blue-700 h-7 px-2.5 font-bold">
-                    GitHub Profile <ExternalLink className="w-3 h-3 ml-1" />
-                  </Button>
-                </Link>
+              <div className="flex-1 p-4 flex flex-col justify-between min-w-0">
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <Badge className="bg-blue-600 text-white text-[10px] font-bold px-2 py-0 shadow-xs">Team Lead</Badge>
+                    <span className="text-[9px] font-bold bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-400 border border-teal-200 dark:border-teal-800 px-1.5 py-0.5 rounded">Finance</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white font-sans leading-snug">Md Golam Mubasshir Rafi</h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-semibold leading-tight">Product Architecture &amp; Mission Strategy</p>
+                </div>
+                <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  <span className="text-[10px] font-semibold text-slate-500">CFSBR SpaceWeb</span>
+                  <Link href="https://github.com/gmrafi" target="_blank">
+                    <Button variant="outline" size="sm" className="text-[10px] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border-slate-200 dark:border-slate-700 h-6 px-2 font-bold">GitHub <ExternalLink className="w-2.5 h-2.5 ml-1" /></Button>
+                  </Link>
+                </div>
               </div>
             </div>
 
             {/* Member 2: Afshara Tasneem Zoa */}
-            <div className="p-4 rounded-xl bg-purple-50/40 dark:bg-slate-900/90 border-2 border-purple-400 dark:border-purple-600 shadow-md flex flex-col justify-between space-y-3 hover:shadow-lg hover:border-purple-500 transition-all">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Badge className="bg-purple-600 text-white text-[11px] font-bold px-2.5 py-0.5 shadow-xs">
-                    Co-Lead Research
-                  </Badge>
-                  <span className="text-[11px] text-purple-700 dark:text-purple-300 font-mono font-semibold">CFSBR SpaceWeb</span>
-                </div>
-                <div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white font-sans">
-                    Afshara Tasneem Zoa
-                  </h3>
-                  <p className="text-xs text-purple-700 dark:text-purple-400 font-semibold mt-0.5">
-                    Co-Lead: Strategy &amp; Research
-                  </p>
-                </div>
-                <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
-                  Leads lunar surface exploration research, CLPS regulatory requirements, Artemis candidate site evaluation, and decision assistant prompts.
-                </p>
+            <div className="rounded-xl bg-white dark:bg-slate-900/90 border-2 border-slate-200 dark:border-slate-800 h-64 shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-slate-700 transition-all overflow-hidden flex flex-row">
+              <div className="relative w-44 shrink-0 bg-slate-100 dark:bg-slate-800">
+                <Image src="/team/zoa.jpg" alt="Afshara Tasneem Zoa" fill className="object-cover object-top" sizes="176px" />
               </div>
-              <div className="pt-2.5 border-t border-purple-200 dark:border-purple-900 flex items-center justify-between text-xs">
-                <span className="text-slate-600 dark:text-slate-400 font-medium">Sylhet, Bangladesh</span>
-                <Link href="https://github.com/gmrafi" target="_blank">
-                  <Button variant="outline" size="sm" className="text-xs text-purple-700 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-950 border-purple-300 dark:border-purple-700 h-7 px-2.5 font-bold">
-                    Research Dossier <ExternalLink className="w-3 h-3 ml-1" />
-                  </Button>
-                </Link>
+              <div className="flex-1 p-4 flex flex-col justify-between min-w-0">
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <Badge className="bg-blue-600 text-white text-[10px] font-bold px-2 py-0 shadow-xs">Co-Lead</Badge>
+                    <span className="text-[9px] font-bold bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-400 border border-teal-200 dark:border-teal-800 px-1.5 py-0.5 rounded">CSE</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white font-sans leading-snug">Afshara Tasneem Zoa</h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-semibold leading-tight">Scientific Research &amp; Systems Strategy</p>
+                </div>
+                <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  <span className="text-[10px] font-semibold text-slate-500">CFSBR SpaceWeb</span>
+                  <Link href="https://github.com/zoaafshara" target="_blank">
+                    <Button variant="outline" size="sm" className="text-[10px] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border-slate-200 dark:border-slate-700 h-6 px-2 font-bold">GitHub <ExternalLink className="w-2.5 h-2.5 ml-1" /></Button>
+                  </Link>
+                </div>
               </div>
             </div>
 
-            {/* Member 3: UI/UX Specialist */}
-            <div className="p-4 rounded-xl bg-cyan-50/40 dark:bg-slate-900/90 border-2 border-cyan-400 dark:border-cyan-600 shadow-md flex flex-col justify-between space-y-3 hover:shadow-lg hover:border-cyan-500 transition-all">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Badge className="bg-cyan-600 text-white text-[11px] font-bold px-2.5 py-0.5 shadow-xs">
-                    Frontend &amp; UI
-                  </Badge>
-                  <span className="text-[11px] text-cyan-700 dark:text-cyan-300 font-mono font-semibold">CFSBR SpaceWeb</span>
-                </div>
-                <div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white font-sans">
-                    Core Contributor
-                  </h3>
-                  <p className="text-xs text-cyan-700 dark:text-cyan-400 font-semibold mt-0.5">
-                    UI/UX &amp; Aerospace Interface Systems
-                  </p>
-                </div>
-                <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
-                  Builds responsive mission HUD layouts, interactive telemetry gauges, high-contrast dark/light design palettes, and accessible controls.
-                </p>
+            {/* Member 3: Kaiba Hasnat */}
+            <div className="rounded-xl bg-white dark:bg-slate-900/90 border-2 border-slate-200 dark:border-slate-800 h-64 shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-slate-700 transition-all overflow-hidden flex flex-row">
+              <div className="relative w-44 shrink-0 bg-slate-100 dark:bg-slate-800">
+                <Image src="/team/member3.jpg" alt="Kaiba Hasnat" fill className="object-cover object-top" sizes="176px" />
               </div>
-              <div className="pt-2.5 border-t border-cyan-200 dark:border-cyan-900 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
-                <span>Bangladesh</span>
-                <span className="font-mono font-semibold text-cyan-800 dark:text-cyan-300">SpaceWeb Team</span>
+              <div className="flex-1 p-4 flex flex-col justify-between min-w-0">
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <Badge className="bg-blue-600 text-white text-[10px] font-bold px-2 py-0 shadow-xs">Frontend &amp; UI</Badge>
+                    <span className="text-[9px] font-bold bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-400 border border-teal-200 dark:border-teal-800 px-1.5 py-0.5 rounded">EEE</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white font-sans leading-snug">Kaiba Hasnat</h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-semibold leading-tight">Avionics Interface &amp; Telemetry UI</p>
+                </div>
+                <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  <span className="text-[10px] font-semibold text-slate-500">CFSBR SpaceWeb</span>
+                  <Link href="#" target="_blank">
+                    <Button variant="outline" size="sm" className="text-[10px] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border-slate-200 dark:border-slate-700 h-6 px-2 font-bold">GitHub <ExternalLink className="w-2.5 h-2.5 ml-1" /></Button>
+                  </Link>
+                </div>
               </div>
             </div>
 
-            {/* Member 4: Planetary GIS & Altimetry */}
-            <div className="p-4 rounded-xl bg-emerald-50/40 dark:bg-slate-900/90 border-2 border-emerald-400 dark:border-emerald-600 shadow-md flex flex-col justify-between space-y-3 hover:shadow-lg hover:border-emerald-500 transition-all">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Badge className="bg-emerald-600 text-white text-[11px] font-bold px-2.5 py-0.5 shadow-xs">
-                    Data &amp; GIS
-                  </Badge>
-                  <span className="text-[11px] text-emerald-700 dark:text-emerald-300 font-mono font-semibold">CFSBR SpaceWeb</span>
-                </div>
-                <div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white font-sans">
-                    Core Contributor
-                  </h3>
-                  <p className="text-xs text-emerald-700 dark:text-emerald-400 font-semibold mt-0.5">
-                    Planetary GIS &amp; Altimetry Modeling
-                  </p>
-                </div>
-                <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
-                  Processes NASA LOLA DEM altimetry rasters, stereographic polar projections, crater slope gradients, and topographic horizon skyline profiles.
-                </p>
+            {/* Member 4: Labiba Mahzabin */}
+            <div className="rounded-xl bg-white dark:bg-slate-900/90 border-2 border-slate-200 dark:border-slate-800 h-64 shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-slate-700 transition-all overflow-hidden flex flex-row">
+              <div className="relative w-44 shrink-0 bg-slate-100 dark:bg-slate-800">
+                <Image src="/team/labiba.jpg" alt="Labiba Mahzabin" fill className="object-cover object-top" sizes="176px" />
               </div>
-              <div className="pt-2.5 border-t border-emerald-200 dark:border-emerald-900 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
-                <span>Bangladesh</span>
-                <span className="font-mono font-semibold text-emerald-800 dark:text-emerald-300">SpaceWeb Team</span>
+              <div className="flex-1 p-4 flex flex-col justify-between min-w-0">
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <Badge className="bg-blue-600 text-white text-[10px] font-bold px-2 py-0 shadow-xs">Data &amp; GIS</Badge>
+                    <span className="text-[9px] font-bold bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-400 border border-teal-200 dark:border-teal-800 px-1.5 py-0.5 rounded">CSE</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white font-sans leading-snug">Labiba Mahzabin</h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-semibold leading-tight">Planetary GIS &amp; Data Engineering</p>
+                </div>
+                <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  <span className="text-[10px] font-semibold text-slate-500">CFSBR SpaceWeb</span>
+                  <Link href="#" target="_blank">
+                    <Button variant="outline" size="sm" className="text-[10px] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border-slate-200 dark:border-slate-700 h-6 px-2 font-bold">GitHub <ExternalLink className="w-2.5 h-2.5 ml-1" /></Button>
+                  </Link>
+                </div>
               </div>
             </div>
 
-            {/* Member 5: Mission Analytics */}
-            <div className="p-4 rounded-xl bg-amber-50/40 dark:bg-slate-900/90 border-2 border-amber-400 dark:border-amber-600 shadow-md flex flex-col justify-between space-y-3 hover:shadow-lg hover:border-amber-500 transition-all">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Badge className="bg-amber-600 text-white text-[11px] font-bold px-2.5 py-0.5 shadow-xs">
-                    Mission Analytics
-                  </Badge>
-                  <span className="text-[11px] text-amber-700 dark:text-amber-300 font-mono font-semibold">CFSBR SpaceWeb</span>
-                </div>
-                <div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white font-sans">
-                    Core Contributor
-                  </h3>
-                  <p className="text-xs text-amber-700 dark:text-amber-400 font-semibold mt-0.5">
-                    MCDA Feasibility &amp; Trajectory Analysis
-                  </p>
-                </div>
-                <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
-                  Formulates Multi-Criteria Decision Analysis (MCDA) metrics, landing site risk matrices, solar blackout risk scoring, and comms reliability indices.
-                </p>
+            {/* Member 5: Nafiz Akib Khan */}
+            <div className="rounded-xl bg-white dark:bg-slate-900/90 border-2 border-slate-200 dark:border-slate-800 h-64 shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-slate-700 transition-all overflow-hidden flex flex-row">
+              <div className="relative w-44 shrink-0 bg-slate-100 dark:bg-slate-800">
+                <Image src="/team/member5.jpg" alt="Nafiz Akib Khan" fill className="object-cover object-top" sizes="176px" />
               </div>
-              <div className="pt-2.5 border-t border-amber-200 dark:border-amber-900 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
-                <span>Bangladesh</span>
-                <span className="font-mono font-semibold text-amber-800 dark:text-amber-300">SpaceWeb Team</span>
+              <div className="flex-1 p-4 flex flex-col justify-between min-w-0">
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <Badge className="bg-blue-600 text-white text-[10px] font-bold px-2 py-0 shadow-xs">Analytics</Badge>
+                    <span className="text-[9px] font-bold bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-400 border border-teal-200 dark:border-teal-800 px-1.5 py-0.5 rounded">EEE</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white font-sans leading-snug">Nafiz Akib Khan</h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-semibold leading-tight">Power Budgeting &amp; Feasibility Modeling</p>
+                </div>
+                <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  <span className="text-[10px] font-semibold text-slate-500">CFSBR SpaceWeb</span>
+                  <Link href="#" target="_blank">
+                    <Button variant="outline" size="sm" className="text-[10px] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border-slate-200 dark:border-slate-700 h-6 px-2 font-bold">GitHub <ExternalLink className="w-2.5 h-2.5 ml-1" /></Button>
+                  </Link>
+                </div>
               </div>
             </div>
 
             {/* Member 6: Comms & Outreach */}
-            <div className="p-4 rounded-xl bg-rose-50/40 dark:bg-slate-900/90 border-2 border-rose-400 dark:border-rose-600 shadow-md flex flex-col justify-between space-y-3 hover:shadow-lg hover:border-rose-500 transition-all">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Badge className="bg-rose-600 text-white text-[11px] font-bold px-2.5 py-0.5 shadow-xs">
-                    Comms &amp; Outreach
-                  </Badge>
-                  <span className="text-[11px] text-rose-700 dark:text-rose-300 font-mono font-semibold">CFSBR SpaceWeb</span>
-                </div>
-                <div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white font-sans">
-                    Core Contributor
-                  </h3>
-                  <p className="text-xs text-rose-700 dark:text-rose-400 font-semibold mt-0.5">
-                    Documentation &amp; Mission Presentation
-                  </p>
-                </div>
-                <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
-                  Synthesizes technical mission documentation, UN SDG sustainability impact frameworks, video pitch scripts, and open-science community outreach.
-                </p>
+            <div className="rounded-xl bg-white dark:bg-slate-900/90 border-2 border-slate-200 dark:border-slate-800 h-64 shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-slate-700 transition-all overflow-hidden flex flex-row">
+              <div className="relative w-44 shrink-0 bg-slate-100 dark:bg-slate-800">
+                <Image src="/team/nowshin.jpg" alt="Nishat Jahan Nowshin" fill className="object-cover object-top" sizes="176px" />
               </div>
-              <div className="pt-2.5 border-t border-rose-200 dark:border-rose-900 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
-                <span>Bangladesh</span>
-                <span className="font-mono font-semibold text-rose-800 dark:text-rose-300">SpaceWeb Team</span>
+              <div className="flex-1 p-4 flex flex-col justify-between min-w-0">
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <Badge className="bg-blue-600 text-white text-[10px] font-bold px-2 py-0 shadow-xs">Comms</Badge>
+                    <span className="text-[9px] font-bold bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-400 border border-teal-200 dark:border-teal-800 px-1.5 py-0.5 rounded">EEE</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-white font-sans leading-snug">Nishat Jahan Nowshin</h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-semibold leading-tight">Mission Communications &amp; Public Outreach</p>
+                </div>
+                <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  <span className="text-[10px] font-semibold text-slate-500">CFSBR SpaceWeb</span>
+                  <Link href="#" target="_blank">
+                    <Button variant="outline" size="sm" className="text-[10px] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border-slate-200 dark:border-slate-700 h-6 px-2 font-bold">GitHub <ExternalLink className="w-2.5 h-2.5 ml-1" /></Button>
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </div></div>
       </section>
 
       {/* ========================================================================= */}
@@ -1527,3 +1494,7 @@ export default function HomePage() {
     </div>
   )
 }
+
+
+
+
