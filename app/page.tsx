@@ -88,8 +88,8 @@ export default function HomePage() {
             </div>
 
             {/* Main Title (H1) */}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 dark:text-white font-sans leading-tight">
-              Navigate Lunar South Pole Payloads <br className="hidden md:inline" />
+            <h1 className="text-2xl sm:text-3xl md:text-[32px] md:leading-[1.2] lg:text-5xl lg:leading-tight font-black tracking-tight text-slate-900 dark:text-white font-sans">
+              Navigate Lunar South Pole Payloads <br className="hidden sm:inline" />
               with <span className="text-[#4e6aff] underline decoration-[#4e6aff]/40 decoration-4 underline-offset-4">Real-Time Solar &amp; Comms Precision</span>
             </h1>
 
@@ -126,7 +126,7 @@ export default function HomePage() {
           {/* Hero Live Telemetry Cockpit Preview */}
           <div className="max-w-4xl mx-auto w-full rounded-2xl border-2 border-indigo-300 dark:border-indigo-900/60 bg-white dark:bg-slate-900 shadow-xl overflow-hidden">
             {/* Cockpit Header Bar */}
-            <div className="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-slate-900 text-white flex items-center justify-between flex-wrap gap-2 text-xs border-b border-slate-800">
+            <div className="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-slate-900 text-white flex items-center justify-between gap-2 text-xs border-b border-slate-800">
               <div className="flex items-center gap-2 min-w-0">
                 <div className="flex gap-1.5 shrink-0">
                   <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
@@ -137,7 +137,7 @@ export default function HomePage() {
                   MISSION COCKPIT &bull; MALAPERT MASSIF (-85.99°S, 2.93°E)
                 </span>
               </div>
-              <Badge className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[9px] sm:text-[10px] font-mono shrink-0">
+              <Badge className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[9px] sm:text-[10px] font-mono shrink-0 whitespace-nowrap">
                 <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-1.5 inline-block animate-ping"></span>
                 ACTIVE TELEMETRY
               </Badge>
@@ -146,64 +146,74 @@ export default function HomePage() {
             {/* Cockpit Telemetry Grid */}
             <div className="p-3 sm:p-4 grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-3 lg:gap-4 bg-slate-50 dark:bg-slate-950">
               {/* Telemetry Block 1: Solar */}
-              <div className="bg-amber-50/60 dark:bg-amber-950/20 border-2 border-amber-300/70 dark:border-amber-700/50 rounded-xl p-3 space-y-1.5 shadow-sm">
-                <div className="flex items-center justify-between text-xs font-bold text-amber-900 dark:text-amber-200">
-                  <span className="flex items-center gap-1.5">
-                    <Sun className="w-4 h-4 text-amber-600 shrink-0" /> Sun Elevation (θ)
+              <div className="bg-amber-50/60 dark:bg-amber-950/20 border-2 border-amber-300/70 dark:border-amber-700/50 rounded-xl p-2.5 sm:p-3 space-y-1.5 shadow-sm">
+                <div className="flex items-center justify-between gap-1 text-xs font-bold text-amber-900 dark:text-amber-200">
+                  <span className="flex items-center gap-1.5 truncate">
+                    <Sun className="w-4 h-4 text-amber-600 shrink-0" />
+                    <span className="truncate">Sun Elevation <span className="hidden xl:inline">(θ)</span></span>
                   </span>
-                  <span className="text-emerald-700 dark:text-emerald-300 text-[10px] bg-emerald-100 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded border border-emerald-300 font-bold shrink-0">Unobstructed</span>
+                  <span className="text-emerald-700 dark:text-emerald-300 text-[9px] sm:text-[10px] bg-emerald-100 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded border border-emerald-300 font-bold shrink-0">
+                    <span className="hidden lg:inline">Unobstructed</span>
+                    <span className="lg:hidden">Clear</span>
+                  </span>
                 </div>
-                <div className="text-2xl sm:text-xl lg:text-2xl xl:text-3xl font-black font-mono text-amber-950 dark:text-amber-100 flex items-baseline justify-between">
+                <div className="text-xl sm:text-xl lg:text-2xl xl:text-3xl font-black font-mono text-amber-950 dark:text-amber-100 flex items-baseline justify-between">
                   <span>+2.84°</span>
                   <span className="text-xs text-amber-700 dark:text-amber-300 font-normal">Az: 142.6°</span>
                 </div>
                 <div className="w-full bg-amber-200 dark:bg-amber-900/40 h-2 rounded-full overflow-hidden">
                   <div className="bg-amber-500 h-full w-[78%]"></div>
                 </div>
-                <div className="flex justify-between text-[10px] sm:text-[11px] text-amber-800 dark:text-amber-300 font-medium">
-                  <span>Horizon Margin: +2.04°</span>
+                <div className="flex justify-between items-center text-[10px] lg:text-[11px] text-amber-800 dark:text-amber-300 font-medium whitespace-nowrap">
+                  <span>Margin: +2.04°</span>
                   <span className="font-bold">614 W Output</span>
                 </div>
               </div>
 
               {/* Telemetry Block 2: DTE */}
-              <div className="bg-blue-50/60 dark:bg-blue-950/20 border-2 border-blue-300/70 dark:border-blue-700/50 rounded-xl p-3 space-y-1.5 shadow-sm">
-                <div className="flex items-center justify-between text-xs font-bold text-blue-900 dark:text-blue-200">
-                  <span className="flex items-center gap-1.5">
-                    <Radio className="w-4 h-4 text-[#4e6aff] shrink-0" /> DSN 34m X-Band
+              <div className="bg-blue-50/60 dark:bg-blue-950/20 border-2 border-blue-300/70 dark:border-blue-700/50 rounded-xl p-2.5 sm:p-3 space-y-1.5 shadow-sm">
+                <div className="flex items-center justify-between gap-1 text-xs font-bold text-blue-900 dark:text-blue-200">
+                  <span className="flex items-center gap-1.5 truncate">
+                    <Radio className="w-4 h-4 text-[#4e6aff] shrink-0" />
+                    <span className="truncate">DSN <span className="hidden lg:inline">34m </span>X-Band</span>
                   </span>
-                  <span className="text-emerald-700 dark:text-emerald-300 text-[10px] bg-emerald-100 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded border border-emerald-300 font-bold shrink-0">Link Closed</span>
+                  <span className="text-emerald-700 dark:text-emerald-300 text-[9px] sm:text-[10px] bg-emerald-100 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded border border-emerald-300 font-bold shrink-0">
+                    Link Closed
+                  </span>
                 </div>
-                <div className="text-2xl sm:text-xl lg:text-2xl xl:text-3xl font-black font-mono text-blue-950 dark:text-blue-100 flex items-baseline justify-between">
+                <div className="text-xl sm:text-xl lg:text-2xl xl:text-3xl font-black font-mono text-blue-950 dark:text-blue-100 flex items-baseline justify-between">
                   <span>+4.8 dB</span>
                   <span className="text-xs text-blue-700 dark:text-blue-300 font-normal">Margin</span>
                 </div>
                 <div className="w-full bg-blue-200 dark:bg-blue-900/40 h-2 rounded-full overflow-hidden">
                   <div className="bg-[#4e6aff] h-full w-[88%]"></div>
                 </div>
-                <div className="flex justify-between text-[10px] sm:text-[11px] text-blue-800 dark:text-blue-300 font-medium">
+                <div className="flex justify-between items-center text-[10px] lg:text-[11px] text-blue-800 dark:text-blue-300 font-medium whitespace-nowrap">
                   <span>FSPL: 222.7 dB</span>
                   <span className="font-bold">Goldstone Locked</span>
                 </div>
               </div>
 
               {/* Telemetry Block 3: Topography */}
-              <div className="bg-indigo-50/60 dark:bg-indigo-950/20 border-2 border-indigo-300/70 dark:border-indigo-700/50 rounded-xl p-3 space-y-1.5 shadow-sm">
-                <div className="flex items-center justify-between text-xs font-bold text-indigo-900 dark:text-indigo-200">
-                  <span className="flex items-center gap-1.5">
-                    <Mountain className="w-4 h-4 text-indigo-600 shrink-0" /> Horizon Relief
+              <div className="bg-indigo-50/60 dark:bg-indigo-950/20 border-2 border-indigo-300/70 dark:border-indigo-700/50 rounded-xl p-2.5 sm:p-3 space-y-1.5 shadow-sm">
+                <div className="flex items-center justify-between gap-1 text-xs font-bold text-indigo-900 dark:text-indigo-200">
+                  <span className="flex items-center gap-1.5 truncate">
+                    <Mountain className="w-4 h-4 text-indigo-600 shrink-0" />
+                    <span className="truncate">Horizon Relief</span>
                   </span>
-                  <span className="text-indigo-700 dark:text-indigo-300 text-[10px] bg-indigo-100 dark:bg-indigo-900/60 px-1.5 py-0.5 rounded border border-indigo-300 font-bold shrink-0">5000m Elev</span>
+                  <span className="text-indigo-700 dark:text-indigo-300 text-[9px] sm:text-[10px] bg-indigo-100 dark:bg-indigo-900/60 px-1.5 py-0.5 rounded border border-indigo-300 font-bold shrink-0">
+                    5000m Elev
+                  </span>
                 </div>
-                <div className="text-2xl sm:text-xl lg:text-2xl xl:text-3xl font-black font-mono text-indigo-950 dark:text-indigo-100 flex items-baseline justify-between">
+                <div className="text-xl sm:text-xl lg:text-2xl xl:text-3xl font-black font-mono text-indigo-950 dark:text-indigo-100 flex items-baseline justify-between">
                   <span>0.80°</span>
                   <span className="text-xs text-indigo-700 dark:text-indigo-300 font-normal">Max Obstacle</span>
                 </div>
                 <div className="w-full bg-indigo-200 dark:bg-indigo-900/40 h-2 rounded-full overflow-hidden">
                   <div className="bg-indigo-500 h-full w-[35%]"></div>
                 </div>
-                <div className="flex justify-between text-[10px] sm:text-[11px] text-indigo-800 dark:text-indigo-300 font-medium">
-                  <span>Crater Mask: Clear</span>
+                <div className="flex justify-between items-center text-[10px] lg:text-[11px] text-indigo-800 dark:text-indigo-300 font-medium whitespace-nowrap">
+                  <span>Mask: Clear</span>
                   <span className="font-bold">Artemis Baseline</span>
                 </div>
               </div>
