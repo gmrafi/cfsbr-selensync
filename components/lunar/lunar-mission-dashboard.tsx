@@ -31,6 +31,8 @@ import CockpitPowerThermal from "./cockpit/cockpit-power-thermal";
 import CockpitTimeDrawer from "./cockpit/cockpit-time-drawer";
 import TelemetryCharts, { TelemetryDataPoint } from "./telemetry-charts";
 import SiteComparisonMatrix from "./site-comparison-matrix";
+import CockpitGlossaryModal from "./cockpit/cockpit-glossary-modal";
+import { downloadMissionPlanJSON, printExecutiveMissionBriefing } from "@/lib/export/mission-plan-export";
 
 export default function LunarMissionDashboard() {
   const [selectedSiteId, setSelectedSiteId] = useState<string>("malapert-mountain");
@@ -52,6 +54,7 @@ export default function LunarMissionDashboard() {
   const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(false);
   const [speedMultiplier, setSpeedMultiplier] = useState<number>(1);
   const [baseDate, setBaseDate] = useState<Date>(new Date("2026-06-21T00:00:00Z")); // Solstice baseline
+  const [isGlossaryOpen, setIsGlossaryOpen] = useState<boolean>(false);
 
   // Active Lander vehicle profile
   const activeLander = useMemo(() => {
@@ -223,9 +226,32 @@ export default function LunarMissionDashboard() {
     ? "bg-slate-900 border-slate-800" 
     : "bg-white border-slate-300 shadow-xs";
 
+  const handleExportJSON = () => {
+    downloadMissionPlanJSON({
+      site: activeSite,
+      lander: activeLander,
+      simulatedEpoch: simulatedDate,
+      baseEpoch: baseDate,
+      timeOffsetHours,
+      celestial: celestialData,
+      solar: solarOutput,
+      isSunOccluded,
+      rfLink: rfLinkOutput,
+      isEarthOccluded,
+      dsn: dsnStatus,
+      libration: librationData,
+      thermal: thermalStatus,
+      batterySoCPercent: batterySoC,
+    });
+  };
+
+  const handlePrintBriefing = () => {
+    printExecutiveMissionBriefing();
+  };
+
   return (
-    <div className={`h-full w-full overflow-hidden flex flex-col font-sans select-none transition-colors ${rootBg}`}>
-      {/* 1. FIXED TOP HUD BAR WITH HOME NAVIGATION & LIGHT/DARK TOGGLE */}
+    <div className={`min-h-screen lg:h-full w-full overflow-y-auto lg:overflow-hidden flex flex-col font-sans select-none transition-colors ${rootBg}`}>
+      {/* 1. FIXED TOP HUD BAR WITH HOME NAVIGATION, TIME, EXPORT & LIGHT/DARK TOGGLE */}
       <CockpitHudBar
         simulatedDate={simulatedDate}
         baseDate={baseDate}
@@ -237,14 +263,17 @@ export default function LunarMissionDashboard() {
         onSelectLander={(landerId) => setSelectedLanderId(landerId)}
         isSunInShadow={isSunOccluded}
         isEarthOccluded={isEarthOccluded}
+        onExportJSON={handleExportJSON}
+        onPrintBriefing={handlePrintBriefing}
+        onOpenGlossary={() => setIsGlossaryOpen(true)}
         isDarkMode={isDarkMode}
         onToggleDarkMode={toggleDarkMode}
       />
 
-      {/* 2. MAIN 12-COLUMN TACTICAL SCREEN (flex-1 grid, zero-scroll locked) */}
-      <main className="flex-1 grid grid-cols-12 gap-3 p-3 overflow-hidden min-h-0">
+      {/* 2. MAIN 12-COLUMN TACTICAL SCREEN (flex-1 grid, zero-scroll presentation on desktop, stacked on mobile) */}
+      <main className="flex-1 grid grid-cols-12 gap-3 p-3 overflow-y-auto lg:overflow-hidden min-h-0">
         {/* COLUMN 1: Left Telemetry & System Gauges (3 Cols) */}
-        <section className="col-span-12 lg:col-span-3 h-full overflow-hidden flex flex-col min-h-0">
+        <section className="col-span-12 lg:col-span-3 min-h-[380px] lg:h-full overflow-y-auto lg:overflow-hidden flex flex-col min-h-0">
           <CockpitTelemetryColumn
             lander={activeLander}
             solarData={{
@@ -264,11 +293,12 @@ export default function LunarMissionDashboard() {
             thermalData={thermalStatus}
             batterySoCPercent={batterySoC}
             isDarkMode={isDarkMode}
+            onOpenGlossary={() => setIsGlossaryOpen(true)}
           />
         </section>
 
         {/* COLUMN 2: Center Dual-Stage Visualizer (5 Cols) */}
-        <section className="col-span-12 lg:col-span-5 h-full overflow-hidden flex flex-col gap-3 min-h-0">
+        <section className="col-span-12 lg:col-span-5 min-h-[520px] h-[560px] lg:h-full overflow-hidden flex flex-col gap-3 min-h-0">
           {/* Top Half (54% height): 2.5D Polar Surface Simulator */}
           <div className="flex-[54] min-h-0 overflow-hidden">
             <LunarSurfaceVisualizer
@@ -301,7 +331,7 @@ export default function LunarMissionDashboard() {
         </section>
 
         {/* COLUMN 3: Right Intelligence & Mission Tabs (4 Cols) */}
-        <section className={`col-span-12 lg:col-span-4 h-full overflow-hidden flex flex-col border rounded-xl min-h-0 ${panelBg}`}>
+        <section className={`col-span-12 lg:col-span-4 min-h-[480px] lg:h-full overflow-hidden flex flex-col border rounded-xl min-h-0 ${panelBg}`}>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col overflow-hidden">
             <TabsList className="h-9 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 grid grid-cols-5 rounded-none p-0.5 text-xs font-semibold shrink-0">
               <TabsTrigger
@@ -399,19 +429,28 @@ export default function LunarMissionDashboard() {
         </section>
       </main>
 
-      {/* 3. FIXED BOTTOM FLIGHT SCRUBBER DRAWER */}
-      <CockpitTimeDrawer
-        currentOffsetHours={timeOffsetHours}
-        maxHours={maxTimeHours}
-        simulatedDate={simulatedDate}
-        isAutoPlaying={isAutoPlaying}
-        onToggleAutoPlay={() => setIsAutoPlaying(!isAutoPlaying)}
-        onResetTime={() => setTimeOffsetHours(0)}
-        onChangeOffsetHours={(h) => setTimeOffsetHours(h)}
-        onSetMaxHours={(m) => setMaxTimeHours(m)}
-        speedMultiplier={speedMultiplier}
-        onChangeSpeedMultiplier={(s) => setSpeedMultiplier(s)}
-        isSunInShadow={isSunOccluded}
+      {/* 3. FLIGHT SCRUBBER DRAWER (Sticky on mobile, pinned on desktop) */}
+      <div className="sticky bottom-0 lg:relative z-20 shrink-0">
+        <CockpitTimeDrawer
+          currentOffsetHours={timeOffsetHours}
+          maxHours={maxTimeHours}
+          simulatedDate={simulatedDate}
+          isAutoPlaying={isAutoPlaying}
+          onToggleAutoPlay={() => setIsAutoPlaying(!isAutoPlaying)}
+          onResetTime={() => setTimeOffsetHours(0)}
+          onChangeOffsetHours={(h) => setTimeOffsetHours(h)}
+          onSetMaxHours={(m) => setMaxTimeHours(m)}
+          speedMultiplier={speedMultiplier}
+          onChangeSpeedMultiplier={(s) => setSpeedMultiplier(s)}
+          isSunInShadow={isSunOccluded}
+          isDarkMode={isDarkMode}
+        />
+      </div>
+
+      {/* 4. CLPS AEROSPACE GLOSSARY & PUBLIC EDUCATOR FIELD GUIDE MODAL */}
+      <CockpitGlossaryModal
+        isOpen={isGlossaryOpen}
+        onClose={() => setIsGlossaryOpen(false)}
         isDarkMode={isDarkMode}
       />
     </div>
