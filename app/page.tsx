@@ -59,6 +59,7 @@ import UniversalHeader from "@/components/universal-header"
 import Image from "next/image"
 import { LUNAR_SOUTH_POLE_CANDIDATES } from "@/lib/gis/lunar-sites"
 import HomeSiteComparison from "@/components/lunar/home-site-comparison"
+import HomeSlideController from "@/components/lunar/home-slide-controller"
 
 export default function HomePage() {
   return (
@@ -1579,6 +1580,9 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+
+      {/* Floating Presentation Slide Controller */}
+      <HomeSlideController />
     </div>
   )
 }
