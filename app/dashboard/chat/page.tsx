@@ -92,7 +92,7 @@ export default function ChatPage() {
     {
       id: "1",
       content:
-        "Greetings! I'm **Afshara**, your **AI Lunar Mission Strategist** for SelenSync. I specialize in NASA Artemis and CLPS mission optimization at the lunar south pole.\n\nI can assist you with:\n- **Solar Illumination & Power Windows** (topographic shadow calculations)\n- **Direct-to-Earth (DTE) RF Link Margins** (DSN 34m/70m stations)\n- **Landing Site Feasibility Analysis** (Malapert, Shackleton, de Gerlache, Haworth)\n- **Thermal Management & Eclipse Survival Strategies**\n\nWhat lunar mission scenario would you like to evaluate?",
+        "Greetings! I'm **Asteria** (Autonomous Surface Topography & Ephemeris Risk Intelligence Assistant), your **AI Lunar Mission Strategist** for SelenSync. I specialize in NASA Artemis and CLPS mission optimization at the lunar south pole.\n\nI can assist you with:\n- **Solar Illumination & Power Windows** (topographic shadow calculations)\n- **Direct-to-Earth (DTE) RF Link Margins** (DSN 34m/70m stations)\n- **Landing Site Feasibility Analysis** (Malapert, Shackleton, de Gerlache, Haworth)\n- **Thermal Management & Eclipse Survival Strategies**\n\nWhat lunar mission scenario would you like to evaluate?",
       sender: "ai",
       timestamp: new Date(),
       provider: "groq"
@@ -184,7 +184,7 @@ export default function ChatPage() {
 
   const handleExportTranscript = () => {
     const transcript = messages
-      .map((m) => `[${m.timestamp.toLocaleTimeString()}] ${m.sender === 'user' ? 'USER' : 'AFSHARA (AI STRATEGIST)'}:\n${m.content}\n`)
+      .map((m) => `[${m.timestamp.toLocaleTimeString()}] ${m.sender === 'user' ? 'USER' : 'ASTERIA (AI STRATEGIST)'}:\n${m.content}\n`)
       .join('\n----------------------------------------\n\n')
     
     const blob = new Blob([transcript], { type: 'text/plain;charset=utf-8' })
@@ -222,14 +222,14 @@ export default function ChatPage() {
             <div className="relative">
               <Avatar className="h-14 w-14 border-2 border-[#4e6aff] shadow-md">
                 <AvatarFallback className="bg-gradient-to-tr from-[#4e6aff] to-[#7c3aed] text-white font-bold text-lg">
-                  AZ
+                  AST
                 </AvatarFallback>
               </Avatar>
               <span className="absolute bottom-0 right-0 h-4 w-4 bg-emerald-500 border-2 border-white rounded-full"></span>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-bold text-slate-900">Afshara</h1>
+                <h1 className="text-xl sm:text-2xl font-bold text-slate-900">Asteria</h1>
                 <Badge className="bg-[#4e6aff]/10 text-[#4e6aff] hover:bg-[#4e6aff]/20 border-[#4e6aff]/30 font-medium">
                   AI Mission Strategist
                 </Badge>
@@ -512,12 +512,12 @@ export default function ChatPage() {
             <div className="flex items-center gap-3 mb-2">
               <Avatar className="h-12 w-12 border-2 border-[#4e6aff]">
                 <AvatarFallback className="bg-gradient-to-tr from-[#4e6aff] to-[#7c3aed] text-white font-bold">
-                  AZ
+                  AST
                 </AvatarFallback>
               </Avatar>
               <div>
                 <DialogTitle className="text-lg font-bold text-slate-900">
-                  Afshara — AI Lunar Mission Strategist
+                  Asteria — AI Lunar Mission Strategist
                 </DialogTitle>
                 <DialogDescription className="text-xs text-slate-500">
                   SelenSync Core Intelligence Architecture
@@ -528,7 +528,7 @@ export default function ChatPage() {
 
           <div className="space-y-4 text-sm text-slate-700 py-2">
             <p className="leading-relaxed">
-              Afshara is designed specifically for Artemis and Commercial Lunar Payload Services (CLPS) mission planners. She evaluates complex South Pole topography, low solar elevations, Direct-to-Earth link visibility, and shadow persistence.
+              Asteria (Autonomous Surface Topography & Ephemeris Risk Intelligence Assistant) is designed specifically for Artemis and Commercial Lunar Payload Services (CLPS) mission planners. She evaluates complex South Pole topography, low solar elevations, Direct-to-Earth link visibility, and shadow persistence.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">

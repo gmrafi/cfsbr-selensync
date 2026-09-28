@@ -608,7 +608,7 @@ export default function HomePage() {
                 <Sparkles className="w-5 h-5" />
               </div>
               <h3 className="text-base font-bold text-slate-900 dark:text-white font-sans">
-                Afshara — AI Lunar Mission Strategist
+                Asteria — AI Lunar Mission Strategist
               </h3>
               <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Context-aware mission assistant providing real-time operational advice, power risk alerts, and landing window recommendations based on active coordinates.

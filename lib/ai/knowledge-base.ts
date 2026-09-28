@@ -1,8 +1,8 @@
 /**
- * Afshara AI Mission Strategist — Scientific & Strategic Knowledge Base
+ * Asteria AI Mission Strategist — Scientific & Strategic Knowledge Base
  * SelenSync — NASA Space Apps Challenge 2026 (CLPS Lunar Mission Browser)
  * 
- * Lead Mission Strategist: Afshara Tasneem Zoa
+ * Lead Mission Strategists: Afshara Tasneem Zoa & Labiba Mahzabin
  * Strategy & Research Lead, CFSBR SpaceWeb
  * 
  * Synthesizes authoritative planetary science and mission engineering rules from:
@@ -88,7 +88,7 @@ export const DSN_GROUND_STATIONS = [
 ];
 
 /**
- * Core Strategic Heuristics used by Afshara AI to advise flight directors
+ * Core Strategic Heuristics used by Asteria AI to advise flight directors
  */
 export const STRATEGIC_HEURISTICS = {
   /**

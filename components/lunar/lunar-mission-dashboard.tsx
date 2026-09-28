@@ -370,11 +370,11 @@ export default function LunarMissionDashboard() {
                 Power
               </TabsTrigger>
               <TabsTrigger
-                value="afshara"
+                value="asteria"
                 className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-[#4e6aff] py-1 text-xs"
               >
                 <TerminalIcon className="w-3.5 h-3.5 mr-1 text-cyan-600" />
-                Afshara
+                Asteria
               </TabsTrigger>
             </TabsList>
 
@@ -419,8 +419,8 @@ export default function LunarMissionDashboard() {
               />
             </TabsContent>
 
-            {/* Tab 4: Afshara AI Flight Terminal */}
-            <TabsContent value="afshara" className="flex-1 overflow-hidden m-0 min-h-0">
+            {/* Tab 4: Asteria AI Flight Terminal */}
+            <TabsContent value="asteria" className="flex-1 overflow-hidden m-0 min-h-0">
               <CockpitAITerminal
                 site={activeSite}
                 lander={activeLander}

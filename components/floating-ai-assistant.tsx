@@ -163,7 +163,7 @@ export default function FloatingAIAssistant() {
       // Add welcome message when first opened
       const welcomeMessage: Message = {
         id: Date.now().toString(),
-        content: "Hello! I'm **Afshara**, your **AI Lunar Mission Strategist**. I can assist you with lunar South Pole illumination cycles, CLPS lander payloads, terrain shadow masking, and Direct-to-Earth communication windows. Which candidate landing site or mission timeline would you like to evaluate?",
+        content: "Hello! I'm **Asteria**, your **AI Lunar Mission Strategist**. I can assist you with lunar South Pole illumination cycles, CLPS lander payloads, terrain shadow masking, and Direct-to-Earth communication windows. Which candidate landing site or mission timeline would you like to evaluate?",
         sender: "ai",
         timestamp: new Date()
       }
@@ -236,7 +236,7 @@ export default function FloatingAIAssistant() {
         <div className="flex items-center gap-3">
           <div className="relative">
             <Avatar className="h-10 w-10 border-2 border-white bg-purple-700">
-              <AvatarFallback className="bg-purple-800 text-white font-bold">AZ</AvatarFallback>
+              <AvatarFallback className="bg-purple-800 text-white font-bold">AST</AvatarFallback>
             </Avatar>
             <span className="absolute bottom-0 right-0 flex h-3 w-3">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -244,7 +244,7 @@ export default function FloatingAIAssistant() {
             </span>
           </div>
           <div>
-            <CardTitle className="text-sm font-semibold">Afshara</CardTitle>
+            <CardTitle className="text-sm font-semibold">Asteria</CardTitle>
             <p className="text-xs text-white/90">AI Lunar Mission Strategist</p>
           </div>
         </div>
@@ -301,10 +301,10 @@ export default function FloatingAIAssistant() {
                     <div className="flex flex-col items-center gap-1">
                       <Avatar className="h-8 w-8 border-2 border-[#4e6aff]/20">
                         <AvatarFallback className="bg-gradient-to-r from-[#4e6aff] to-[#6d5bff] text-white text-xs">
-                          AZ
+                          AST
                         </AvatarFallback>
                       </Avatar>
-                      <span className="text-[10px] text-gray-600 font-medium">Afshara</span>
+                      <span className="text-[10px] text-gray-600 font-medium">Asteria</span>
                     </div>
                   )}
                   

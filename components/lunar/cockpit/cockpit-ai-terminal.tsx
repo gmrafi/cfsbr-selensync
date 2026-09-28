@@ -28,14 +28,14 @@ export default function CockpitAITerminal({
   batterySoC,
   isDarkMode = false,
 }: CockpitAITerminalProps) {
-  const [messages, setMessages] = useState<Array<{ role: "system" | "user" | "afshara"; text: string; time: string }>>([
+  const [messages, setMessages] = useState<Array<{ role: "system" | "user" | "asteria"; text: string; time: string }>>([
     {
       role: "system",
-      text: "Afshara Tactical Advisory Daemon online (NASA SPICE & LOLA Altimetry Kernel linked).",
+      text: "Asteria Tactical Advisory Daemon online (NASA SPICE & LOLA Altimetry Kernel linked).",
       time: "00:00:00",
     },
     {
-      role: "afshara",
+      role: "asteria",
       text: `Tactical flight analysis for ${lander.name} on ${site.name}. Solar power is currently generating ${solarWatts.toFixed(0)}W with battery at ${batterySoC.toFixed(0)}%. ${isSunOccluded ? "Alert: Crater rim shadow occlusion active. Cryogenic line heaters engaged at 85W." : "Direct solar grazing angle nominal. Direct-to-Earth carrier locked."}`,
       time: "00:00:01",
     },
@@ -57,7 +57,7 @@ export default function CockpitAITerminal({
       replyText = `TELEMETRY CONFIRMED: Position ${site.latitude}°S, ${site.longitude}°E verified. Solar insolation model operating at 1,361 W/m² AM0. All subsystems reporting nominal parameters for Artemis support mission.`;
     }
 
-    const aiMsg = { role: "afshara" as const, text: replyText, time: new Date().toISOString().slice(11, 19) };
+    const aiMsg = { role: "asteria" as const, text: replyText, time: new Date().toISOString().slice(11, 19) };
     setMessages((prev) => [...prev, userMsg, aiMsg]);
     setInputVal("");
   };
@@ -69,7 +69,7 @@ export default function CockpitAITerminal({
       <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2 shrink-0">
         <div className="flex items-center gap-1.5 text-[#4e6aff] font-bold text-xs">
           <Terminal className="w-4 h-4" />
-          <span>Afshara AI Mission Strategist</span>
+          <span>Asteria AI Mission Strategist</span>
         </div>
         <Badge variant="outline" className="text-[10px] bg-blue-50 text-[#4e6aff] border-blue-200">
           Tactical Engine v3.4
@@ -91,7 +91,7 @@ export default function CockpitAITerminal({
           >
             <div className="flex justify-between text-[10px] text-slate-500 mb-1">
               <span className="font-bold uppercase">
-                {m.role === "afshara" ? "AFSHARA AI STRATEGIST" : m.role}
+                {m.role === "asteria" ? "ASTERIA AI STRATEGIST" : m.role}
               </span>
               <span className="font-mono">{m.time}</span>
             </div>
@@ -129,7 +129,7 @@ export default function CockpitAITerminal({
           value={inputVal}
           onChange={(e) => setInputVal(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
-          placeholder="Ask Afshara for tactical guidance..."
+          placeholder="Ask Asteria for tactical guidance..."
           className="flex-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#4e6aff]"
         />
         <Button

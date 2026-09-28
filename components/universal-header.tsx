@@ -86,9 +86,10 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
             <Link
               href="/mission-finance"
               className="px-2.5 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-500/10 rounded-md transition-colors flex items-center gap-1"
+              title="Lunar Surface Techno-Economic Analysis (TEA) & Capital Allocation"
             >
               <Coins className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-              <span>Economics</span>
+              <span>Techno-Economics</span>
             </Link>
           </nav>
 
@@ -114,9 +115,10 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
                 variant="outline"
                 size="sm"
                 className="h-8 px-2.5 text-xs font-medium text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800 border-slate-300 dark:border-slate-700"
+                title="Asteria AI Lunar Mission Strategist"
               >
                 <Sparkles className="w-3.5 h-3.5 mr-1 text-[#4e6aff]" />
-                <span>AI Strategist</span>
+                <span>Asteria AI</span>
               </Button>
             </Link>
 
@@ -245,7 +247,7 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
               <Link href="/dashboard/chat" onClick={() => setMobileMenuOpen(false)}>
                 <Button variant="outline" size="sm" className="w-full justify-center text-xs font-medium">
                   <Sparkles className="w-3.5 h-3.5 mr-1.5 text-[#4e6aff]" />
-                  AI Mission Strategist
+                  Asteria AI Strategist
                 </Button>
               </Link>
               <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>

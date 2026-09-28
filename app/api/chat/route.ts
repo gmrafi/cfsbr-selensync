@@ -68,7 +68,7 @@ export async function POST(req: Request) {
           },
           {
             role: 'model',
-            parts: [{ text: "Greetings! I'm Afshara, your **AI Lunar Mission Strategist** for SelenSync. I provide real-time guidance on CLPS mission architecture, South Pole solar illumination, DTE communications, and landing site feasibility. How can I assist your mission planning today?" }]
+            parts: [{ text: "Greetings! I'm Asteria, your **AI Lunar Mission Strategist** for SelenSync. I provide real-time guidance on CLPS mission architecture, South Pole solar illumination, DTE communications, and landing site feasibility. How can I assist your mission planning today?" }]
           },
           ...(conversationHistory?.map((msg: any) => ({
             role: msg.sender === 'user' ? 'user' : 'model',
@@ -100,7 +100,7 @@ export async function POST(req: Request) {
     // If this is the first user message (no previous conversation), add personalized greeting with user's name
     const isFirstMessage = !conversationHistory || conversationHistory.length === 0;
     if (isFirstMessage && userFullName) {
-      text = `Hello **${userFullName}**! I'm Afshara, your **AI Lunar Mission Strategist** for SelenSync. I'm ready to assist with lunar south pole trajectory analysis, solar illumination modeling, and DTE RF link optimization.\n\n${text}`;
+      text = `Hello **${userFullName}**! I'm Asteria, your **AI Lunar Mission Strategist** for SelenSync. I'm ready to assist with lunar south pole trajectory analysis, solar illumination modeling, and DTE RF link optimization.\n\n${text}`;
     }
 
     // Add AI provider credit at the end (shows which advanced AI is being used)

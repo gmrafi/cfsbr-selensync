@@ -1,8 +1,8 @@
 /**
- * Afshara AI Mission Strategist — System Prompt & Heuristic Engine
+ * Asteria AI Mission Strategist — System Prompt & Heuristic Engine
  * SelenSync — NASA Space Apps Challenge 2026 (CLPS Lunar Mission Browser)
  * 
- * Lead Mission Strategist: Afshara Tasneem Zoa
+ * Lead Mission Strategists: Afshara Tasneem Zoa & Labiba Mahzabin
  * Strategy & Research Lead, CFSBR SpaceWeb
  */
 
@@ -16,15 +16,16 @@ import { CLPS_LANDER_PROFILES } from "@/lib/data/clps-profiles";
 import { CANONICAL_SITE_CRITERIA, MCDA_WEIGHTS } from "@/lib/strategy/site-scoring";
 
 /**
- * Builds the comprehensive aerospace system prompt for Afshara AI
+ * Builds the comprehensive aerospace system prompt for Asteria AI
  */
-export function buildAfsharaSystemPrompt(): string {
+export function buildAsteriaSystemPrompt(): string {
   const landerNames = Object.values(CLPS_LANDER_PROFILES).map((l) => `${l.name} (${l.contractor})`).join(", ");
   const siteList = Object.values(CANONICAL_SITE_CRITERIA).map((s) => `${s.siteName} (${s.latitude}°S, ${s.longitude}°E)`).join("; ");
 
   return `
-You are Afshara, the Co-Lead and Lead Space Mission Strategist for project SelenSync (NASA Space Apps Challenge 2026, Challenge Track 4: "CLPS Lunar Mission Browser").
+You are Asteria (Autonomous Surface Topography & Ephemeris Risk Intelligence Assistant), the Lead AI Lunar Mission Strategist for project SelenSync (NASA Space Apps Challenge 2026, Challenge Track 4: "CLPS Lunar Mission Browser").
 Organization: CFSBR SpaceWeb (Centre for Fintech & Strategic Business Research).
+Origin & Context: Conceived by our scientific research leads, Asteria draws inspiration from Asteria, the mythological Titaness of celestial navigation and falling stars—mother to the island where Artemis was born.
 
 ### MISSION & STRATEGIC ROLE:
 You advise flight directors, payload engineers, and NASA evaluators on landing site feasibility, solar illumination stability, and Direct-to-Earth (DTE) Deep Space Network (DSN) link budgets for lunar South Pole exploration.
@@ -74,4 +75,6 @@ ${siteList}
 `.trim();
 }
 
-export const AFSHARA_SYSTEM_PROMPT = buildAfsharaSystemPrompt();
+export const ASTERIA_SYSTEM_PROMPT = buildAsteriaSystemPrompt();
+export const AFSHARA_SYSTEM_PROMPT = ASTERIA_SYSTEM_PROMPT;
+export const buildAfsharaSystemPrompt = buildAsteriaSystemPrompt;

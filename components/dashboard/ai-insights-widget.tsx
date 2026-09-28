@@ -156,7 +156,7 @@ export default function AIInsightsWidget() {
             </div>
             <div>
               <CardTitle className="text-lg">AI Intelligence Insights</CardTitle>
-              <p className="text-xs text-gray-500 mt-0.5">Real-time analysis powered by Afshara AI Engine</p>
+              <p className="text-xs text-gray-500 mt-0.5">Real-time analysis powered by Asteria AI Engine</p>
             </div>
           </div>
           <Button
