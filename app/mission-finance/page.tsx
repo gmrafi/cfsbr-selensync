@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
+import { useTheme } from "next-themes";
+import UniversalHeader from "@/components/universal-header";
 import { 
   CANDIDATE_SITE_FINANCIAL_PROFILES, 
   TEA_CONSTANTS, 
@@ -33,7 +35,9 @@ import {
   Info,
   Calendar,
   CheckCircle2,
-  Home
+  Home,
+  Sun,
+  Moon
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -57,6 +61,16 @@ export default function MissionFinancePage() {
   const [heaterWatts, setHeaterWatts] = useState<number>(120);
   const [scienceTargetKg, setScienceTargetKg] = useState<number>(45);
 
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDarkMode = mounted ? resolvedTheme === "dark" : false;
+  const toggleTheme = () => setTheme(isDarkMode ? "light" : "dark");
+
   // Compute dynamic tradeoff analytics
   const simResult = useMemo(() => {
     return calculateDynamicTradeoff({
@@ -75,52 +89,71 @@ export default function MissionFinancePage() {
     }
   };
 
+  // Recharts styling helpers based on active theme
+  const chartGridStroke = isDarkMode ? "#27272a" : "#e2e8f0";
+  const chartAxisTickColor = isDarkMode ? "#a1a1aa" : "#64748b";
+  const tooltipStyle = {
+    backgroundColor: isDarkMode ? "#18181b" : "#ffffff",
+    borderColor: isDarkMode ? "#27272a" : "#cbd5e1",
+    color: isDarkMode ? "#f4f4f5" : "#0f172a",
+    borderRadius: "8px",
+    fontSize: "11px",
+    boxShadow: isDarkMode 
+      ? "0 4px 6px -1px rgba(0, 0, 0, 0.4)" 
+      : "0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05)"
+  };
+
   return (
     <TooltipProvider delayDuration={150}>
-      <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-emerald-500/20 pb-16">
+      <div className="min-h-screen bg-slate-50 dark:bg-zinc-950 text-slate-900 dark:text-zinc-100 font-sans selection:bg-emerald-500/20 transition-colors pb-16">
         
         {/* ========================================================================= */}
-        {/* 1. TOP AEROSPACE CONSOLE HEADER                                          */}
+        {/* 1. UNIVERSAL GLOBAL NAVBAR                                                */}
         {/* ========================================================================= */}
-        <header className="sticky top-0 z-40 border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-md px-4 sm:px-6 lg:px-8 py-3.5">
+        <UniversalHeader variant="light" />
+
+        {/* ========================================================================= */}
+        {/* 2. SUBHEADER: MISSION FINANCE CONSOLE CONTROLS & BREADCRUMBS              */}
+        {/* ========================================================================= */}
+        <header className="sticky top-16 sm:top-20 z-40 border-b border-slate-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/90 backdrop-blur-md px-4 sm:px-6 lg:px-8 py-3 transition-colors shadow-2xs">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <Link
                 href="/"
-                className="p-1.5 rounded-lg border border-zinc-800 bg-zinc-900/60 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-100 transition-colors"
+                className="p-1.5 rounded-lg border border-slate-300 dark:border-zinc-800 bg-slate-100 dark:bg-zinc-900/60 hover:bg-slate-200 dark:hover:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-100 transition-colors"
                 title="Back to Overview"
               >
-                <Home className="w-4 h-4" />
+                <Home className="w-4 h-4 text-[#4e6aff]" />
               </Link>
 
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-base sm:text-lg font-bold text-zinc-100 tracking-tight flex items-center gap-2">
-                    <Coins className="w-4 h-4 text-emerald-400" />
+                  <h1 className="text-base sm:text-lg font-bold text-slate-900 dark:text-zinc-100 tracking-tight flex items-center gap-2">
+                    <Coins className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                     <span>Mission Finance: Techno-Economic &amp; Asset Risk Engine</span>
                   </h1>
-                  <Badge variant="outline" className="border-emerald-500/40 text-emerald-400 bg-emerald-500/10 text-[10px] font-mono font-semibold px-1.5 py-0">
+                  <Badge variant="outline" className="border-emerald-500/40 text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 text-[10px] font-mono font-semibold px-1.5 py-0">
                     TEA ARCHITECTURE
                   </Badge>
                 </div>
-                <p className="text-xs text-zinc-400 hidden sm:block">
+                <p className="text-xs text-slate-500 dark:text-zinc-400 hidden sm:block">
                   Aerospace Capital Allocation &bull; Launch Mass Savings &bull; NASA CLPS $1.2M/kg Baseline Model
                 </p>
               </div>
             </div>
 
-            {/* Context Controls: Site Selector & Print */}
+            {/* Context Controls: Site Selector, Duration, Theme & Print */}
             <div className="flex items-center gap-2 flex-wrap">
               {/* Site Selector Dropdown */}
-              <div className="flex items-center gap-1.5 bg-zinc-900/80 border border-zinc-800 rounded-lg px-2.5 py-1 text-xs">
-                <span className="text-zinc-500 text-[11px] font-medium">Site:</span>
+              <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-zinc-900/80 border border-slate-300 dark:border-zinc-800 rounded-lg px-2.5 py-1 text-xs">
+                <span className="text-slate-500 dark:text-zinc-500 text-[11px] font-medium">Site:</span>
                 <select
                   value={selectedSiteId}
                   onChange={(e) => setSelectedSiteId(e.target.value)}
-                  className="bg-transparent text-zinc-100 font-semibold focus:outline-none cursor-pointer text-xs"
+                  className="bg-transparent text-slate-900 dark:text-zinc-100 font-semibold focus:outline-none cursor-pointer text-xs"
                 >
                   {CANDIDATE_SITE_FINANCIAL_PROFILES.slice(0, 3).map((site) => (
-                    <option key={site.id} value={site.id} className="bg-zinc-900 text-zinc-100">
+                    <option key={site.id} value={site.id} className="bg-white dark:bg-zinc-900 text-slate-900 dark:text-zinc-100">
                       {site.name} ({site.lat.toFixed(1)}°S)
                     </option>
                   ))}
@@ -133,29 +166,52 @@ export default function MissionFinancePage() {
                 onValueChange={(val) => setMissionDays(Number(val))}
                 className="hidden sm:inline-block"
               >
-                <TabsList className="bg-zinc-900 border border-zinc-800 h-7 p-0.5">
-                  <TabsTrigger value="14" className="text-xs px-2.5 py-0.5 data-[state=active]:bg-zinc-800 data-[state=active]:text-zinc-100">
+                <TabsList className="bg-slate-100 dark:bg-zinc-900 border border-slate-300 dark:border-zinc-800 h-7 p-0.5">
+                  <TabsTrigger value="14" className="text-xs px-2.5 py-0.5 data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-800 data-[state=active]:text-slate-900 dark:data-[state=active]:text-zinc-100 data-[state=active]:shadow-2xs text-slate-600 dark:text-zinc-400">
                     14d Lunar Day
                   </TabsTrigger>
-                  <TabsTrigger value="28" className="text-xs px-2.5 py-0.5 data-[state=active]:bg-zinc-800 data-[state=active]:text-zinc-100">
+                  <TabsTrigger value="28" className="text-xs px-2.5 py-0.5 data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-800 data-[state=active]:text-slate-900 dark:data-[state=active]:text-zinc-100 data-[state=active]:shadow-2xs text-slate-600 dark:text-zinc-400">
                     28d Extended
                   </TabsTrigger>
                 </TabsList>
               </Tabs>
 
+              {/* Theme Toggle Button */}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={toggleTheme}
+                className="h-7 text-xs border-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-700 dark:text-zinc-300 gap-1.5 transition-colors shadow-2xs"
+                title={isDarkMode ? "Switch to High-Contrast Light Mode" : "Switch to Dark Aerospace Mode"}
+              >
+                {mounted && isDarkMode ? (
+                  <>
+                    <Sun className="w-3.5 h-3.5 text-amber-500" />
+                    <span className="hidden sm:inline">Light</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon className="w-3.5 h-3.5 text-slate-700" />
+                    <span className="hidden sm:inline">Dark</span>
+                  </>
+                )}
+              </Button>
+
+              {/* Print Button */}
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handlePrint}
-                className="h-7 text-xs border-zinc-800 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 gap-1.5"
+                className="h-7 text-xs border-slate-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-700 dark:text-zinc-300 gap-1.5 transition-colors shadow-2xs"
                 title="Print Executive Techno-Economic Report"
               >
-                <Printer className="w-3.5 h-3.5" />
+                <Printer className="w-3.5 h-3.5 text-slate-600 dark:text-zinc-400" />
                 <span className="hidden sm:inline">Print Report</span>
               </Button>
 
+              {/* Cockpit Link */}
               <Link href="/dashboard">
-                <Button size="sm" className="h-7 text-xs bg-[#4e6aff] hover:bg-[#3d59ef] text-white font-semibold gap-1.5">
+                <Button size="sm" className="h-7 text-xs bg-[#4e6aff] hover:bg-[#3d59ef] text-white font-semibold gap-1.5 shadow-xs">
                   <Compass className="w-3.5 h-3.5" />
                   <span>Cockpit</span>
                 </Button>
@@ -170,134 +226,134 @@ export default function MissionFinancePage() {
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
 
           {/* ======================================================================= */}
-          {/* 2. TOP METRIC RIBBON (4 BENTO KPI CARDS)                                */}
+          {/* 3. TOP METRIC RIBBON (4 BENTO KPI CARDS)                                */}
           {/* ======================================================================= */}
           <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
             {/* Card 1: Net Launch Mass Cost Offset */}
-            <Card className="bg-zinc-900/60 border-zinc-800/80 shadow-xs relative overflow-hidden">
+            <Card className="bg-white dark:bg-zinc-900/60 border-slate-200 dark:border-zinc-800/80 shadow-xs dark:shadow-none relative overflow-hidden transition-colors">
               <div className="absolute top-0 left-0 right-0 h-[2px] bg-emerald-500"></div>
               <CardHeader className="p-4 pb-1">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-zinc-400">Launch Cost Offset</span>
+                  <span className="text-xs font-semibold text-slate-600 dark:text-zinc-400">Launch Cost Offset</span>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <button className="text-zinc-500 hover:text-zinc-300">
+                      <button className="text-slate-400 hover:text-slate-600 dark:text-zinc-500 dark:hover:text-zinc-300">
                         <HelpCircle className="w-3.5 h-3.5" />
                       </button>
                     </TooltipTrigger>
-                    <TooltipContent className="bg-zinc-900 border-zinc-700 text-zinc-200 text-xs max-w-xs">
+                    <TooltipContent className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-700 text-slate-800 dark:text-zinc-200 text-xs max-w-xs shadow-md">
                       NASA CLPS payload transit to lunar surface costs ~$1.2M per kg. Avoiding crater shadow reduces battery mass buffer, directly saving rocket launch spend.
                     </TooltipContent>
                   </Tooltip>
                 </div>
-                <div className="text-2xl lg:text-3xl font-black font-mono tabular-nums text-emerald-400 mt-1">
+                <div className="text-2xl lg:text-3xl font-black font-mono tabular-nums text-emerald-600 dark:text-emerald-400 mt-1">
                   +${simResult.launchSavingsVsBasinM.toFixed(1)}M
                 </div>
               </CardHeader>
-              <CardContent className="p-4 pt-1 text-[11px] text-zinc-400 leading-snug">
+              <CardContent className="p-4 pt-1 text-[11px] text-slate-500 dark:text-zinc-400 leading-snug">
                 Saved vs. polar basin benchmark from avoiding heavy shadow survival battery ballast.
               </CardContent>
             </Card>
 
             {/* Card 2: Levelized Cost of Science (LCMD) */}
-            <Card className="bg-zinc-900/60 border-zinc-800/80 shadow-xs relative overflow-hidden">
+            <Card className="bg-white dark:bg-zinc-900/60 border-slate-200 dark:border-zinc-800/80 shadow-xs dark:shadow-none relative overflow-hidden transition-colors">
               <div className="absolute top-0 left-0 right-0 h-[2px] bg-cyan-500"></div>
               <CardHeader className="p-4 pb-1">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-zinc-400">Levelized Cost / Day (LCMD)</span>
+                  <span className="text-xs font-semibold text-slate-600 dark:text-zinc-400">Levelized Cost / Day (LCMD)</span>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <button className="text-zinc-500 hover:text-zinc-300">
+                      <button className="text-slate-400 hover:text-slate-600 dark:text-zinc-500 dark:hover:text-zinc-300">
                         <HelpCircle className="w-3.5 h-3.5" />
                       </button>
                     </TooltipTrigger>
-                    <TooltipContent className="bg-zinc-900 border-zinc-700 text-zinc-200 text-xs max-w-xs">
+                    <TooltipContent className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-700 text-slate-800 dark:text-zinc-200 text-xs max-w-xs shadow-md">
                       Total Mission CAPEX ($120M) divided by productive sunlit operational days. High illumination drastically drives down the cost per science day.
                     </TooltipContent>
                   </Tooltip>
                 </div>
-                <div className="text-2xl lg:text-3xl font-black font-mono tabular-nums text-cyan-400 mt-1">
-                  ${simResult.lcmdDailyCostM.toFixed(2)}M <span className="text-xs text-zinc-500 font-sans font-normal">/ day</span>
+                <div className="text-2xl lg:text-3xl font-black font-mono tabular-nums text-cyan-600 dark:text-cyan-400 mt-1">
+                  ${simResult.lcmdDailyCostM.toFixed(2)}M <span className="text-xs text-slate-500 dark:text-zinc-500 font-sans font-normal">/ day</span>
                 </div>
               </CardHeader>
-              <CardContent className="p-4 pt-1 text-[11px] text-zinc-400 leading-snug">
+              <CardContent className="p-4 pt-1 text-[11px] text-slate-500 dark:text-zinc-400 leading-snug">
                 {Math.round(missionDays * activeSite.illuminationFraction)} active sunlit days out of {missionDays}d. (Basin benchmark: $12.50M/day).
               </CardContent>
             </Card>
 
             {/* Card 3: Capital-at-Risk Index (CaRI) */}
-            <Card className="bg-zinc-900/60 border-zinc-800/80 shadow-xs relative overflow-hidden">
+            <Card className="bg-white dark:bg-zinc-900/60 border-slate-200 dark:border-zinc-800/80 shadow-xs dark:shadow-none relative overflow-hidden transition-colors">
               <div className={`absolute top-0 left-0 right-0 h-[2px] ${activeSite.cariPercent < 15 ? "bg-emerald-500" : activeSite.cariPercent < 30 ? "bg-amber-500" : "bg-rose-500"}`}></div>
               <CardHeader className="p-4 pb-1">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-zinc-400">Capital-at-Risk (CaRI)</span>
+                  <span className="text-xs font-semibold text-slate-600 dark:text-zinc-400">Capital-at-Risk (CaRI)</span>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <button className="text-zinc-500 hover:text-zinc-300">
+                      <button className="text-slate-400 hover:text-slate-600 dark:text-zinc-500 dark:hover:text-zinc-300">
                         <HelpCircle className="w-3.5 h-3.5" />
                       </button>
                     </TooltipTrigger>
-                    <TooltipContent className="bg-zinc-900 border-zinc-700 text-zinc-200 text-xs max-w-xs">
+                    <TooltipContent className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-700 text-slate-800 dark:text-zinc-200 text-xs max-w-xs shadow-md">
                       Composite risk metric: 50% cryogenic shadow freeze hazard + 30% DSN line-of-sight blackout + 20% landing slope tip-over risk.
                     </TooltipContent>
                   </Tooltip>
                 </div>
                 <div className="flex items-baseline gap-2 mt-1">
-                  <span className={`text-2xl lg:text-3xl font-black font-mono tabular-nums ${activeSite.cariPercent < 15 ? "text-emerald-400" : activeSite.cariPercent < 30 ? "text-amber-400" : "text-rose-400"}`}>
+                  <span className={`text-2xl lg:text-3xl font-black font-mono tabular-nums ${activeSite.cariPercent < 15 ? "text-emerald-600 dark:text-emerald-400" : activeSite.cariPercent < 30 ? "text-amber-600 dark:text-amber-400" : "text-rose-600 dark:text-rose-400"}`}>
                     {activeSite.cariPercent.toFixed(1)}%
                   </span>
-                  <Badge variant="outline" className={`text-[10px] py-0 px-1 font-semibold ${activeSite.cariPercent < 15 ? "border-emerald-500/40 text-emerald-400" : "border-amber-500/40 text-amber-400"}`}>
+                  <Badge variant="outline" className={`text-[10px] py-0 px-1 font-semibold ${activeSite.cariPercent < 15 ? "border-emerald-500/40 text-emerald-700 dark:text-emerald-400 bg-emerald-500/10" : "border-amber-500/40 text-amber-700 dark:text-amber-400 bg-amber-500/10"}`}>
                     {activeSite.cariPercent < 15 ? "Minimal Risk" : activeSite.cariPercent < 30 ? "Moderate" : "Elevated Risk"}
                   </Badge>
                 </div>
               </CardHeader>
-              <CardContent className="p-4 pt-1 text-[11px] text-zinc-400 leading-snug">
+              <CardContent className="p-4 pt-1 text-[11px] text-slate-500 dark:text-zinc-400 leading-snug">
                 Max shadow: {activeSite.maxShadowHours}h &bull; Slope: {activeSite.maxSlopeDeg}° (&lt;10° Safe envelope).
               </CardContent>
             </Card>
 
             {/* Card 4: DTE Comm Cost Efficiency */}
-            <Card className="bg-zinc-900/60 border-zinc-800/80 shadow-xs relative overflow-hidden">
+            <Card className="bg-white dark:bg-zinc-900/60 border-slate-200 dark:border-zinc-800/80 shadow-xs dark:shadow-none relative overflow-hidden transition-colors">
               <div className="absolute top-0 left-0 right-0 h-[2px] bg-blue-500"></div>
               <CardHeader className="p-4 pb-1">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-zinc-400">DTE Comm Line-of-Sight</span>
+                  <span className="text-xs font-semibold text-slate-600 dark:text-zinc-400">DTE Comm Line-of-Sight</span>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <button className="text-zinc-500 hover:text-zinc-300">
+                      <button className="text-slate-400 hover:text-slate-600 dark:text-zinc-500 dark:hover:text-zinc-300">
                         <HelpCircle className="w-3.5 h-3.5" />
                       </button>
                     </TooltipTrigger>
-                    <TooltipContent className="bg-zinc-900 border-zinc-700 text-zinc-200 text-xs max-w-xs">
+                    <TooltipContent className="bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-700 text-slate-800 dark:text-zinc-200 text-xs max-w-xs shadow-md">
                       Direct-to-Earth coverage eliminates the need to lease expensive commercial lunar relay satellite constellation transponders (~$25M per campaign).
                     </TooltipContent>
                   </Tooltip>
                 </div>
-                <div className="text-2xl lg:text-3xl font-black font-mono tabular-nums text-blue-400 mt-1">
+                <div className="text-2xl lg:text-3xl font-black font-mono tabular-nums text-blue-600 dark:text-blue-400 mt-1">
                   {(activeSite.dteAvailabilityFraction * 100).toFixed(1)}%
                 </div>
               </CardHeader>
-              <CardContent className="p-4 pt-1 text-[11px] text-zinc-400 leading-snug">
+              <CardContent className="p-4 pt-1 text-[11px] text-slate-500 dark:text-zinc-400 leading-snug">
                 Avoids ~$25M in dedicated lunar orbital relay constellation lease fees.
               </CardContent>
             </Card>
           </section>
 
           {/* ======================================================================= */}
-          {/* 3. INTERACTIVE TECHNO-ECONOMIC SIMULATOR (SLIDERS + VISUAL SPLIT)       */}
+          {/* 4. INTERACTIVE TECHNO-ECONOMIC SIMULATOR (SLIDERS + VISUAL SPLIT)       */}
           {/* ======================================================================= */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-5 shadow-xs space-y-5">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800 pb-3">
+          <section className="bg-white dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl p-5 shadow-xs space-y-5 transition-colors">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-zinc-800 pb-3">
               <div>
-                <h2 className="text-base font-bold text-zinc-100 flex items-center gap-2">
-                  <Scale className="w-4 h-4 text-emerald-400" />
+                <h2 className="text-base font-bold text-slate-900 dark:text-zinc-100 flex items-center gap-2">
+                  <Scale className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   <span>Interactive Techno-Economic Trade-Off Simulator</span>
                 </h2>
-                <p className="text-xs text-zinc-400 mt-0.5">
+                <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
                   Adjust spacecraft thermal heating and science payload targets to model real-time hardware mass and launch budget optimization.
                 </p>
               </div>
-              <Badge variant="outline" className="text-xs border-zinc-700 text-zinc-300 bg-zinc-950 font-mono w-fit">
+              <Badge variant="outline" className="text-xs border-slate-300 dark:border-zinc-700 text-slate-700 dark:text-zinc-300 bg-slate-50 dark:bg-zinc-950 font-mono w-fit">
                 P_heater: {heaterWatts}W &bull; Duration: {missionDays}d
               </Badge>
             </div>
@@ -306,13 +362,13 @@ export default function MissionFinancePage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               
               {/* Left 5 Cols: Sliders */}
-              <div className="lg:col-span-5 space-y-4 bg-zinc-950/70 border border-zinc-800/80 p-4 rounded-xl">
+              <div className="lg:col-span-5 space-y-4 bg-slate-50/80 dark:bg-zinc-950/70 border border-slate-200 dark:border-zinc-800/80 p-4 rounded-xl">
                 
                 {/* Slider A: Mission Duration */}
                 <div className="space-y-2">
                   <div className="flex justify-between items-center text-xs">
-                    <span className="font-semibold text-zinc-200">A. Planned Mission Duration</span>
-                    <span className="font-mono text-emerald-400 font-bold">{missionDays} Earth Days</span>
+                    <span className="font-semibold text-slate-800 dark:text-zinc-200">A. Planned Mission Duration</span>
+                    <span className="font-mono text-emerald-600 dark:text-emerald-400 font-bold">{missionDays} Earth Days</span>
                   </div>
                   <Slider
                     min={7}
@@ -322,7 +378,7 @@ export default function MissionFinancePage() {
                     onValueChange={(val) => setMissionDays(val[0])}
                     className="py-1"
                   />
-                  <div className="flex justify-between text-[10px] text-zinc-500 font-mono">
+                  <div className="flex justify-between text-[10px] text-slate-500 dark:text-zinc-500 font-mono">
                     <span>7d (Quick Ingress)</span>
                     <span>28d (Full Lunar Cycle)</span>
                     <span>45d (Long Duration)</span>
@@ -330,10 +386,10 @@ export default function MissionFinancePage() {
                 </div>
 
                 {/* Slider B: Heater Power Requirement */}
-                <div className="space-y-2 pt-2 border-t border-zinc-800/60">
+                <div className="space-y-2 pt-2 border-t border-slate-200 dark:border-zinc-800/60">
                   <div className="flex justify-between items-center text-xs">
-                    <span className="font-semibold text-zinc-200">B. Survival Heater Draw (Shadow)</span>
-                    <span className="font-mono text-rose-400 font-bold">{heaterWatts} Watts</span>
+                    <span className="font-semibold text-slate-800 dark:text-zinc-200">B. Survival Heater Draw (Shadow)</span>
+                    <span className="font-mono text-rose-600 dark:text-rose-400 font-bold">{heaterWatts} Watts</span>
                   </div>
                   <Slider
                     min={80}
@@ -343,7 +399,7 @@ export default function MissionFinancePage() {
                     onValueChange={(val) => setHeaterWatts(val[0])}
                     className="py-1"
                   />
-                  <div className="flex justify-between text-[10px] text-zinc-500 font-mono">
+                  <div className="flex justify-between text-[10px] text-slate-500 dark:text-zinc-500 font-mono">
                     <span>80W (Minimal)</span>
                     <span>120W (Baseline)</span>
                     <span>250W (Active Lines)</span>
@@ -351,10 +407,10 @@ export default function MissionFinancePage() {
                 </div>
 
                 {/* Slider C: Secondary Science Payload Target */}
-                <div className="space-y-2 pt-2 border-t border-zinc-800/60">
+                <div className="space-y-2 pt-2 border-t border-slate-200 dark:border-zinc-800/60">
                   <div className="flex justify-between items-center text-xs">
-                    <span className="font-semibold text-zinc-200">C. Science Payload Target Mass</span>
-                    <span className="font-mono text-cyan-400 font-bold">{scienceTargetKg} kg</span>
+                    <span className="font-semibold text-slate-800 dark:text-zinc-200">C. Science Payload Target Mass</span>
+                    <span className="font-mono text-cyan-600 dark:text-cyan-400 font-bold">{scienceTargetKg} kg</span>
                   </div>
                   <Slider
                     min={20}
@@ -364,21 +420,21 @@ export default function MissionFinancePage() {
                     onValueChange={(val) => setScienceTargetKg(val[0])}
                     className="py-1"
                   />
-                  <div className="flex justify-between text-[10px] text-zinc-500 font-mono">
+                  <div className="flex justify-between text-[10px] text-slate-500 dark:text-zinc-500 font-mono">
                     <span>20 kg (Compact)</span>
                     <span>45 kg (NASA Nominal)</span>
                     <span>100 kg (Heavy Suite)</span>
                   </div>
                 </div>
 
-                <div className="pt-2 text-[11px] text-zinc-400 bg-zinc-900/60 p-2.5 rounded-lg border border-zinc-800 space-y-1">
+                <div className="pt-2 text-[11px] text-slate-600 dark:text-zinc-400 bg-white dark:bg-zinc-900/60 p-2.5 rounded-lg border border-slate-200 dark:border-zinc-800 space-y-1 shadow-2xs">
                   <div className="flex justify-between">
                     <span>Computed Battery Mass:</span>
-                    <span className="font-mono font-bold text-zinc-200">{simResult.batteryMassKg} kg</span>
+                    <span className="font-mono font-bold text-slate-900 dark:text-zinc-200">{simResult.batteryMassKg} kg</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Equivalent Launch Cost:</span>
-                    <span className="font-mono font-bold text-emerald-400">${simResult.batteryCostM.toFixed(1)}M</span>
+                    <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">${simResult.batteryCostM.toFixed(1)}M</span>
                   </div>
                 </div>
               </div>
@@ -387,10 +443,10 @@ export default function MissionFinancePage() {
               <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4">
                 
                 {/* Donut Chart: Hardware Mass Breakdown */}
-                <div className="bg-zinc-950/70 border border-zinc-800/80 p-4 rounded-xl flex flex-col justify-between">
+                <div className="bg-slate-50/80 dark:bg-zinc-950/70 border border-slate-200 dark:border-zinc-800/80 p-4 rounded-xl flex flex-col justify-between">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold text-zinc-200">Spacecraft Mass Allocation</span>
-                    <span className="text-[10px] font-mono text-zinc-500">Total ~1,200 kg</span>
+                    <span className="text-xs font-semibold text-slate-800 dark:text-zinc-200">Spacecraft Mass Allocation</span>
+                    <span className="text-[10px] font-mono text-slate-500 dark:text-zinc-500">Total ~1,200 kg</span>
                   </div>
 
                   <div className="h-44 w-full">
@@ -411,54 +467,53 @@ export default function MissionFinancePage() {
                           ))}
                         </Pie>
                         <RechartsTooltip
-                          contentStyle={{ backgroundColor: "#18181b", borderColor: "#27272a", borderRadius: "8px", fontSize: "11px" }}
-                          itemStyle={{ color: "#f4f4f5" }}
+                          contentStyle={tooltipStyle}
                           formatter={(value: any) => [`${value} kg`, "Mass"]}
                         />
                       </PieChart>
                     </ResponsiveContainer>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-1.5 text-[10px] text-zinc-400 font-mono mt-1 border-t border-zinc-800 pt-2">
+                  <div className="grid grid-cols-2 gap-1.5 text-[10px] text-slate-600 dark:text-zinc-400 font-mono mt-1 border-t border-slate-200 dark:border-zinc-800 pt-2">
                     {simResult.massBreakdown.map((item) => (
                       <div key={item.name} className="flex items-center gap-1.5 truncate">
                         <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
-                        <span className="truncate">{item.name}: <strong className="text-zinc-200">{item.value}kg</strong></span>
+                        <span className="truncate">{item.name}: <strong className="text-slate-900 dark:text-zinc-200">{item.value}kg</strong></span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Capital Reallocation Card */}
-                <div className="bg-zinc-950/70 border border-zinc-800/80 p-4 rounded-xl flex flex-col justify-between space-y-3">
+                <div className="bg-slate-50/80 dark:bg-zinc-950/70 border border-slate-200 dark:border-zinc-800/80 p-4 rounded-xl flex flex-col justify-between space-y-3">
                   <div>
-                    <Badge variant="outline" className="border-emerald-500/40 text-emerald-400 bg-emerald-500/10 text-[10px] font-mono mb-2">
+                    <Badge variant="outline" className="border-emerald-500/40 text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 text-[10px] font-mono mb-2">
                       CAPITAL CONVERSION
                     </Badge>
-                    <h3 className="text-sm font-bold text-zinc-100">
+                    <h3 className="text-sm font-bold text-slate-900 dark:text-zinc-100">
                       Ballast-to-Science Value Transformation
                     </h3>
-                    <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
-                      By choosing <strong>{activeSite.name}</strong>, you avoid <strong className="text-emerald-400">+{Math.round(CANDIDATE_SITE_FINANCIAL_PROFILES[3].requiredBatteryKg - simResult.batteryMassKg)} kg</strong> in dead battery ballast.
+                    <p className="text-xs text-slate-600 dark:text-zinc-400 mt-1 leading-relaxed">
+                      By choosing <strong>{activeSite.name}</strong>, you avoid <strong className="text-emerald-600 dark:text-emerald-400">+{Math.round(CANDIDATE_SITE_FINANCIAL_PROFILES[3].requiredBatteryKg - simResult.batteryMassKg)} kg</strong> in dead battery ballast.
                     </p>
                   </div>
 
-                  <div className="p-3 bg-zinc-900 border border-zinc-800 rounded-lg space-y-2">
-                    <div className="text-[11px] text-zinc-400 flex justify-between">
+                  <div className="p-3 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-lg space-y-2 shadow-2xs">
+                    <div className="text-[11px] text-slate-600 dark:text-zinc-400 flex justify-between">
                       <span>Reallocated Capital Value:</span>
-                      <span className="font-mono text-emerald-400 font-bold text-sm">
+                      <span className="font-mono text-emerald-600 dark:text-emerald-400 font-bold text-sm">
                         +${simResult.reallocatedCapitalM.toFixed(1)}M
                       </span>
                     </div>
-                    <div className="text-[11px] text-zinc-400 flex justify-between">
+                    <div className="text-[11px] text-slate-600 dark:text-zinc-400 flex justify-between">
                       <span>Science Payload Capacity:</span>
-                      <span className="font-mono text-cyan-400 font-bold text-sm">
+                      <span className="font-mono text-cyan-600 dark:text-cyan-400 font-bold text-sm">
                         {scienceTargetKg} kg ({Math.round((scienceTargetKg / 1250) * 100)}% of lander)
                       </span>
                     </div>
                   </div>
 
-                  <p className="text-[10px] text-zinc-500 italic">
+                  <p className="text-[10px] text-slate-500 dark:text-zinc-500 italic">
                     *Every 1 kg of battery eliminated frees up capacity for multi-spectral spectrometers, drills, or neutron detectors without additional rocket launch fees.
                   </p>
                 </div>
@@ -467,19 +522,19 @@ export default function MissionFinancePage() {
           </section>
 
           {/* ======================================================================= */}
-          {/* 4. ANALYTICAL CHARTS GRID (2 COLUMNS)                                   */}
+          {/* 5. ANALYTICAL CHARTS GRID (2 COLUMNS)                                   */}
           {/* ======================================================================= */}
           <section className="grid grid-cols-1 lg:grid-cols-12 gap-5">
             
             {/* Chart 1: Cumulative Capital-at-Risk vs. Solar Elevation Curve (Area Chart) */}
-            <div className="lg:col-span-6 bg-zinc-900/50 border border-zinc-800 rounded-xl p-4 shadow-xs space-y-3">
+            <div className="lg:col-span-6 bg-white dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-xs space-y-3 transition-colors">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-sm font-bold text-zinc-100 flex items-center gap-1.5">
-                    <TrendingUp className="w-4 h-4 text-emerald-400" />
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-zinc-100 flex items-center gap-1.5">
+                    <TrendingUp className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                     <span>Capital-at-Risk vs. Solar Illumination Curve</span>
                   </h3>
-                  <p className="text-[11px] text-zinc-400">
+                  <p className="text-[11px] text-slate-500 dark:text-zinc-400">
                     Dual-axis projection: Solar elevation (left, °) vs. Cumulative financial risk accumulation (right, $M).
                   </p>
                 </div>
@@ -498,13 +553,12 @@ export default function MissionFinancePage() {
                         <stop offset="95%" stopColor="#f43f5e" stopOpacity={0.0} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
-                    <XAxis dataKey="day" stroke="#71717a" fontSize={10} tickFormatter={(val) => `D+${val}`} />
+                    <CartesianGrid strokeDasharray="3 3" stroke={chartGridStroke} />
+                    <XAxis dataKey="day" stroke={chartAxisTickColor} fontSize={10} tickFormatter={(val) => `D+${val}`} />
                     <YAxis yAxisId="left" stroke="#10b981" fontSize={10} domain={[-2, 6]} tickFormatter={(v) => `${v}°`} />
                     <YAxis yAxisId="right" orientation="right" stroke="#f43f5e" fontSize={10} tickFormatter={(v) => `$${v}M`} />
                     <RechartsTooltip
-                      contentStyle={{ backgroundColor: "#18181b", borderColor: "#27272a", borderRadius: "8px", fontSize: "11px" }}
-                      itemStyle={{ color: "#f4f4f5" }}
+                      contentStyle={tooltipStyle}
                       formatter={(value: any, name: any) => [
                         name === "solarElevationDeg" ? `${value}°` : `$${value}M`,
                         name === "solarElevationDeg" ? "Solar Elevation" : "Cumulative Risk",
@@ -534,20 +588,20 @@ export default function MissionFinancePage() {
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
-              <div className="text-[10px] text-zinc-500 font-mono text-center">
+              <div className="text-[10px] text-slate-500 dark:text-zinc-500 font-mono text-center">
                 *Whenever solar elevation dips below 0° (crater shadow), risk increases rapidly as thermal heater draw exhausts battery capacity.
               </div>
             </div>
 
             {/* Chart 2: Comparative Lifecycle Cost Breakdown (Grouped Bar Chart) */}
-            <div className="lg:col-span-6 bg-zinc-900/50 border border-zinc-800 rounded-xl p-4 shadow-xs space-y-3">
+            <div className="lg:col-span-6 bg-white dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl p-4 shadow-xs space-y-3 transition-colors">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-sm font-bold text-zinc-100 flex items-center gap-1.5">
-                    <Layers className="w-4 h-4 text-cyan-400" />
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-zinc-100 flex items-center gap-1.5">
+                    <Layers className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
                     <span>Lifecycle Cost Allocation Comparison ($M)</span>
                   </h3>
-                  <p className="text-[11px] text-zinc-400">
+                  <p className="text-[11px] text-slate-500 dark:text-zinc-400">
                     Comparing Malapert Mountain vs. Shackleton Ridge vs. Polar Basin across cost categories.
                   </p>
                 </div>
@@ -556,42 +610,41 @@ export default function MissionFinancePage() {
               <div className="h-64 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={simResult.lifecycleComparisonData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
-                    <XAxis dataKey="category" stroke="#71717a" fontSize={9} />
-                    <YAxis stroke="#71717a" fontSize={10} tickFormatter={(v) => `$${v}M`} />
+                    <CartesianGrid strokeDasharray="3 3" stroke={chartGridStroke} />
+                    <XAxis dataKey="category" stroke={chartAxisTickColor} fontSize={9} />
+                    <YAxis stroke={chartAxisTickColor} fontSize={10} tickFormatter={(v) => `$${v}M`} />
                     <RechartsTooltip
-                      contentStyle={{ backgroundColor: "#18181b", borderColor: "#27272a", borderRadius: "8px", fontSize: "11px" }}
-                      itemStyle={{ color: "#f4f4f5" }}
+                      contentStyle={tooltipStyle}
                       formatter={(val: any) => [`$${val}M`, "Cost"]}
                     />
                     <Legend wrapperStyle={{ fontSize: "11px", paddingTop: "8px" }} />
                     <Bar dataKey="malapert" name="Malapert Mountain" fill="#10b981" radius={[3, 3, 0, 0]} />
                     <Bar dataKey="shackleton" name="Shackleton Ridge" fill="#0284c7" radius={[3, 3, 0, 0]} />
-                    <Bar dataKey="craterBasin" name="Polar Crater Floor" fill="#64748b" radius={[3, 3, 0, 0]} />
+                    <Bar dataKey="craterBasin" name="Polar Crater Floor" fill={isDarkMode ? "#52525b" : "#94a3b8"} radius={[3, 3, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-              <div className="text-[10px] text-zinc-500 font-mono text-center">
+              <div className="text-[10px] text-slate-500 dark:text-zinc-500 font-mono text-center">
                 *Polar crater floors require $441.5M in battery mass overhead alone, making low-elevation basins financially prohibitive.
               </div>
             </div>
           </section>
 
           {/* ======================================================================= */}
-          {/* 5. CROSS-SITE FINANCIAL SENSITIVITY MATRIX (TABLE)                     */}
+          {/* 6. CROSS-SITE FINANCIAL SENSITIVITY MATRIX (TABLE)                     */}
           {/* ======================================================================= */}
-          <section className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-5 shadow-xs space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800 pb-3">
+          <section className="bg-white dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-xl p-5 shadow-xs space-y-4 transition-colors">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-zinc-800 pb-3">
               <div>
-                <h3 className="text-base font-bold text-zinc-100 flex items-center gap-2">
-                  <Coins className="w-4 h-4 text-emerald-400" />
+                <h3 className="text-base font-bold text-slate-900 dark:text-zinc-100 flex items-center gap-2">
+                  <Coins className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   <span>Artemis Candidate Sites: Techno-Economic Sensitivity Matrix</span>
                 </h3>
-                <p className="text-xs text-zinc-400 mt-0.5">
+                <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5">
                   Direct evaluation of landing site solar availability, shadow intervals, required battery reserves, and transit costs.
                 </p>
               </div>
-              <Badge variant="outline" className="text-xs border-emerald-500/40 text-emerald-400 bg-emerald-500/10 font-mono w-fit">
+              <Badge variant="outline" className="text-xs border-emerald-500/40 text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 font-mono w-fit">
                 NASA CLPS TEA BENCHMARK
               </Badge>
             </div>
@@ -599,77 +652,78 @@ export default function MissionFinancePage() {
             <div className="overflow-x-auto">
               <Table className="text-xs">
                 <TableHeader>
-                  <TableRow className="border-zinc-800 hover:bg-transparent">
-                    <TableHead className="text-zinc-400 font-semibold">Candidate Landing Site</TableHead>
-                    <TableHead className="text-zinc-400 font-semibold text-center">Illumination (%)</TableHead>
-                    <TableHead className="text-zinc-400 font-semibold text-center">Max Shadow (hrs)</TableHead>
-                    <TableHead className="text-zinc-400 font-semibold text-center">Battery Reserve</TableHead>
-                    <TableHead className="text-zinc-400 font-semibold text-center">Launch Transit Cost</TableHead>
-                    <TableHead className="text-zinc-400 font-semibold text-center">Capital Risk (CaRI)</TableHead>
-                    <TableHead className="text-zinc-400 font-semibold text-right">Net Efficiency Score</TableHead>
+                  <TableRow className="border-b border-slate-200 dark:border-zinc-800 bg-slate-50/80 dark:bg-zinc-900/80 hover:bg-transparent">
+                    <TableHead className="text-slate-700 dark:text-zinc-400 font-bold">Candidate Landing Site</TableHead>
+                    <TableHead className="text-slate-700 dark:text-zinc-400 font-bold text-center">Illumination (%)</TableHead>
+                    <TableHead className="text-slate-700 dark:text-zinc-400 font-bold text-center">Max Shadow (hrs)</TableHead>
+                    <TableHead className="text-slate-700 dark:text-zinc-400 font-bold text-center">Battery Reserve</TableHead>
+                    <TableHead className="text-slate-700 dark:text-zinc-400 font-bold text-center">Launch Transit Cost</TableHead>
+                    <TableHead className="text-slate-700 dark:text-zinc-400 font-bold text-center">Capital Risk (CaRI)</TableHead>
+                    <TableHead className="text-slate-700 dark:text-zinc-400 font-bold text-right">Net Efficiency Score</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {CANDIDATE_SITE_FINANCIAL_PROFILES.map((site) => {
                     const isOptimal = site.id === "malapert-peak";
                     const isBenchmark = site.id === "polar-basin-benchmark";
+                    const isSelected = site.id === selectedSiteId;
                     return (
                       <TableRow 
                         key={site.id} 
-                        className={`border-zinc-800/80 transition-colors ${
-                          site.id === selectedSiteId 
-                            ? "bg-zinc-800/50" 
-                            : "hover:bg-zinc-900/50"
+                        className={`border-b border-slate-200 dark:border-zinc-800/80 transition-colors ${
+                          isSelected 
+                            ? "bg-emerald-500/10 dark:bg-zinc-800/60 font-medium" 
+                            : "hover:bg-slate-50 dark:hover:bg-zinc-900/50"
                         }`}
                       >
-                        <TableCell className="font-semibold text-zinc-200">
+                        <TableCell className="font-semibold text-slate-900 dark:text-zinc-200">
                           <div className="flex items-center gap-2">
                             <span>{site.name}</span>
                             {isOptimal && (
-                              <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-[9px] px-1 py-0">
+                              <Badge className="bg-emerald-600 text-white dark:bg-emerald-500/20 dark:text-emerald-400 dark:border-emerald-500/40 text-[9px] px-1 py-0">
                                 OPTIMAL
                               </Badge>
                             )}
                             {isBenchmark && (
-                              <Badge variant="outline" className="border-zinc-700 text-zinc-400 text-[9px] px-1 py-0">
+                              <Badge variant="outline" className="border-slate-300 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 text-[9px] px-1 py-0 bg-slate-100 dark:bg-zinc-800">
                                 BENCHMARK
                               </Badge>
                             )}
                           </div>
-                          <span className="text-[10px] text-zinc-500 block font-mono">
+                          <span className="text-[10px] text-slate-500 dark:text-zinc-500 block font-mono">
                             {site.lat.toFixed(1)}°S, {site.lon.toFixed(1)}°E &bull; Slope {site.maxSlopeDeg}°
                           </span>
                         </TableCell>
 
-                        <TableCell className="text-center font-mono tabular-nums font-bold text-zinc-200">
+                        <TableCell className="text-center font-mono tabular-nums font-bold text-slate-900 dark:text-zinc-200">
                           {(site.illuminationFraction * 100).toFixed(1)}%
                         </TableCell>
 
-                        <TableCell className="text-center font-mono tabular-nums text-zinc-300">
+                        <TableCell className="text-center font-mono tabular-nums text-slate-700 dark:text-zinc-300">
                           {site.maxShadowHours} h
                         </TableCell>
 
                         <TableCell className="text-center font-mono tabular-nums">
-                          <span className="text-rose-400 font-bold">{site.requiredBatteryKg} kg</span>
+                          <span className="text-rose-600 dark:text-rose-400 font-bold">{site.requiredBatteryKg} kg</span>
                         </TableCell>
 
-                        <TableCell className="text-center font-mono tabular-nums font-semibold text-zinc-200">
+                        <TableCell className="text-center font-mono tabular-nums font-semibold text-slate-800 dark:text-zinc-200">
                           ${site.batteryLaunchCostM.toFixed(1)}M
                         </TableCell>
 
                         <TableCell className="text-center font-mono tabular-nums">
                           <span className={`px-2 py-0.5 rounded text-[11px] font-bold ${
                             site.cariPercent < 15 
-                              ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30" 
+                              ? "bg-emerald-100 text-emerald-800 border border-emerald-300 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30" 
                               : site.cariPercent < 40 
-                              ? "bg-amber-500/10 text-amber-400 border border-amber-500/30" 
-                              : "bg-rose-500/10 text-rose-400 border border-rose-500/30"
+                              ? "bg-amber-100 text-amber-800 border border-amber-300 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/30" 
+                              : "bg-rose-100 text-rose-800 border border-rose-300 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/30"
                           }`}>
                             {site.cariPercent.toFixed(1)}%
                           </span>
                         </TableCell>
 
-                        <TableCell className="text-right font-mono tabular-nums font-bold text-emerald-400 text-sm">
+                        <TableCell className="text-right font-mono tabular-nums font-bold text-emerald-600 dark:text-emerald-400 text-sm">
                           {site.netEfficiencyScore.toFixed(1)} / 100
                         </TableCell>
                       </TableRow>
@@ -679,37 +733,37 @@ export default function MissionFinancePage() {
               </Table>
             </div>
 
-            <div className="p-3 bg-zinc-950/60 rounded-lg border border-zinc-800/80 text-[11px] text-zinc-400 leading-relaxed flex items-start gap-2.5">
-              <Info className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+            <div className="p-3 bg-slate-50 dark:bg-zinc-950/60 rounded-lg border border-slate-200 dark:border-zinc-800/80 text-[11px] text-slate-600 dark:text-zinc-400 leading-relaxed flex items-start gap-2.5 transition-colors">
+              <Info className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
               <div>
-                <strong className="text-zinc-200">Techno-Economic Conclusion:</strong> Malapert Mountain (Peak) represents the single most capital-efficient landing target on the lunar south pole. Its 96.4% illumination window limits continuous shadow to just 24.2 hours, saving <strong>+$38.4M in launch mass overhead</strong> compared to crater floors and allowing an extra 32+ kg of scientific equipment to be flown for zero extra rocket transit cost.
+                <strong className="text-slate-900 dark:text-zinc-200">Techno-Economic Conclusion:</strong> Malapert Mountain (Peak) represents the single most capital-efficient landing target on the lunar south pole. Its 96.4% illumination window limits continuous shadow to just 24.2 hours, saving <strong>+$38.4M in launch mass overhead</strong> compared to crater floors and allowing an extra 32+ kg of scientific equipment to be flown for zero extra rocket transit cost.
               </div>
             </div>
           </section>
 
           {/* ======================================================================= */}
-          {/* 6. METHODOLOGY & PHYSICAL CITATIONS FOOTER                             */}
+          {/* 7. METHODOLOGY & PHYSICAL CITATIONS FOOTER                             */}
           {/* ======================================================================= */}
-          <footer className="border-t border-zinc-800 pt-6 text-xs text-zinc-500 space-y-2">
+          <footer className="border-t border-slate-200 dark:border-zinc-800 pt-6 text-xs text-slate-500 dark:text-zinc-500 space-y-2 transition-colors">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
               <p>
                 <strong>SelenSync Techno-Economic Architecture:</strong> Derived from official NASA CLPS Payload Services benchmarks, JPL DE440 ephemeris, and LRO LOLA polar altimetry.
               </p>
               <div className="flex items-center gap-2 shrink-0">
-                <Link href="/dashboard" className="text-zinc-400 hover:text-zinc-200 underline">
+                <Link href="/dashboard" className="text-slate-700 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-200 underline">
                   Mission Cockpit
                 </Link>
                 <span>&bull;</span>
-                <Link href="/dashboard/map" className="text-zinc-400 hover:text-zinc-200 underline">
+                <Link href="/dashboard/map" className="text-slate-700 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-200 underline">
                   Planetary Map
                 </Link>
                 <span>&bull;</span>
-                <Link href="/" className="text-zinc-400 hover:text-zinc-200 underline">
+                <Link href="/" className="text-slate-700 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-200 underline">
                   Overview
                 </Link>
               </div>
             </div>
-            <p className="text-[11px] font-mono text-zinc-600">
+            <p className="text-[11px] font-mono text-slate-500 dark:text-zinc-600">
               Formulas: M_battery = (P_heater &times; T_shadow) / (180 Wh/kg &times; 0.80 DoD) &bull; LCMD = CAPEX ($120M) / Active Days &bull; CaRI = 0.50&times;Shadow + 0.30&times;Blackout + 0.20&times;Slope
             </p>
           </footer>
