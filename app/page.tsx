@@ -84,7 +84,7 @@ export default function HomePage() {
               <span className="text-slate-300 dark:text-slate-600 hidden xs:inline">•</span>
               <span className="text-[#4e6aff]">CLPS Lunar Mission Browser</span>
               <span className="text-slate-300 dark:text-slate-600 hidden sm:inline">•</span>
-              <span className="text-amber-600 dark:text-amber-400 font-semibold">Team Lead: 2025 Global Nominee (Team AIBA SpaceWeb)</span>
+              <span className="text-amber-600 dark:text-amber-400 font-semibold">From the 2025 Global Nominee Team (AIBA SpaceWeb)</span>
             </div>
 
             {/* Main Title (H1) */}
@@ -230,7 +230,7 @@ export default function HomePage() {
           <div className="text-center max-w-3xl mx-auto mb-5 space-y-1.5">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white dark:bg-slate-900 border-2 border-indigo-300 dark:border-indigo-700 text-xs font-bold text-indigo-900 dark:text-indigo-200 shadow-sm">
               <Award className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-              <span>Team Lead: 2025 Global Nominee (Team AIBA SpaceWeb) &bull; CFSBR SpaceWeb</span>
+              <span>From the 2025 Global Nominee Team (AIBA SpaceWeb) &bull; CFSBR SpaceWeb</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white font-sans tracking-tight">
               Meet Our Team
