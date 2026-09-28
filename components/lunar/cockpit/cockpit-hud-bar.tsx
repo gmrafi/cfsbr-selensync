@@ -17,7 +17,8 @@ import {
   ChevronDown,
   Download,
   FileText,
-  BookOpen
+  BookOpen,
+  Coins
 } from "lucide-react";
 import Link from "next/link";
 import { CLPS_LANDER_PROFILES, CLPSLanderProfile } from "@/lib/physics/lander-profiles";
@@ -104,6 +105,19 @@ export default function CockpitHudBar({
         >
           <Compass className="w-3.5 h-3.5 text-cyan-500" />
           <span className="hidden sm:inline">GIS Map</span>
+        </Link>
+
+        <Link
+          href="/mission-finance"
+          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold border transition-all ${
+            isDarkMode 
+              ? "bg-emerald-950/40 hover:bg-emerald-900/50 text-emerald-300 border-emerald-800/60" 
+              : "bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200"
+          }`}
+          title="Open Mission Techno-Economic Analysis (TEA)"
+        >
+          <Coins className="w-3.5 h-3.5 text-emerald-500" />
+          <span className="hidden sm:inline">Techno-Economics</span>
         </Link>
 
         {/* Brand Capsule */}

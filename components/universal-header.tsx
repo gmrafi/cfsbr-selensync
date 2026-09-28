@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Satellite, Menu, X, Rocket, Compass, Radio, Sparkles, Layers, ShieldCheck, ArrowRight, Sun, Moon } from "lucide-react"
+import { Satellite, Menu, X, Rocket, Compass, Radio, Sparkles, Layers, ShieldCheck, ArrowRight, Sun, Moon, Coins } from "lucide-react"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
@@ -79,6 +79,13 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
               className="px-3 py-1.5 text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-colors"
             >
               Site Comparison
+            </Link>
+            <Link
+              href="/mission-finance"
+              className="px-3 py-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10 rounded-md transition-colors flex items-center gap-1"
+            >
+              <Coins className="w-3.5 h-3.5" />
+              <span>Techno-Economics</span>
             </Link>
             <Link
               href="/dashboard"
@@ -201,6 +208,13 @@ export default function UniversalHeader({ variant = "light" }: UniversalHeaderPr
               className="block px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 rounded-md"
             >
               Site Comparison
+            </Link>
+            <Link
+              href="/mission-finance"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-3 py-2 text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10 rounded-md"
+            >
+              Techno-Economics (Mission Finance)
             </Link>
             <Link
               href="/dashboard"
