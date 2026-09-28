@@ -10,7 +10,7 @@ import { getLunarSunEarthPositions } from "@/lib/celestial/lunar-engine";
 import { calculateSolarPower, DEFAULT_CLPS_SOLAR_SPECS } from "@/lib/physics/solar-power";
 import { calculateDTERFLinkBudget, DEFAULT_CLPS_RF_SPECS } from "@/lib/physics/rf-link";
 import { calculateDivinerThermal } from "@/lib/physics/diviner-thermal";
-import { generateSyntheticHorizonProfile, isBodyClearedOfTopography } from "@/lib/gis/horizon-elevation";
+import { generateSyntheticHorizonProfile, isBodyClearedOfTopography, getHorizonObstacleElevation } from "@/lib/gis/horizon-elevation";
 import { 
   Sun, 
   Radio, 
@@ -85,9 +85,9 @@ export default function SiteComparisonMatrix({
   }, [ephemerisA.earth, horizonA]);
 
   const solarPowerA = useMemo(() => {
-    const obstacleElev = isSunOccludedA ? ephemerisA.sun.altitudeDegrees + 0.1 : 0;
+    const obstacleElev = getHorizonObstacleElevation(ephemerisA.sun.azimuthDegrees, horizonA.profile);
     return calculateSolarPower(ephemerisA.sun.altitudeDegrees, ephemerisA.sun.azimuthDegrees, DEFAULT_CLPS_SOLAR_SPECS, obstacleElev);
-  }, [ephemerisA.sun, isSunOccludedA]);
+  }, [ephemerisA.sun, horizonA]);
 
   const rfLinkA = useMemo(() => {
     const effectiveEarthElev = isEarthOccludedA ? -1 : ephemerisA.earth.altitudeDegrees;
@@ -116,9 +116,9 @@ export default function SiteComparisonMatrix({
   }, [ephemerisB.earth, horizonB]);
 
   const solarPowerB = useMemo(() => {
-    const obstacleElev = isSunOccludedB ? ephemerisB.sun.altitudeDegrees + 0.1 : 0;
+    const obstacleElev = getHorizonObstacleElevation(ephemerisB.sun.azimuthDegrees, horizonB.profile);
     return calculateSolarPower(ephemerisB.sun.altitudeDegrees, ephemerisB.sun.azimuthDegrees, DEFAULT_CLPS_SOLAR_SPECS, obstacleElev);
-  }, [ephemerisB.sun, isSunOccludedB]);
+  }, [ephemerisB.sun, horizonB]);
 
   const rfLinkB = useMemo(() => {
     const effectiveEarthElev = isEarthOccludedB ? -1 : ephemerisB.earth.altitudeDegrees;
@@ -361,14 +361,22 @@ export default function SiteComparisonMatrix({
               <tr className="bg-slate-50/80 dark:bg-slate-900/80 font-bold">
                 <td className="p-3 flex items-center gap-1.5 text-slate-900 dark:text-white">
                   <Scale className="w-4 h-4 text-[#4e6aff] shrink-0" />
-                  <span>MCDA Feasibility Index</span>
+                  <div>
+                    <span>Annual Baseline Feasibility (MCDA)</span>
+                    <span className="block text-[10px] text-slate-500 font-normal">
+                      Weights: Sun 40% • DTE 30% • Slope 20% • Science 10%
+                    </span>
+                  </div>
                 </td>
                 <td className="p-3 bg-blue-50/40 dark:bg-blue-950/30 border-l border-r border-slate-200 dark:border-slate-800">
                   <div className="flex items-baseline gap-1 font-mono">
                     <span className="text-base text-[#4e6aff] font-extrabold">
                       {calculateSiteFeasibilityScore(getSiteCriteria(siteA.id)).feasibilityIndex}
                     </span>
-                    <span className="text-[10px] text-slate-500">/100</span>
+                    <span className="text-[10px] text-slate-500">/100 Annual Baseline</span>
+                  </div>
+                  <div className="text-[10px] text-slate-500 mt-0.5">
+                    Epoch Status: {solarPowerA.netOutputWatts > 0 ? "Solar Active" : "Shadow Mode"}
                   </div>
                 </td>
                 <td className="p-3 bg-purple-50/40 dark:bg-purple-950/30">
@@ -376,7 +384,10 @@ export default function SiteComparisonMatrix({
                     <span className="text-base text-purple-600 dark:text-purple-400 font-extrabold">
                       {calculateSiteFeasibilityScore(getSiteCriteria(siteB.id)).feasibilityIndex}
                     </span>
-                    <span className="text-[10px] text-slate-500">/100</span>
+                    <span className="text-[10px] text-slate-500">/100 Annual Baseline</span>
+                  </div>
+                  <div className="text-[10px] text-slate-500 mt-0.5">
+                    Epoch Status: {solarPowerB.netOutputWatts > 0 ? "Solar Active" : "Shadow Mode"}
                   </div>
                 </td>
               </tr>
@@ -447,7 +458,7 @@ export default function SiteComparisonMatrix({
                       +{rfLinkA.linkMarginDb} dB
                     </span>
                     <Badge variant="outline" className={`text-[9px] font-sans px-1.5 py-0 ${rfLinkA.isLinkClosed ? "text-emerald-700 border-emerald-300 dark:text-emerald-400" : "text-rose-600 border-rose-300"}`}>
-                      {rfLinkA.isLinkClosed ? "Link Closed" : "Link Down"}
+                      {rfLinkA.isLinkClosed ? "Link OK" : "Link Down"}
                     </Badge>
                   </div>
                   <div className="text-[10px] text-slate-500 font-sans">Earth Elev: {ephemerisA.earth.altitudeDegrees}°</div>
@@ -458,7 +469,7 @@ export default function SiteComparisonMatrix({
                       +{rfLinkB.linkMarginDb} dB
                     </span>
                     <Badge variant="outline" className={`text-[9px] font-sans px-1.5 py-0 ${rfLinkB.isLinkClosed ? "text-emerald-700 border-emerald-300 dark:text-emerald-400" : "text-rose-600 border-rose-300"}`}>
-                      {rfLinkB.isLinkClosed ? "Link Closed" : "Link Down"}
+                      {rfLinkB.isLinkClosed ? "Link OK" : "Link Down"}
                     </Badge>
                   </div>
                   <div className="text-[10px] text-slate-500 font-sans">Earth Elev: {ephemerisB.earth.altitudeDegrees}°</div>
@@ -520,15 +531,24 @@ export default function SiteComparisonMatrix({
               Epoch &amp; Topographic Delta Synthesis
             </div>
             <div className="text-xs font-semibold text-slate-200 leading-relaxed">
-              {deltaPowerWatts >= 0 ? (
+              {solarPowerA.netOutputWatts === 0 && solarPowerB.netOutputWatts === 0 ? (
+                <span>
+                  Both options are currently in <strong className="text-amber-300">lunar shadow / occlusion (0 W)</strong> at selected epoch. Operations rely on battery reserve baseline.
+                </span>
+              ) : deltaPowerWatts > 0 ? (
                 <span>
                   Option A generates <strong className="text-amber-300">+{deltaPowerWatts}W</strong> more solar power and holds{" "}
                   <strong className="text-blue-300">{deltaSunElev >= 0 ? `+${deltaSunElev}°` : `${deltaSunElev}°`}</strong> Sun elevation relative to Option B.
                 </span>
-              ) : (
+              ) : deltaPowerWatts < 0 ? (
                 <span>
                   Option B generates <strong className="text-purple-300">+{Math.abs(deltaPowerWatts)}W</strong> more solar power and holds{" "}
                   <strong className="text-purple-300">{deltaSunElev < 0 ? `+${Math.abs(deltaSunElev)}°` : `${deltaSunElev}°`}</strong> Sun elevation relative to Option A.
+                </span>
+              ) : (
+                <span>
+                  Both options generate equal solar power (<strong className="text-emerald-300">{solarPowerA.netOutputWatts}W</strong>) with{" "}
+                  <strong className="text-blue-300">{deltaSunElev >= 0 ? `+${deltaSunElev}°` : `${deltaSunElev}°`}</strong> Sun elevation difference.
                 </span>
               )}
             </div>

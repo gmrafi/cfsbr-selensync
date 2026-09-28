@@ -32,6 +32,16 @@ export default function TelemetryCharts({
   const gridStroke = isDarkMode ? "#1e293b" : "#e2e8f0";
   const axisStroke = isDarkMode ? "#64748b" : "#94a3b8";
 
+  const maxHour = data && data.length > 0 ? data[data.length - 1].hour : 336;
+  const tickInterval = maxHour <= 72 ? 12 : maxHour <= 168 ? 24 : 48;
+  const axisTicks = React.useMemo(() => {
+    const list = [];
+    for (let h = 0; h <= maxHour; h += tickInterval) {
+      list.push(h);
+    }
+    return list;
+  }, [maxHour, tickInterval]);
+
   return (
     <div className="h-full flex flex-col gap-3 overflow-y-auto pr-1 select-none font-sans">
       {/* Chart 1: Solar Array Power Generation Curve */}
@@ -48,7 +58,7 @@ export default function TelemetryCharts({
 
         <div className="h-44 w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={data} margin={{ top: 8, right: 10, left: -20, bottom: 0 }}>
+            <AreaChart data={data} margin={{ top: 12, right: 12, left: -18, bottom: 0 }}>
               <defs>
                 <linearGradient id="solarGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.8} />
@@ -56,8 +66,22 @@ export default function TelemetryCharts({
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
-              <XAxis dataKey="timeLabel" tick={{ fontSize: 9 }} stroke={axisStroke} />
-              <YAxis tick={{ fontSize: 9 }} stroke={axisStroke} />
+              <XAxis 
+                dataKey="hour" 
+                type="number"
+                domain={[0, maxHour]}
+                ticks={axisTicks}
+                tickFormatter={(val) => `+${val}h`}
+                tick={{ fontSize: 9 }} 
+                stroke={axisStroke} 
+              />
+              <YAxis 
+                tick={{ fontSize: 9 }} 
+                stroke={axisStroke} 
+                domain={[0, "auto"]}
+                allowDataOverflow={false}
+                tickFormatter={(val) => `${Math.round(val)}`}
+              />
               <Tooltip
                 contentStyle={{ 
                   backgroundColor: isDarkMode ? "#0f172a" : "#ffffff", 
@@ -67,9 +91,16 @@ export default function TelemetryCharts({
                   fontSize: "11px",
                   boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)"
                 }}
-                formatter={(val: any) => [`${(Number(val) || 0).toFixed(0)} W`, "Generated Power"]}
+                labelFormatter={(label) => `Timeline: +${label}h`}
+                formatter={(val: any) => [`${Math.round(Number(val) || 0)} W`, "Generated Power"]}
               />
-              <ReferenceLine x={`+${currentHourOffset}h`} stroke="#3b82f6" strokeWidth={2} strokeDasharray="3 3" label={{ value: "Now", fill: "#3b82f6", fontSize: 10 }} />
+              <ReferenceLine 
+                x={currentHourOffset} 
+                stroke="#3b82f6" 
+                strokeWidth={2} 
+                strokeDasharray="3 3" 
+                label={{ value: "Now", fill: "#3b82f6", fontSize: 10, position: "insideTopLeft", offset: 12 }} 
+              />
               <Area type="monotone" dataKey="solarWatts" stroke="#d97706" strokeWidth={2} fillOpacity={1} fill="url(#solarGradient)" />
             </AreaChart>
           </ResponsiveContainer>
@@ -91,10 +122,23 @@ export default function TelemetryCharts({
 
         <div className="h-44 w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 8, right: 10, left: -20, bottom: 0 }}>
+            <LineChart data={data} margin={{ top: 12, right: 12, left: -18, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
-              <XAxis dataKey="timeLabel" tick={{ fontSize: 9 }} stroke={axisStroke} />
-              <YAxis tick={{ fontSize: 9 }} stroke={axisStroke} domain={[-10, 25]} />
+              <XAxis 
+                dataKey="hour" 
+                type="number"
+                domain={[0, maxHour]}
+                ticks={axisTicks}
+                tickFormatter={(val) => `+${val}h`}
+                tick={{ fontSize: 9 }} 
+                stroke={axisStroke} 
+              />
+              <YAxis 
+                tick={{ fontSize: 9 }} 
+                stroke={axisStroke} 
+                domain={[-10, 20]} 
+                tickFormatter={(val) => `${Math.round(val)}°`}
+              />
               <Tooltip
                 contentStyle={{ 
                   backgroundColor: isDarkMode ? "#0f172a" : "#ffffff", 
@@ -104,10 +148,11 @@ export default function TelemetryCharts({
                   fontSize: "11px",
                   boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)"
                 }}
+                labelFormatter={(label) => `Timeline: +${label}h`}
                 formatter={(val: any, name: any) => [`${(Number(val) || 0).toFixed(2)}°`, name]}
               />
               <ReferenceLine y={0} stroke="#ef4444" strokeWidth={1.5} strokeDasharray="2 2" label={{ value: "0° Horizon", fill: "#ef4444", fontSize: 9 }} />
-              <ReferenceLine x={`+${currentHourOffset}h`} stroke="#3b82f6" strokeWidth={2} strokeDasharray="3 3" />
+              <ReferenceLine x={currentHourOffset} stroke="#3b82f6" strokeWidth={2} strokeDasharray="3 3" />
               <Line type="monotone" dataKey="sunElevationDeg" name="Sun Elevation (°)" stroke="#f59e0b" strokeWidth={2} dot={false} />
               <Line type="monotone" dataKey="earthElevationDeg" name="Earth Elevation (°)" stroke="#06b6d4" strokeWidth={2} dot={false} />
             </LineChart>
