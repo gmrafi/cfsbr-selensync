@@ -80,6 +80,25 @@ $$\text{FSPL} = 20\log_{10}(d_{\text{km}}) + 20\log_{10}(f_{\text{GHz}}) + 92.45
 
 $$\text{Margin}_{\text{dB}} = \text{EIRP} - \text{FSPL} + (G/T)_{\text{ground}} - k_{\text{Boltz}} - R_{\text{data}} - (E_b/N_0)_{\text{req}}$$
 
+### 5. Techno-Economic Analysis (TEA) & Aerospace Capital Allocation Model
+Converts raw lunar environmental ephemeris into hard financial risk and capital allocation metrics for NASA CLPS missions ($120M CAPEX baseline, $1.2M/kg soft-landing delivery cost, 180 Wh/kg @ 80% DoD battery density):
+
+- **Cryogenic Survival Battery Mass Sizing ($M_{\text{battery}}$):**
+  $$M_{\text{battery}} = \frac{P_{\text{heat}} \times \Delta t_{\text{shadow}}}{\eta_{\text{DoD}} \times \rho_{\text{energy}}}$$
+  Where $P_{\text{heat}}$ is the keep-alive heater wattage (nominal $120\text{ W}$), $\Delta t_{\text{shadow}}$ is the longest continuous shadow period (hours), $\eta_{\text{DoD}} = 0.80$ is the maximum depth-of-discharge, and $\rho_{\text{energy}} = 180\text{ Wh/kg}$ is space-qualified Li-ion specific energy.
+
+- **Dynamic Launch Cost Transit Offset ($\Delta C_{\text{transit}}$):**
+  $$\Delta C_{\text{transit}} = (M_{\text{battery, baseline}} - M_{\text{battery, site}}) \times c_{\text{transit}}$$
+  Where $c_{\text{transit}} = \$1.2\text{M / kg}$ is the NASA CLPS soft-landing payload delivery cost benchmark. Minimizing eclipse shadow directly liberates payload capacity for high-return scientific instrumentation.
+
+- **Levelized Cost of Mission Day (LCMD):**
+  $$\text{LCMD} = \frac{\text{CAPEX}_{\text{baseline}} + C_{\text{launch}} + C_{\text{ops}} - \Delta C_{\text{transit}} - S_{\text{relay}}}{t_{\text{active, daylight}}}$$
+  Measures the true capital efficiency of a landing site per functional scientific operating day.
+
+- **Capital-at-Risk Index (CaRI):**
+  $$\text{CaRI}(t) = \text{Asset Value} \times \left(1 - \frac{E_{\text{reserve}}(t)}{E_{\text{total}}}\right) \times \phi_{\text{cryo}}$$
+  Quantifies total spacecraft capital exposed to irreversible cryogenic failure during extended topographic occultation.
+
 ---
 
 ## Newly Implemented Advanced Features
@@ -112,6 +131,22 @@ $$\text{Margin}_{\text{dB}} = \text{EIRP} - \text{FSPL} + (G/T)_{\text{ground}} 
 ### 5. Responsive Aerospace Console (Mobile, Tablet & Desktop)
 - **Zero-Scroll Presentation Console:** Preserved on desktop screens ($\ge 1024\text{px}$) for professional aerospace flight room displays.
 - **Mobile & Tablet Portrait Optimization:** Smooth vertical natural scrolling (`overflow-y-auto`) prevents container clipping on mobile screens (360px-768px) and portrait tablets (640px-1024px), paired with a responsive sticky timeline scrubber drawer.
+
+### 6. Mission Finance & Techno-Economic Analysis (TEA) Dashboard (`/mission-finance`)
+- **NASA CLPS Aerospace Capital Modeling:** Converts topocentric solar illumination and horizon masking into rigorous financial metrics ($120M baseline lander CAPEX, $1.2M/kg payload soft-landing transit cost, 180 Wh/kg @ 80% DoD space-qualified Li-ion battery density, and $25M lunar relay lease avoidance).
+- **Top 4-Key Mission KPI Bento Cards:**
+  - **Launch Cost Offset ($\Delta C_{\text{transit}}$):** Real-time dollar savings achieved by minimizing battery mass at illuminated peaks (e.g., up to $\sim\$102.0\text{M}$ transit savings on Malapert Mountain).
+  - **Levelized Cost of Mission Day (LCMD):** Net operational capital efficiency per daylight scientific operating day ($\$M/\text{day}$).
+  - **Capital-at-Risk Index (CaRI):** Percentage of total spacecraft asset value exposed to irreversible cryogenic battery depletion during maximum continuous shadow.
+  - **DTE Comm Visibility & Relay Savings:** $\$25\text{M}$ capital offset for landing sites with direct line-of-sight to NASA DSN stations without commercial lunar relay constellation dependencies.
+- **Interactive Techno-Economic Simulator:**
+  - Dynamic slider controls for **Max Continuous Eclipse Duration** ($0-354\text{ hrs}$), **Keep-alive Survival Heater Load** ($20-300\text{ W}$), and **Baseline Scientific Instrumentation** ($20-150\text{ kg}$).
+  - Split-view telemetry: Donut Chart Mass Budget Breakdown ($M_{\text{battery}}$, $M_{\text{science}}$, $M_{\text{bus}}$) and Capital Reallocation assessment.
+- **Dual Analytical Risk & Cost Visualizations:**
+  - **Area Timeline Chart:** 28-day diurnal cycle plotting Capital-at-Risk (%) against Topocentric Solar Elevation with dynamic red-shaded risk zones during lunar night.
+  - **Grouped Bar Chart:** Lifecycle Cost Breakdown (Transit Cost, Power/Thermal System, Payload CAPEX, and Ground Relay Communications).
+- **Cross-Site Financial Sensitivity Matrix:** Multi-candidate comparative table benchmarking Malapert Mountain, Shackleton Connecting Ridge, Amundsen Rim, and Standard Polar Basin with strategic investment takeaways.
+- **Seamless System Navigation:** Direct access via top Universal Navigation Header and Cockpit Flight HUD Bar (`Techno-Economics`).
 
 ---
 
@@ -169,8 +204,11 @@ SelenSync bridges space exploration technology with global sustainability challe
    npm run dev
    ```
 
-5. **Open Mission Control:**
-   Navigate to [http://localhost:3000](http://localhost:3000) or [http://localhost:3000/dashboard](http://localhost:3000/dashboard).
+5. **Open Mission Control & Dashboards:**
+   - **Mission Control Portal:** [http://localhost:3000](http://localhost:3000)
+   - **Flight Telemetry Cockpit:** [http://localhost:3000/dashboard](http://localhost:3000/dashboard)
+   - **GIS Polar Surface Map:** [http://localhost:3000/dashboard/map](http://localhost:3000/dashboard/map)
+   - **Techno-Economic Analysis (TEA):** [http://localhost:3000/mission-finance](http://localhost:3000/mission-finance)
 
 ---
 
