@@ -71,11 +71,9 @@ export default function HomePage() {
       {/* 1. HERO SECTION (Subtle Depth, Tactile Borders, Live Telemetry Cockpit)   */}
       {/* ========================================================================= */}
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION (FULL SCREEN SLIDE 1: PUNCHY COLORS, HIGH-CONTRAST BORDERS) */}
+      {/* 1. HERO SECTION (FULL SCREEN SLIDE 1: PURE WHITE CANVAS, CRISP BORDERS)    */}
       {/* ========================================================================= */}
       <section className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-center py-6 sm:py-8 lg:py-10 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
-        <div className="absolute inset-0 bg-[radial-gradient(#4e6aff_0.75px,transparent_0.75px)] opacity-10 pointer-events-none [background-size:24px_24px]" />
-        
         <div className="container mx-auto max-w-6xl relative z-10 flex flex-col justify-center my-auto space-y-4 sm:space-y-5 lg:space-y-6">
           <div className="text-center max-w-4xl mx-auto space-y-2.5 sm:space-y-3">
             {/* Top Badge */}
@@ -95,8 +93,8 @@ export default function HomePage() {
             </h1>
 
             {/* Sub-Title */}
-            <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 max-w-2xl mx-auto font-medium px-2 sm:px-0 leading-relaxed">
-              Simulate Sun illumination cycles, crater rim topographic shadow masking, and Direct-to-Earth (DTE) communication windows for NASA Artemis &amp; CLPS commercial landers.
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-2xl mx-auto font-medium px-2 sm:px-0 leading-relaxed">
+              Simulate topocentric solar illumination cycles, 360° LOLA crater shadow masking, Direct-to-Earth (DTE) communications, and Techno-Economic Analysis (TEA) for NASA Artemis &amp; CLPS commercial lunar landers.
             </p>
 
             {/* Call-to-Actions (CTAs) */}
@@ -135,7 +133,7 @@ export default function HomePage() {
           </div>
 
           {/* Hero Live Telemetry Cockpit Preview */}
-          <div className="max-w-4xl mx-auto w-full rounded-2xl border-2 border-indigo-300 dark:border-indigo-900/60 bg-white dark:bg-slate-900 shadow-xl overflow-hidden">
+          <div className="max-w-4xl mx-auto w-full rounded-2xl border border-slate-200 dark:border-indigo-900/60 bg-white dark:bg-slate-900 shadow-xl overflow-hidden">
             {/* Cockpit Header Bar */}
             <div className="px-3.5 sm:px-4 py-2 sm:py-2.5 bg-slate-900 text-white flex items-center justify-between gap-2 text-xs border-b border-slate-800">
               <div className="flex items-center gap-2 min-w-0">
@@ -155,7 +153,7 @@ export default function HomePage() {
             </div>
 
             {/* Cockpit Telemetry Grid */}
-            <div className="p-3 sm:p-4 grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-3 lg:gap-4 bg-slate-50 dark:bg-slate-950">
+            <div className="p-3 sm:p-4 grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-3 lg:gap-4 bg-white dark:bg-slate-950">
               {/* Telemetry Block 1: Solar */}
               <div className="bg-amber-50/60 dark:bg-amber-950/20 border-2 border-amber-300/70 dark:border-amber-700/50 rounded-xl p-2.5 sm:p-3 space-y-1.5 shadow-sm">
                 <div className="flex items-center justify-between gap-1 text-xs font-bold text-amber-900 dark:text-amber-200">
