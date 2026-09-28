@@ -20,7 +20,8 @@ export interface RFLinkBudgetResult {
   ebN0Db: number;              // Energy per bit to noise power spectral density ratio
   requiredEbN0Db: number;      // Threshold for QPSK/LDPC BER < 10^-6 (typically ~3.5 dB)
   linkMarginDb: number;        // Margin over threshold (healthy link requires > 3.0 dB)
-  isLinkClosed: boolean;       // True if linkMarginDb >= 3.0 dB
+  isLinkClosed: boolean;       // True if linkMarginDb >= 3.0 dB (Legacy flag)
+  linkStatus: "Link OK" | "Link Degraded" | "Link Occulted"; // User-facing status
 }
 
 export const DEFAULT_CLPS_RF_SPECS: RFTransceiverSpecs = {
@@ -62,6 +63,7 @@ export function calculateDTERFLinkBudget(
       requiredEbN0Db: 3.5,
       linkMarginDb: -99,
       isLinkClosed: false,
+      linkStatus: "Link Occulted",
     };
   }
 
@@ -98,5 +100,6 @@ export function calculateDTERFLinkBudget(
     requiredEbN0Db,
     linkMarginDb: Number(linkMarginDb.toFixed(2)),
     isLinkClosed: linkMarginDb >= 3.0,
+    linkStatus: linkMarginDb >= 3.0 ? "Link OK" : "Link Degraded",
   };
 }
