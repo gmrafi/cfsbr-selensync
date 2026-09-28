@@ -23,6 +23,44 @@ export interface HorizonProfileResult {
 }
 
 /**
+ * Retrieves the local terrain obstacle elevation angle (degrees) for a given azimuth direction.
+ */
+export function getHorizonObstacleElevation(
+  azimuthDeg: number,
+  horizonProfile: HorizonObstaclePoint[]
+): number {
+  if (!horizonProfile || horizonProfile.length === 0) return 0;
+  const normalizedAzimuth = ((azimuthDeg % 360) + 360) % 360;
+  const closestPoint = horizonProfile.reduce((prev, curr) => {
+    const prevDiff = Math.abs(prev.azimuthDeg - normalizedAzimuth);
+    const currDiff = Math.abs(curr.azimuthDeg - normalizedAzimuth);
+    return currDiff < prevDiff ? curr : prev;
+  });
+  return closestPoint.horizonElevationDeg;
+}
+
+export type CelestialOcclusionState = "SUN_BELOW_HORIZON" | "TERRAIN_MASKED" | "UNOBSTRUCTED";
+
+/**
+ * Accurately determines whether a celestial body is below the geometric horizon (lunar night),
+ * masked by crater rim topography, or unobstructed.
+ */
+export function getCelestialOcclusionState(
+  altitudeDeg: number,
+  azimuthDeg: number,
+  horizonProfile: HorizonObstaclePoint[]
+): CelestialOcclusionState {
+  if (altitudeDeg <= 0) {
+    return "SUN_BELOW_HORIZON";
+  }
+  const obstacleElev = getHorizonObstacleElevation(azimuthDeg, horizonProfile);
+  if (altitudeDeg <= obstacleElev) {
+    return "TERRAIN_MASKED";
+  }
+  return "UNOBSTRUCTED";
+}
+
+/**
  * Checks if a celestial body (Sun or Earth) is occluded by local topography (crater walls, ridges).
  *
  * @param bodyAltitudeDeg Target body elevation
@@ -36,16 +74,8 @@ export function isBodyClearedOfTopography(
   horizonProfile: HorizonObstaclePoint[]
 ): boolean {
   if (bodyAltitudeDeg <= 0) return false;
-
-  const normalizedAzimuth = ((bodyAzimuthDeg % 360) + 360) % 360;
-  // Find closest azimuth bucket
-  const closestPoint = horizonProfile.reduce((prev, curr) => {
-    const prevDiff = Math.abs(prev.azimuthDeg - normalizedAzimuth);
-    const currDiff = Math.abs(curr.azimuthDeg - normalizedAzimuth);
-    return currDiff < prevDiff ? curr : prev;
-  });
-
-  return bodyAltitudeDeg > closestPoint.horizonElevationDeg;
+  const obstacleElev = getHorizonObstacleElevation(bodyAzimuthDeg, horizonProfile);
+  return bodyAltitudeDeg > obstacleElev;
 }
 
 /**

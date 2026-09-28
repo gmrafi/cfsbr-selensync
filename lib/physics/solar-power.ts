@@ -48,8 +48,10 @@ export function calculateSolarPower(
   // Clearance above obstacle horizon
   const deltaElev = sunAltitudeDeg - obstacleAltitudeDeg;
 
-  // If the entire solar disk is below the obstacle horizon
-  if (deltaElev <= -SUN_ANGULAR_DIAMETER_DEG / 2) {
+  // Strict physical shadow constraint:
+  // If the sun is at or below the local geometric horizon (altitude <= 0),
+  // or if the entire solar disk is occluded beneath the obstacle horizon:
+  if (sunAltitudeDeg <= 0 || deltaElev <= -SUN_ANGULAR_DIAMETER_DEG / 2) {
     return {
       sunAltitudeDeg,
       sunAzimuthDeg,
