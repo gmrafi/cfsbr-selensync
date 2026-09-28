@@ -83,6 +83,8 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
   const moonMeshRef = useRef<THREE.Mesh | null>(null);
   const earthMeshRef = useRef<THREE.Mesh | null>(null);
   const sunGroupRef = useRef<THREE.Group | null>(null);
+  const sunLightRef = useRef<THREE.DirectionalLight | null>(null);
+  const earthshineRef = useRef<THREE.DirectionalLight | null>(null);
   const dteBeamLineRef = useRef<THREE.Line | null>(null);
   const pinsGroupRef = useRef<THREE.Group | null>(null);
   const reqIdRef = useRef<number | null>(null);
@@ -167,10 +169,12 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
     const sunLight = new THREE.DirectionalLight(0xfffaed, 2.8);
     sunLight.position.set(38, 14, 45);
     scene.add(sunLight);
+    sunLightRef.current = sunLight;
 
     const earthshine = new THREE.DirectionalLight(0x38bdf8, 0.35);
     earthshine.position.set(-35, -15, -20);
     scene.add(earthshine);
+    earthshineRef.current = earthshine;
 
     // 6. Moon Mesh with Photographic NASA Texture
     const moonRadius = 9;
@@ -391,6 +395,9 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
       36
     );
     earthMeshRef.current.position.copy(earthPos);
+    if (earthshineRef.current) {
+      earthshineRef.current.position.copy(earthPos);
+    }
 
     // 2. Sun 3D Coordinate in Selenocentric Space
     // Position Sun along subSolar vector at distance 54 units
@@ -400,6 +407,9 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
       54
     );
     sunGroupRef.current.position.copy(sunPos);
+    if (sunLightRef.current) {
+      sunLightRef.current.position.copy(sunPos);
+    }
 
     // 3. Connect DTE Beam between Active Landing Site and Earth
     const siteSurfacePos = latLonToVector3(activeSite.lat, activeSite.lon, 9.1);
