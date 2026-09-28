@@ -69,7 +69,7 @@ export default async function SatellitesPage() {
               <p className="text-sm text-gray-600 mb-4">
                 Pioneering Sustainable LEO Commerce through advanced satellite monitoring and business intelligence.
               </p>
-              <p className="text-xs text-gray-500">AIBA SpaceWeb (Sylhet) - NASA Space Apps Challenge 2025</p>
+              <p className="text-xs text-gray-500">CFSBR SpaceWeb - NASA Space Apps Challenge</p>
             </div>
           </div>
           <div className="border-t pt-6 mt-6">
