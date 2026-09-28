@@ -75,7 +75,7 @@ export default function HomePage() {
       <section className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-center py-6 sm:py-8 lg:py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50/70 via-slate-100 to-indigo-50/40 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-[#4e6aff]/40">
         <div className="absolute inset-0 bg-[radial-gradient(#4e6aff_0.75px,transparent_0.75px)] opacity-15 pointer-events-none [background-size:24px_24px]" />
         
-        <div className="container mx-auto max-w-6xl relative z-10 flex flex-col justify-between my-auto space-y-4 sm:space-y-5 lg:space-y-6">
+        <div className="container mx-auto max-w-6xl relative z-10 flex flex-col justify-center my-auto space-y-4 sm:space-y-5 lg:space-y-6">
           <div className="text-center max-w-4xl mx-auto space-y-2.5 sm:space-y-3">
             {/* Top Badge */}
             <div className="inline-flex items-center justify-center flex-wrap gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-white dark:bg-slate-900 border-2 border-[#4e6aff]/40 text-slate-900 dark:text-slate-100 text-[11px] sm:text-xs font-bold shadow-sm">
@@ -148,7 +148,7 @@ export default function HomePage() {
               {/* Telemetry Block 1: Solar */}
               <div className="bg-amber-50/60 dark:bg-amber-950/20 border-2 border-amber-300/70 dark:border-amber-700/50 rounded-xl p-2.5 sm:p-3 space-y-1.5 shadow-sm">
                 <div className="flex items-center justify-between gap-1 text-xs font-bold text-amber-900 dark:text-amber-200">
-                  <span className="flex items-center gap-1.5 truncate">
+                  <span className="flex items-center gap-1.5 min-w-0">
                     <Sun className="w-4 h-4 text-amber-600 shrink-0" />
                     <span className="truncate">Sun Elevation <span className="hidden xl:inline">(θ)</span></span>
                   </span>
@@ -164,16 +164,16 @@ export default function HomePage() {
                 <div className="w-full bg-amber-200 dark:bg-amber-900/40 h-2 rounded-full overflow-hidden">
                   <div className="bg-amber-500 h-full w-[78%]"></div>
                 </div>
-                <div className="flex justify-between items-center text-[10px] lg:text-[11px] text-amber-800 dark:text-amber-300 font-medium whitespace-nowrap">
-                  <span>Margin: +2.04°</span>
-                  <span className="font-bold">614 W Output</span>
+                <div className="flex justify-between items-center text-[10px] lg:text-[11px] text-amber-800 dark:text-amber-300 font-medium">
+                  <span className="truncate">Margin: +2.04°</span>
+                  <span className="font-bold shrink-0">614 W Output</span>
                 </div>
               </div>
 
               {/* Telemetry Block 2: DTE */}
               <div className="bg-blue-50/60 dark:bg-blue-950/20 border-2 border-blue-300/70 dark:border-blue-700/50 rounded-xl p-2.5 sm:p-3 space-y-1.5 shadow-sm">
                 <div className="flex items-center justify-between gap-1 text-xs font-bold text-blue-900 dark:text-blue-200">
-                  <span className="flex items-center gap-1.5 truncate">
+                  <span className="flex items-center gap-1.5 min-w-0">
                     <Radio className="w-4 h-4 text-[#4e6aff] shrink-0" />
                     <span className="truncate">DSN <span className="hidden lg:inline">34m </span>X-Band</span>
                   </span>
@@ -188,16 +188,16 @@ export default function HomePage() {
                 <div className="w-full bg-blue-200 dark:bg-blue-900/40 h-2 rounded-full overflow-hidden">
                   <div className="bg-[#4e6aff] h-full w-[88%]"></div>
                 </div>
-                <div className="flex justify-between items-center text-[10px] lg:text-[11px] text-blue-800 dark:text-blue-300 font-medium whitespace-nowrap">
-                  <span>FSPL: 222.7 dB</span>
-                  <span className="font-bold">DSS-24 Locked</span>
+                <div className="flex justify-between items-center text-[10px] lg:text-[11px] text-blue-800 dark:text-blue-300 font-medium">
+                  <span className="truncate">FSPL: 222.7 dB</span>
+                  <span className="font-bold shrink-0">DSS-24 Locked</span>
                 </div>
               </div>
 
               {/* Telemetry Block 3: Topography */}
               <div className="bg-indigo-50/60 dark:bg-indigo-950/20 border-2 border-indigo-300/70 dark:border-indigo-700/50 rounded-xl p-2.5 sm:p-3 space-y-1.5 shadow-sm">
                 <div className="flex items-center justify-between gap-1 text-xs font-bold text-indigo-900 dark:text-indigo-200">
-                  <span className="flex items-center gap-1.5 truncate">
+                  <span className="flex items-center gap-1.5 min-w-0">
                     <Mountain className="w-4 h-4 text-indigo-600 shrink-0" />
                     <span className="truncate">Horizon Relief</span>
                   </span>
@@ -212,9 +212,9 @@ export default function HomePage() {
                 <div className="w-full bg-indigo-200 dark:bg-indigo-900/40 h-2 rounded-full overflow-hidden">
                   <div className="bg-indigo-500 h-full w-[35%]"></div>
                 </div>
-                <div className="flex justify-between items-center text-[10px] lg:text-[11px] text-indigo-800 dark:text-indigo-300 font-medium whitespace-nowrap">
-                  <span>Mask: Clear</span>
-                  <span className="font-bold">Slope &lt; 10° Safe</span>
+                <div className="flex justify-between items-center text-[10px] lg:text-[11px] text-indigo-800 dark:text-indigo-300 font-medium">
+                  <span className="truncate">Mask: Clear</span>
+                  <span className="font-bold shrink-0">Slope &lt; 10° Safe</span>
                 </div>
               </div>
             </div>
