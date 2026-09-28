@@ -647,12 +647,12 @@ export default function HomePage() {
                 <AccordionTrigger className="text-sm font-bold text-slate-900 dark:text-white hover:no-underline py-3">
                   <div className="flex items-center gap-2.5 text-left">
                     <Compass className="w-4 h-4 text-[#4e6aff] shrink-0" />
-                    <span>1. Precision Topocentric Ephemeris Engine (Meeus Astronomical Vector Algorithm)</span>
+                    <span>1. Precision Topocentric Ephemeris Engine (Astronomy Engine &amp; NASA SPICE Models)</span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="text-xs text-slate-600 dark:text-slate-300 pb-4 leading-relaxed space-y-2">
                   <p>
-                    SelenSync utilizes high-precision astronomical vector mathematics adhering to the International Astronomical Union (IAU) lunar pole coordinate frames. Topocentric conversion accounts for the Moon’s mean radius (1,737.4 km), correcting for selenographic latitude and longitude parallax with sub-second temporal resolution.
+                    SelenSync utilizes high-precision celestial mechanics integrating Astronomy Engine alongside NASA SPICE and International Astronomical Union (IAU) lunar pole coordinate frames. Topocentric conversion accounts for the Moon’s mean radius (1,737.4 km), correcting for selenographic latitude and longitude parallax with sub-second temporal resolution.
                   </p>
                   <div className="p-2.5 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 font-mono text-[11px] text-slate-800 dark:text-slate-200">
                     Selenocentric Elevation: sin(θ_elev) = sin(φ_site) · sin(b_s) + cos(φ_site) · cos(b_s) · cos(l_s - λ_site)

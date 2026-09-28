@@ -39,7 +39,7 @@ SelenSync exclusively integrates official NASA, JPL, and USGS planetary scientif
 
 | Dataset / Mission Source | Scientific Purpose & Provenance | Technical Details |
 | :--- | :--- | :--- |
-| **JPL Horizons Ephemeris DE440/DE441 & IAU WGCCRE** | High-precision topocentric ephemeris engine | Sub-solar $(\phi_\odot, \lambda_\odot)$ bounded by Moon's $1.543^\circ$ obliquity, sub-Earth $(\phi_\oplus, \lambda_\oplus)$, topocentric parallax, and optical/physical libration $(\Delta\lambda, \Delta\beta)$. |
+| **JPL Horizons Ephemeris DE440/DE441, NASA SPICE & IAU WGCCRE** | High-precision astrodynamics ephemeris engine | Sub-solar $(\phi_\odot, \lambda_\odot)$ bounded by Moon's $1.543^\circ$ obliquity, sub-Earth $(\phi_\oplus, \lambda_\oplus)$, topocentric parallax, and optical/physical libration $(\Delta\lambda, \Delta\beta)$ computed via Astronomy Engine. |
 | **NASA LRO LOLA (Lunar Orbiter Laser Altimeter)** | 128 ppd Polar DEM (~237m/px) | Horizon obstacle angle extraction ($\mathcal{H}_{\text{topo}}(\alpha)$), slope hazard assessment, and 360° terrain mask occlusion. |
 | **NASA LRO Diviner (DLRE)** | Lunar Radiometer Experiment thermal data | Regolith cryogenic thermal equilibrium ($40\text{ K}$ in PSR cold-traps to $235\text{ K}$ during grazing illumination), avionics bay cooling, and survival heater drawdowns. |
 | **NASA Deep Space Network (DSN) 810-007** | Deep-space telecommunications standards | Antenna gains ($+68\text{ dBi}$ for 34m Beam Waveguide, $+74.2\text{ dBi}$ for 70m), free-space path loss (FSPL), system noise temperatures ($120\text{ K}$), and station handover cycles across Goldstone (DSS-24/14), Madrid (DSS-65/63), and Canberra (DSS-34/43). |
@@ -131,7 +131,7 @@ SelenSync bridges space exploration technology with global sustainability challe
 
 - **Frontend & App Architecture**: [Next.js 16](https://nextjs.org/) (App Router & Turbopack), [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
 - **Styling & UI Components**: [Tailwind CSS v4](https://tailwindcss.com/), [Radix UI](https://www.radix-ui.com/), [Lucide React](https://lucide.dev/)
-- **Ephemeris Engine**: `astronomy-engine` (High-precision DE440/DE441 planetary coordinates)
+- **Astrodynamics & Ephemeris Engine**: `astronomy-engine` (High-precision DE440/DE441 planetary kinematics & NASA SPICE / IAU rotational frame models)
 - **Data Visualization**: [Recharts](https://recharts.org/) & Custom SVG Polar Projection Canvas
 - **Geospatial Mapping**: [Mapbox GL JS](https://www.mapbox.com/) 3D Globe Projection
 - **Deployment**: [Vercel](https://vercel.com/)
