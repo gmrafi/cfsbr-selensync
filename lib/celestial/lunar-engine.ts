@@ -88,6 +88,75 @@ function calculateTopocentricAngles(
 }
 
 /**
+ * Calculates exact Selenographic Sub-Solar coordinates (latitude, longitude)
+ * using the official IAU/IAG Working Group on Cartographic Coordinates and Rotational Elements (WGCCRE)
+ * Moon orientation model and vector ephemeris.
+ * Sub-solar latitude strictly adheres to the Moon's axial tilt to the ecliptic (±1.543°).
+ */
+export function getLunarSubSolarPoint(time: Astronomy.AstroTime): { latitude: number; longitude: number; distanceKm: number } {
+  const moonAxis = Astronomy.RotationAxis(Astronomy.Body.Moon, time);
+  const sunPos = Astronomy.GeoVector(Astronomy.Body.Sun, time, false);
+  const moonPos = Astronomy.GeoVector(Astronomy.Body.Moon, time, false);
+
+  // Vector from Moon to Sun in J2000 ICRF
+  const dx = sunPos.x - moonPos.x;
+  const dy = sunPos.y - moonPos.y;
+  const dz = sunPos.z - moonPos.z;
+  const distAu = Math.sqrt(dx * dx + dy * dy + dz * dz);
+  const u = { x: dx / distAu, y: dy / distAu, z: dz / distAu };
+
+  const poleDec = (moonAxis.dec * Math.PI) / 180;
+  const poleRa = (moonAxis.ra * 15 * Math.PI) / 180;
+
+  // Lunar North Pole vector Z in ICRF
+  const Z = {
+    x: Math.cos(poleDec) * Math.cos(poleRa),
+    y: Math.cos(poleDec) * Math.sin(poleRa),
+    z: Math.sin(poleDec),
+  };
+
+  // Node Q of lunar equator on ICRF equator is orthogonal to Z and [0,0,1]
+  const nodeNorm = Math.sqrt(Z.x * Z.x + Z.y * Z.y) || 1e-12;
+  const Q = { x: -Z.y / nodeNorm, y: Z.x / nodeNorm, z: 0 };
+
+  // Equator vector P_eq at Node + 90°: P_eq = Z x Q
+  const P_eq = {
+    x: Z.y * Q.z - Z.z * Q.y,
+    y: Z.z * Q.x - Z.x * Q.z,
+    z: Z.x * Q.y - Z.y * Q.x,
+  };
+
+  // Prime meridian X-axis: rotated by W (moonAxis.spin) from ascending node Q
+  const W_rad = ((moonAxis.spin % 360) * Math.PI) / 180;
+  const X = {
+    x: Q.x * Math.cos(W_rad) + P_eq.x * Math.sin(W_rad),
+    y: Q.y * Math.cos(W_rad) + P_eq.y * Math.sin(W_rad),
+    z: Q.z * Math.cos(W_rad) + P_eq.z * Math.sin(W_rad),
+  };
+
+  // Y-axis = Z x X
+  const Y = {
+    x: Z.y * X.z - Z.z * X.y,
+    y: Z.z * X.x - Z.x * X.z,
+    z: Z.x * X.y - Z.y * X.x,
+  };
+
+  // Project unit vector u onto Moon body-fixed frame [X, Y, Z]
+  const ux = u.x * X.x + u.y * X.y + u.z * X.z;
+  const uy = u.x * Y.x + u.y * Y.y + u.z * Y.z;
+  const uz = u.x * Z.x + u.y * Z.y + u.z * Z.z;
+
+  const lat = Math.asin(Math.max(-1, Math.min(1, uz))) * (180 / Math.PI);
+  let lon = Math.atan2(uy, ux) * (180 / Math.PI);
+
+  return {
+    latitude: lat,
+    longitude: lon,
+    distanceKm: distAu * 149597870.7,
+  };
+}
+
+/**
  * Primary calculation engine: Computes Sun & Earth positions for any lunar coordinate at a specified UTC date.
  *
  * @param lat Lunar latitude in degrees (-90 to +90, e.g. -89.9 for Shackleton)
@@ -103,23 +172,19 @@ export function getLunarSunEarthPositions(
   const time = Astronomy.MakeTime(date);
   const lib = Astronomy.Libration(time);
 
-  // Sub-solar coordinates (where the Sun is at zenith on the lunar surface)
-  const subSolarLat = typeof lib.mlat === "number" ? lib.mlat : 0;
-  // Normalize mlon (0 to 360) to (-180 to 180) if needed or use directly
-  let subSolarLon = typeof lib.mlon === "number" ? lib.mlon : 0;
-  if (subSolarLon > 180) {
-    subSolarLon -= 360;
-  }
+  // Exact Sub-Solar coordinates using IAU WGCCRE lunar rotational elements (latitude bounded within ±1.543°)
+  const subSolar = getLunarSubSolarPoint(time);
+  const subSolarLat = subSolar.latitude;
+  const subSolarLon = subSolar.longitude;
+  const sunDistKm = subSolar.distanceKm;
 
-  // Sub-Earth coordinates (where the Earth is at zenith on the lunar surface)
+  // Sub-Earth coordinates (where the Earth is at zenith on the lunar surface, from lunar libration)
   const subEarthLat = typeof lib.elat === "number" ? lib.elat : 0;
   let subEarthLon = typeof lib.elon === "number" ? lib.elon : 0;
   if (subEarthLon > 180) {
     subEarthLon -= 360;
   }
 
-  // Distance to Sun in km (HelioDistance returns AU, 1 AU = 149597870.7 km)
-  const sunDistKm = Astronomy.HelioDistance(Astronomy.Body.Moon, time) * 149597870.7;
   const earthDistKm = typeof lib.dist_km === "number" ? lib.dist_km : 384400;
 
   // Sun calculation
