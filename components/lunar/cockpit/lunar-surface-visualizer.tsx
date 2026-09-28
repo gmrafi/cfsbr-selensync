@@ -77,7 +77,11 @@ export default function LunarSurfaceVisualizer({
               : "bg-emerald-950/80 text-emerald-300 border-emerald-500/40"
           }`}>
             <Sun className="w-3 h-3" />
-            {isSunOccluded ? "TOPO SHADOW" : `SUN EL ${sunElevationDeg.toFixed(1)}°`}
+            {sunElevationDeg <= 0 
+              ? `NIGHT (${sunElevationDeg.toFixed(1)}°)` 
+              : isSunOccluded 
+              ? `TOPO SHADOW (${sunElevationDeg.toFixed(1)}°)` 
+              : `SUN EL +${sunElevationDeg.toFixed(1)}°`}
           </div>
 
           <div className={`px-2 py-0.5 rounded font-mono text-[10px] font-bold flex items-center gap-1 border ${
@@ -86,7 +90,7 @@ export default function LunarSurfaceVisualizer({
               : "bg-cyan-950/80 text-cyan-300 border-cyan-500/40"
           }`}>
             <Globe className="w-3 h-3" />
-            {isEarthOccluded ? "DTE OCCLUDED" : `DTE +${rfLinkMarginDb} dB`}
+            {isEarthOccluded ? "DTE OCCLUDED" : `DTE +${rfLinkMarginDb} dB (Link OK)`}
           </div>
         </div>
       </div>
@@ -324,9 +328,9 @@ export default function LunarSurfaceVisualizer({
         {isSunOccluded && (
           <g transform={`translate(${width / 2}, 70)`}>
             <rect
-              x={-130}
+              x={-150}
               y={-12}
-              width={260}
+              width={300}
               height={24}
               rx={6}
               fill="rgba(120, 53, 15, 0.85)"
@@ -342,7 +346,9 @@ export default function LunarSurfaceVisualizer({
               fontFamily="monospace"
               fontWeight="bold"
             >
-              CRATER RIM SHADOW OCCLUSION ACTIVE
+              {sunElevationDeg <= 0 
+                ? "SUN BELOW HORIZON (GEOMETRIC NIGHT)" 
+                : "TERRAIN-MASKED OCCLUSION (CRATER RIM SHADOW)"}
             </text>
           </g>
         )}

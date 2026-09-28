@@ -15,7 +15,13 @@ import { LUNAR_SOUTH_POLE_CANDIDATES, LunarCandidateSite } from "@/lib/gis/lunar
 import { getLunarSunEarthPositions, generateLunarEphemerisSeries } from "@/lib/celestial/lunar-engine";
 import { calculateSolarPower, DEFAULT_CLPS_SOLAR_SPECS } from "@/lib/physics/solar-power";
 import { calculateDTERFLinkBudget, DEFAULT_CLPS_RF_SPECS } from "@/lib/physics/rf-link";
-import { generateSyntheticHorizonProfile, isBodyClearedOfTopography } from "@/lib/gis/horizon-elevation";
+import { 
+  generateSyntheticHorizonProfile, 
+  isBodyClearedOfTopography,
+  getHorizonObstacleElevation,
+  getCelestialOcclusionState,
+  CelestialOcclusionState
+} from "@/lib/gis/horizon-elevation";
 import { CLPS_LANDER_PROFILES, CLPSLanderProfile } from "@/lib/physics/lander-profiles";
 import { calculateDSNNetworkStatus } from "@/lib/physics/dsn-stations";
 import { calculateLunarLibration } from "@/lib/celestial/lunar-libration";
@@ -105,7 +111,7 @@ export default function LunarMissionDashboard() {
 
   // Physics models tailored to selected lander
   const solarOutput = useMemo(() => {
-    const effectiveSunElev = isSunOccluded ? 0 : celestialData.sun.altitudeDegrees;
+    const obstacleElev = getHorizonObstacleElevation(celestialData.sun.azimuthDegrees, horizonProfileResult.profile);
     const landerSpecs = {
       ...DEFAULT_CLPS_SOLAR_SPECS,
       name: `${activeLander.name} Array`,
@@ -114,8 +120,8 @@ export default function LunarMissionDashboard() {
       orientation: activeLander.solarArray.orientation,
       dustDegradationFactor: activeLander.solarArray.dustDegradationFactor,
     };
-    return calculateSolarPower(effectiveSunElev, celestialData.sun.azimuthDegrees, landerSpecs);
-  }, [celestialData.sun, isSunOccluded, activeLander]);
+    return calculateSolarPower(celestialData.sun.altitudeDegrees, celestialData.sun.azimuthDegrees, landerSpecs, obstacleElev);
+  }, [celestialData.sun, horizonProfileResult, activeLander]);
 
   const rfLinkOutput = useMemo(() => {
     const effectiveEarthElev = isEarthOccluded ? -1 : celestialData.earth.altitudeDegrees;
@@ -171,17 +177,18 @@ export default function LunarMissionDashboard() {
 
     return ephemeris.map((pt, idx) => {
       const hoursFromStart = idx * stepHours;
-      const ptSunClear = isBodyClearedOfTopography(pt.sun.altitudeDegrees, pt.sun.azimuthDegrees, horizonProfileResult.profile);
+      const ptObstacleElev = getHorizonObstacleElevation(pt.sun.azimuthDegrees, horizonProfileResult.profile);
       const ptEarthClear = isBodyClearedOfTopography(pt.earth.altitudeDegrees, pt.earth.azimuthDegrees, horizonProfileResult.profile);
 
       const pwr = calculateSolarPower(
-        ptSunClear ? pt.sun.altitudeDegrees : 0, 
+        pt.sun.altitudeDegrees, 
         pt.sun.azimuthDegrees, 
         {
           ...DEFAULT_CLPS_SOLAR_SPECS,
           totalAreaM2: activeLander.solarArray.areaM2,
           cellEfficiency: activeLander.solarArray.cellEfficiency,
-        }
+        },
+        ptObstacleElev
       );
       const rf = calculateDTERFLinkBudget(
         pt.earth.distanceKm, 

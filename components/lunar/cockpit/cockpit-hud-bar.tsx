@@ -73,7 +73,7 @@ export default function CockpitHudBar({
   const utcString = `${year}-${month}-${day} ${hh}:${mm} UTC`;
 
   return (
-    <header className={`h-12 shrink-0 border-b px-3 flex items-center justify-between text-xs select-none z-30 transition-colors whitespace-nowrap overflow-x-auto no-scrollbar ${
+    <header className={`h-12 shrink-0 border-b px-3 flex items-center justify-between text-xs select-none z-30 transition-colors whitespace-nowrap overflow-x-auto [scrollbar-width:thin] ${
       isDarkMode ? "bg-slate-950 border-slate-800 text-slate-100" : "bg-white border-slate-200 text-slate-900 shadow-xs"
     }`}>
       {/* ========================================================================= */}
@@ -225,7 +225,7 @@ export default function CockpitHudBar({
 
         {/* Master Caution & Warning (C&W) Status Pill */}
         <div
-          className={`px-2.5 py-1 rounded-md font-sans text-xs font-bold border flex items-center gap-1.5 tracking-wide ${
+          className={`px-2.5 py-1 rounded-md font-sans text-xs font-bold border flex items-center gap-1.5 tracking-wide shrink-0 ${
             isSunInShadow || isEarthOccluded
               ? isEarthOccluded && isSunInShadow
                 ? "bg-rose-100 text-rose-800 border-rose-300 dark:bg-rose-950/80 dark:text-rose-300 dark:border-rose-800"

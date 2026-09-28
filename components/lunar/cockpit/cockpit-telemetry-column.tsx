@@ -78,12 +78,18 @@ export default function CockpitTelemetryColumn({
           <Badge
             variant="outline"
             className={`text-xs font-semibold px-2 py-0.5 ${
-              solarData.isOccluded
+              solarData.elevationDeg <= 0
+                ? "bg-slate-100 text-slate-800 border-slate-300 dark:bg-slate-800 dark:text-slate-300"
+                : solarData.isOccluded
                 ? "bg-amber-100 text-amber-900 border-amber-300"
                 : "bg-emerald-100 text-emerald-900 border-emerald-300"
             }`}
           >
-            {solarData.isOccluded ? "Crater Shadow" : "Illuminated"}
+            {solarData.elevationDeg <= 0 
+              ? "Geometric Night" 
+              : solarData.isOccluded 
+              ? "Crater Shadow" 
+              : "Illuminated"}
           </Badge>
         </div>
 
@@ -105,7 +111,7 @@ export default function CockpitTelemetryColumn({
               {solarData.output.netOutputWatts.toFixed(0)} <span className="text-xs font-normal text-slate-500">Watts</span>
             </span>
             <span className={`text-[10px] ${subLabelColor} block font-sans`}>
-              {solarData.output.netOutputWatts > 50 ? "Generating" : "Low Power"}
+              {solarData.output.netOutputWatts > 0 ? "Generating" : "Shadow / 0 W Output"}
             </span>
           </div>
         </div>
@@ -159,10 +165,10 @@ export default function CockpitTelemetryColumn({
             className={`text-xs font-semibold px-2 py-0.5 ${
               dteData.isOccluded
                 ? "bg-rose-100 text-rose-900 border-rose-300"
-                : "bg-cyan-100 text-cyan-900 border-cyan-300"
+                : "bg-emerald-100 text-emerald-900 border-emerald-300"
             }`}
           >
-            {dteData.isOccluded ? "LOS Occluded" : "DTE Locked"}
+            {dteData.isOccluded ? "LOS Occluded" : "Link OK"}
           </Badge>
         </div>
 
@@ -184,7 +190,7 @@ export default function CockpitTelemetryColumn({
               {dteData.isOccluded ? "0.0 dB" : `+${dteData.rfOutput.linkMarginDb.toFixed(1)} dB`}
             </span>
             <span className={`text-[10px] ${subLabelColor} block font-sans`}>
-              {dteData.rfOutput.isLinkClosed && !dteData.isOccluded ? "Link Margin Closed" : "Link Degraded"}
+              {dteData.rfOutput.isLinkClosed && !dteData.isOccluded ? "Link OK (>3.0 dB)" : "Link Degraded"}
             </span>
           </div>
         </div>
@@ -202,20 +208,25 @@ export default function CockpitTelemetryColumn({
             <div className="flex justify-between">
               <span className={subLabelColor}>Free-Space Path Loss (FSPL):</span>
               <span className="font-bold text-slate-800 dark:text-slate-200">
-                {dteData.rfOutput.freeSpacePathLossDb > 0 ? `${dteData.rfOutput.freeSpacePathLossDb.toFixed(1)} dB` : "222.7 dB"} (8.45 GHz)
+                {dteData.rfOutput.freeSpacePathLossDb > 0 ? `${dteData.rfOutput.freeSpacePathLossDb.toFixed(1)} dB` : "222.7 dB"} (8.45 GHz Downlink)
               </span>
             </div>
             <div className="flex justify-between">
-              <span className={subLabelColor}>Lunar Libration (Δλ, Δβ):</span>
+              <span className={subLabelColor}>Libration Long (Δλ):</span>
               <span className="font-bold text-cyan-600 dark:text-cyan-400">
-                {dteData.libration.longitudeLibrationDeg > 0 ? `+${dteData.libration.longitudeLibrationDeg}°` : `${dteData.libration.longitudeLibrationDeg}°`},{" "}
+                {dteData.libration.longitudeLibrationDeg > 0 ? `+${dteData.libration.longitudeLibrationDeg}°` : `${dteData.libration.longitudeLibrationDeg}°`}
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className={subLabelColor}>Libration Lat (Δβ):</span>
+              <span className="font-bold text-cyan-600 dark:text-cyan-400">
                 {dteData.libration.latitudeLibrationDeg > 0 ? `+${dteData.libration.latitudeLibrationDeg}°` : `${dteData.libration.latitudeLibrationDeg}°`}
               </span>
             </div>
             <div className="flex justify-between">
               <span className={subLabelColor}>Active Ground Station:</span>
               <span className="font-bold text-slate-800 dark:text-slate-200">
-                {dteData.dsn.activeStation.name.split(" ")[0]} ({dteData.dsn.activeStation.primaryAntenna.split(" ")[0]})
+                {dteData.dsn.activeStation.name.split(" ")[0]} ({dteData.dsn.activeStation.secondaryAntenna.split(" ")[0]})
               </span>
             </div>
             <div className="flex justify-between">
