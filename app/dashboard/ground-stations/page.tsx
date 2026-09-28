@@ -26,7 +26,7 @@ export default function GroundStationsPage() {
     },
     {
       id: "gs2",
-      name: "BUET Research Station",
+      name: "Sylhet Regional Ground Station",
       location: "Sylhet, Bangladesh",
       lat: 24.8949,
       lng: 91.8687,

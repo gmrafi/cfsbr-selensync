@@ -39,34 +39,39 @@ SelenSync exclusively integrates official NASA, JPL, and USGS planetary scientif
 
 | Dataset / Mission Source | Scientific Purpose & Provenance | Technical Details |
 | :--- | :--- | :--- |
-| **JPL Horizons Ephemeris DE440/DE441** | High-precision topocentric ephemeris engine | Sub-solar $(\phi_\odot, \lambda_\odot)$ & sub-Earth $(\phi_\oplus, \lambda_\oplus)$ coordinates, lunar distance ($363,000 - 405,000 \text{ km}$), optical & physical libration ($\Delta\lambda, \Delta\beta$). |
-| **NASA LRO LOLA (Lunar Orbiter Laser Altimeter)** | 30m Global DEM & polar topography | Elevation profiles, crater rim height extraction ($\mathcal{H}_{\text{topo}}(\alpha)$), slope hazard detection, and 360° horizon skyline obstacle masks. |
+| **JPL Horizons Ephemeris DE440/DE441 & IAU WGCCRE** | High-precision topocentric ephemeris engine | Sub-solar $(\phi_\odot, \lambda_\odot)$ bounded by Moon's $1.543^\circ$ obliquity, sub-Earth $(\phi_\oplus, \lambda_\oplus)$, topocentric parallax, and optical/physical libration $(\Delta\lambda, \Delta\beta)$. |
+| **NASA LRO LOLA (Lunar Orbiter Laser Altimeter)** | 128 ppd Polar DEM (~237m/px) | Horizon obstacle angle extraction ($\mathcal{H}_{\text{topo}}(\alpha)$), slope hazard assessment, and 360° terrain mask occlusion. |
 | **NASA LRO Diviner (DLRE)** | Lunar Radiometer Experiment thermal data | Regolith cryogenic thermal equilibrium ($40\text{ K}$ in PSR cold-traps to $235\text{ K}$ during grazing illumination), avionics bay cooling, and survival heater drawdowns. |
-| **NASA Deep Space Network (DSN) 810-007** | Deep-space telecommunications standards | Antenna gains ($+68\text{ dBi}$ for 34m Beam Waveguide, $+74.2\text{ dBi}$ for 70m), free-space path loss (FSPL), system noise temperatures ($120\text{ K}$), and station handover cycles across Goldstone, Madrid, and Canberra. |
+| **NASA Deep Space Network (DSN) 810-007** | Deep-space telecommunications standards | Antenna gains ($+68\text{ dBi}$ for 34m Beam Waveguide, $+74.2\text{ dBi}$ for 70m), free-space path loss (FSPL), system noise temperatures ($120\text{ K}$), and station handover cycles across Goldstone (DSS-24/14), Madrid (DSS-65/63), and Canberra (DSS-34/43). |
 | **NASA CLPS Commercial Lander Specifications** | Flight vehicle physical configurations | Exact dry mass, payload capacity, GaAs 30% solar array area, battery capacity (Wh), and RF transceiver wattage for Nova-C, Griffin, Blue Ghost, and APEX 1.0. |
 
 ---
 
 ## Scientific Architecture & Mathematical Models
 
-### 1. Topocentric Celestial Coordinate Transformation
-Selenographic sub-solar $(\phi_\odot, \lambda_\odot)$ and sub-Earth $(\phi_\oplus, \lambda_\oplus)$ coordinates are derived directly from the high-precision DE440/DE441-compatible ephemeris engine (`astronomy-engine`). Topocentric elevation angle ($\theta_{\text{elev}}$) and azimuth ($\alpha$) relative to an observer at lunar latitude $\phi_1$ and longitude $\lambda_1$ are computed via the spherical law of cosines:
+### 1. Topocentric Celestial Coordinate Transformation (IAU / DE440 Model)
+Selenographic sub-solar $(\phi_\odot, \lambda_\odot)$ coordinates are derived directly from the vector projection of the Sun's position vector onto the Moon's principal axes of inertia defined by the IAU/IAG Working Group on Cartographic Coordinates and Rotational Elements (WGCCRE). Because the Moon's obliquity to the ecliptic is strictly $1.543^\circ$, subsolar latitude is strictly bounded within $[-1.543^\circ, +1.543^\circ]$. Topocentric elevation angle ($\theta_{\text{elev}}$) and azimuth ($\alpha$) relative to an observer at lunar latitude $\phi_{\text{site}}$ and longitude $\lambda_{\text{site}}$ are computed via:
 
-$$\sin(\theta_{\text{elev}}) = \sin(\phi_1)\sin(\phi_2) + \cos(\phi_1)\cos(\phi_2)\cos(\lambda_2 - \lambda_1)$$
+$$\sin(\theta_{\text{elev}}) = \sin(\phi_{\text{site}})\sin(\phi_\odot) + \cos(\phi_{\text{site}})\cos(\phi_\odot)\cos(\lambda_\odot - \lambda_{\text{site}})$$
 
-$$\alpha = \operatorname{atan2}\Big(\sin(\Delta\lambda)\cos(\phi_2),\; \cos(\phi_1)\sin(\phi_2) - \sin(\phi_1)\cos(\phi_2)\cos(\Delta\lambda)\Big)$$
+$$\alpha = \operatorname{atan2}\Big(\sin(\Delta\lambda)\cos(\phi_\odot),\; \cos(\phi_{\text{site}})\sin(\phi_\odot) - \sin(\phi_{\text{site}})\cos(\phi_\odot)\cos(\Delta\lambda)\Big)$$
 
 ### 2. 360° LOLA Digital Elevation Model (DEM) Horizon Profiler
 Synthetic and rasterized DEM profiles extract the maximum elevation angle of surrounding crater rims across all $360^\circ$ azimuths ($\mathcal{H}_{\text{topo}}(\alpha)$). A celestial target is unobstructed if and only if:
 
 $$\theta_{\text{elev, target}} > \mathcal{H}_{\text{topo}}(\alpha_{\text{target}})$$
 
-### 3. Solar Photovoltaic Generation Model & Smoothstep Limb Emergence
+Distinct occlusion states are strictly differentiated:
+- **`SUN_BELOW_HORIZON`**: Geometric night ($\theta_{\text{elev}} \le 0^\circ$).
+- **`TERRAIN_MASKED`**: Geometric day, but occluded by local crater rims / massifs ($\theta_{\text{elev}} \le \mathcal{H}_{\text{topo}}(\alpha)$).
+- **`UNOBSTRUCTED`**: Clear line-of-sight ($\theta_{\text{elev}} > \mathcal{H}_{\text{topo}}(\alpha)$).
+
+### 3. Solar Photovoltaic Generation Model & Strict Shadow Boundary
 Models multi-junction GaAs solar arrays (nominal 30% efficiency) accounting for low-elevation grazing angles, cosine projection factors, lunar regolith dust deposition factors ($\delta_{\text{dust}} = 0.95$), and a cubic smoothstep solar limb emergence fraction ($f_{\text{disk}} \in [0, 1]$ over the Sun's $0.53^\circ$ finite angular diameter):
 
-$$P_{\text{net}} = S_0 \cdot A_{\text{array}} \cdot \eta_{\text{cell}} \cdot \delta_{\text{dust}} \cdot \cos(\theta_{\text{inc}}) \cdot f_{\text{disk}}$$
+$$P_{\text{net}} = \begin{cases} 0 \text{ W}, & \text{if } \theta_{\text{elev}} \le 0^\circ \text{ or } \delta_{\text{elev}} \le -0.265^\circ \\ S_0 \cdot A_{\text{array}} \cdot \eta_{\text{cell}} \cdot \delta_{\text{dust}} \cdot \cos(\theta_{\text{inc}}) \cdot f_{\text{disk}}, & \text{otherwise} \end{cases}$$
 
-Where $S_0 = 1361 \text{ W/m}^2$ (AM0 solar constant) and $f_{\text{disk}}$ eliminates unphysical step-function jumps during sunrise and sunset over crater rims, producing a physically continuous S-curve dawn/dusk transition.
+Where $S_0 = 1361 \text{ W/m}^2$ (AM0 solar constant) and effective solar flux strictly equals $0 \text{ W/m}^2$ when in shadow, eliminating unphysical ghost power or phantom flux. The cubic smoothstep factor $f_{\text{disk}}$ models realistic penumbral limb emergence over the $0.53^\circ$ solar disk during sunrise/sunset over crater rims.
 
 ### 4. Direct-to-Earth (DTE) DSN RF Link Budget
 Evaluates 8.45 GHz X-Band transmissions from CLPS landers (20W HPA, 0.6m parabolic high-gain antenna) to NASA Deep Space Network (DSN) 34m aperture ground stations (Goldstone, Madrid, Canberra):

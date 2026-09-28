@@ -84,7 +84,7 @@ export default function HomePage() {
               <span className="text-slate-300 dark:text-slate-600 hidden xs:inline">•</span>
               <span className="text-[#4e6aff]">CLPS Lunar Mission Browser</span>
               <span className="text-slate-300 dark:text-slate-600 hidden sm:inline">•</span>
-              <span className="text-amber-600 dark:text-amber-400 font-semibold">2025 Global Nominees</span>
+              <span className="text-amber-600 dark:text-amber-400 font-semibold">Team Lead: 2025 Global Nominee (Team AIBA SpaceWeb)</span>
             </div>
 
             {/* Main Title (H1) */}
@@ -178,11 +178,11 @@ export default function HomePage() {
                     <span className="truncate">DSN <span className="hidden lg:inline">34m </span>X-Band</span>
                   </span>
                   <span className="text-emerald-700 dark:text-emerald-300 text-[9px] sm:text-[10px] bg-emerald-100 dark:bg-emerald-900/60 px-1.5 py-0.5 rounded border border-emerald-300 font-bold shrink-0">
-                    Link Closed
+                    Link OK
                   </span>
                 </div>
                 <div className="text-xl sm:text-xl lg:text-2xl xl:text-3xl font-black font-mono text-blue-950 dark:text-blue-100 flex items-baseline justify-between">
-                  <span>+4.8 dB</span>
+                  <span>+23.6 dB</span>
                   <span className="text-xs text-blue-700 dark:text-blue-300 font-normal">Margin</span>
                 </div>
                 <div className="w-full bg-blue-200 dark:bg-blue-900/40 h-2 rounded-full overflow-hidden">
@@ -190,7 +190,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex justify-between items-center text-[10px] lg:text-[11px] text-blue-800 dark:text-blue-300 font-medium whitespace-nowrap">
                   <span>FSPL: 222.7 dB</span>
-                  <span className="font-bold">Goldstone Locked</span>
+                  <span className="font-bold">DSS-24 Locked</span>
                 </div>
               </div>
 
@@ -214,7 +214,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex justify-between items-center text-[10px] lg:text-[11px] text-indigo-800 dark:text-indigo-300 font-medium whitespace-nowrap">
                   <span>Mask: Clear</span>
-                  <span className="font-bold">Artemis Baseline</span>
+                  <span className="font-bold">Slope &lt; 10° Safe</span>
                 </div>
               </div>
             </div>
@@ -230,7 +230,7 @@ export default function HomePage() {
           <div className="text-center max-w-3xl mx-auto mb-5 space-y-1.5">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white dark:bg-slate-900 border-2 border-indigo-300 dark:border-indigo-700 text-xs font-bold text-indigo-900 dark:text-indigo-200 shadow-sm">
               <Award className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-              <span>NASA Space Apps 2025 Global Nominees &bull; CFSBR SpaceWeb</span>
+              <span>Team Lead: 2025 Global Nominee (Team AIBA SpaceWeb) &bull; CFSBR SpaceWeb</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white font-sans tracking-tight">
               Meet Our Team
@@ -655,7 +655,7 @@ export default function HomePage() {
                     SelenSync utilizes high-precision astronomical vector mathematics adhering to the International Astronomical Union (IAU) lunar pole coordinate frames. Topocentric conversion accounts for the Moon’s mean radius (1,737.4 km), correcting for selenographic latitude and longitude parallax with sub-second temporal resolution.
                   </p>
                   <div className="p-2.5 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 font-mono text-[11px] text-slate-800 dark:text-slate-200">
-                    Solar Sub-Altitude: sin(θ) = sin(δ) · sin(φ) + cos(δ) · cos(φ) · cos(H) - π_topo
+                    Selenocentric Elevation: sin(θ_elev) = sin(φ_site) · sin(b_s) + cos(φ_site) · cos(b_s) · cos(l_s - λ_site)
                   </div>
                 </AccordionContent>
               </AccordionItem>
@@ -664,7 +664,7 @@ export default function HomePage() {
                 <AccordionTrigger className="text-sm font-bold text-slate-900 dark:text-white hover:no-underline py-3">
                   <div className="flex items-center gap-2.5 text-left">
                     <Mountain className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span>2. Topographic Horizon Profiling (NASA LOLA Altimetry at 30m/pixel Resolution)</span>
+                    <span>2. Topographic Horizon Profiling (NASA LOLA 128 ppd Altimetry, ~237m/pixel)</span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="text-xs text-slate-600 dark:text-slate-300 pb-4 leading-relaxed space-y-2">
@@ -686,10 +686,10 @@ export default function HomePage() {
                 </AccordionTrigger>
                 <AccordionContent className="text-xs text-slate-600 dark:text-slate-300 pb-4 leading-relaxed space-y-2">
                   <p>
-                    Direct-to-Earth communications are evaluated across standard X-band (8.45 GHz) links connecting with NASA’s Deep Space Network (DSN) complexes: DSS-14 (Goldstone, USA), DSS-43 (Canberra, Australia), and DSS-65 (Madrid, Spain).
+                    Direct-to-Earth communications are evaluated across standard space research X-band (8.45 GHz downlink / 7.18 GHz uplink) connecting with NASA’s Deep Space Network (DSN) complexes: 34m Beam Waveguide/HEF antennas (DSS-24 Goldstone, DSS-34 Canberra, DSS-65 Madrid) and 70m high-gain apertures (DSS-14, DSS-43, DSS-63).
                   </p>
                   <div className="p-2.5 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 font-mono text-[11px] text-slate-800 dark:text-slate-200">
-                    FSPL = 20·log10(d_km) + 20·log10(f_GHz) + 92.45 dB | Mean Free Space Path Loss ≈ 222.7 dB (8.45 GHz)
+                    FSPL = 20·log10(d_km) + 20·log10(f_GHz) + 92.45 dB | Mean Free Space Path Loss ≈ 222.7 dB (8.45 GHz Downlink)
                   </div>
                 </AccordionContent>
               </AccordionItem>
@@ -936,9 +936,9 @@ export default function HomePage() {
               <div className="w-9 h-9 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-[#4e6aff] border border-blue-200 dark:border-blue-900 flex items-center justify-center font-bold">
                 <Globe className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900 dark:text-white">Lunar Libration Wobble (±6.7°)</h3>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">Lunar Libration (±6.7° Lat / ±8.0° Lon)</h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                Earth does not stay stationary in the lunar sky. The Moon’s orbital eccentricity and tilt cause the Earth to trace an apparent Lissajous loop, dipping below the horizon for days at a time.
+                Earth does not stay stationary in the lunar sky. The Moon’s orbital eccentricity and obliquity cause Earth to trace an apparent Lissajous loop, dipping below the horizon for days at a time.
               </p>
             </div>
 
@@ -948,7 +948,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-base font-bold text-slate-900 dark:text-white">DSN 3-Station Global Handover</h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                SelenSync models real-time visibility across Goldstone (DSS-14, USA), Canberra (DSS-43, Australia), and Madrid (DSS-65, Spain) as Earth rotates every 24 hours.
+                SelenSync models real-time visibility across NASA DSN 34m Beam Waveguide/HEF stations: Goldstone (DSS-24, USA), Canberra (DSS-34, Australia), and Madrid (DSS-65, Spain) as Earth rotates.
               </p>
             </div>
 
@@ -956,9 +956,9 @@ export default function HomePage() {
               <div className="w-9 h-9 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 border border-emerald-200 dark:border-emerald-900 flex items-center justify-center font-bold">
                 <Activity className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900 dark:text-white">Link Budget Margin (+4.8 dB)</h3>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">Link Budget Margin (&gt; +3.0 dB)</h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                Computes carrier-to-noise ratio (C/N0), free-space path loss (FSPL ≈ 222.7 dB), and lander high-gain antenna pointing angles to ensure continuous command & telemetry uplink.
+                Computes carrier-to-noise ratio (C/N0), free-space path loss (FSPL ≈ 222.7 dB @ 8.45 GHz downlink), and lander antenna pointing angles ensuring +3.0 dB to +23.6 dB margin.
               </p>
             </div>
           </div>
@@ -1244,8 +1244,8 @@ export default function HomePage() {
             </div>
 
             <div className="p-5 rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 shadow-sm hover:border-slate-400 dark:hover:border-slate-700 transition-all">
-              <div className="text-3xl sm:text-4xl font-extrabold text-emerald-600 dark:text-emerald-400 font-mono">100%</div>
-              <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mt-1">Authoritative NASA Open Data</div>
+              <div className="text-3xl sm:text-4xl font-extrabold text-emerald-600 dark:text-emerald-400 font-mono">PDS</div>
+              <div className="text-xs text-slate-600 dark:text-slate-400 font-medium mt-1">NASA Planetary Data System Pipeline</div>
             </div>
           </div>
         </div>

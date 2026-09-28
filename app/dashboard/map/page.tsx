@@ -267,9 +267,9 @@ export default function LunarMapPage() {
 
         {/* Right: NASA JPL Stream Indicator, AI Chat, Light/Dark Toggle */}
         <div className="flex items-center gap-2">
-          <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-[11px] text-emerald-700 dark:text-emerald-300 font-mono shadow-xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>NASA JPL Live</span>
+          <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-blue-500/10 border border-blue-500/30 text-[11px] text-blue-700 dark:text-blue-300 font-mono shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+            <span>IAU / JPL DE440 Model</span>
           </div>
 
           <Button
@@ -365,7 +365,9 @@ export default function LunarMapPage() {
               <div className="grid grid-cols-2 gap-2 text-[11px]">
                 <div className="p-2 rounded bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
                   <span className="text-slate-500 block text-[10px]">Slope Margin:</span>
-                  <span className="font-mono font-semibold text-slate-800 dark:text-slate-200">{activeSite.maxSlopeDeg}° (&lt;12° Safe)</span>
+                  <span className="font-mono font-semibold text-slate-800 dark:text-slate-200">
+                    {activeSite.maxSlopeDeg}° {activeSite.maxSlopeDeg < 10.0 ? "(<10° Safe)" : "(≥10° Limit)"}
+                  </span>
                 </div>
                 <div className="p-2 rounded bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
                   <span className="text-slate-500 block text-[10px]">Water Ice (PSR):</span>
