@@ -90,7 +90,7 @@ export default function HomePage() {
             {/* Main Title (H1) */}
             <h1 className="text-2xl sm:text-3xl md:text-[32px] md:leading-[1.2] lg:text-5xl lg:leading-tight font-black tracking-tight text-slate-900 dark:text-white font-sans">
               Navigate Lunar South Pole Payloads <br className="hidden sm:inline" />
-              with <span className="text-[#4e6aff] underline decoration-[#4e6aff]/40 decoration-4 underline-offset-4">Real-Time Solar &amp; Comms Precision</span>
+              with <span className="text-[#4e6aff] underline decoration-[#4e6aff]/40 decoration-4 underline-offset-4">Real-Time Solar &amp; Communications Precision</span>
             </h1>
 
             {/* Sub-Title */}
@@ -428,7 +428,7 @@ export default function HomePage() {
                   <Radio className="w-5 h-5" />
                 </div>
                 <CardTitle className="text-base text-slate-900 dark:text-white font-sans font-bold">
-                  Direct-to-Earth (DTE) Comms Windows
+                  Direct-to-Earth (DTE) Communication Windows
                 </CardTitle>
                 <CardDescription className="text-slate-700 dark:text-slate-300 text-xs leading-relaxed font-normal">
                   Instant line-of-sight (LOS) calculation between lunar south pole sites and Earth ground stations, accounting for lunar libration and RF link budgets.
