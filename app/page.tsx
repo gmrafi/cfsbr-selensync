@@ -52,7 +52,8 @@ import {
   Building2,
   Check,
   Flame,
-  Award
+  Award,
+  Coins
 } from "lucide-react"
 import Link from "next/link"
 import UniversalHeader from "@/components/universal-header"
@@ -63,7 +64,7 @@ import HomeSlideController from "@/components/lunar/home-slide-controller"
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#f8fafc] dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-[#4e6aff]/20 transition-colors">
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-[#4e6aff]/20 transition-colors">
       <UniversalHeader variant="light" />
 
       {/* ========================================================================= */}
@@ -72,13 +73,13 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 1. HERO SECTION (FULL SCREEN SLIDE 1: PUNCHY COLORS, HIGH-CONTRAST BORDERS) */}
       {/* ========================================================================= */}
-      <section className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-center py-6 sm:py-8 lg:py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50/70 via-slate-100 to-indigo-50/40 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b-4 border-[#4e6aff]/40">
-        <div className="absolute inset-0 bg-[radial-gradient(#4e6aff_0.75px,transparent_0.75px)] opacity-15 pointer-events-none [background-size:24px_24px]" />
+      <section className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-center py-6 sm:py-8 lg:py-10 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
+        <div className="absolute inset-0 bg-[radial-gradient(#4e6aff_0.75px,transparent_0.75px)] opacity-10 pointer-events-none [background-size:24px_24px]" />
         
         <div className="container mx-auto max-w-6xl relative z-10 flex flex-col justify-center my-auto space-y-4 sm:space-y-5 lg:space-y-6">
           <div className="text-center max-w-4xl mx-auto space-y-2.5 sm:space-y-3">
             {/* Top Badge */}
-            <div className="inline-flex items-center justify-center flex-wrap gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-white dark:bg-slate-900 border-2 border-[#4e6aff]/40 text-slate-900 dark:text-slate-100 text-[11px] sm:text-xs font-bold shadow-sm">
+            <div className="inline-flex items-center justify-center flex-wrap gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-white dark:bg-slate-900 border-2 border-[#4e6aff]/40 text-slate-900 dark:text-slate-100 text-[11px] sm:text-xs font-bold shadow-xs">
               <span className="flex h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-[#4e6aff] animate-pulse"></span>
               <span className="font-bold">NASA Space Apps Challenge 2026</span>
               <span className="text-slate-300 dark:text-slate-600 hidden xs:inline">•</span>
@@ -114,10 +115,20 @@ export default function HomePage() {
                 <Button
                   size="default"
                   variant="outline"
-                  className="border-2 border-indigo-400/50 bg-white dark:bg-slate-900 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-50 font-bold px-5 sm:px-6 py-2 text-xs rounded-lg shadow-sm transition-all"
+                  className="border-2 border-indigo-400/50 bg-white dark:bg-slate-900 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-50 font-bold px-5 sm:px-6 py-2 text-xs rounded-lg shadow-xs transition-all"
                 >
                   <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-2 text-[#4e6aff]" />
                   Open 3D Moon Globe
+                </Button>
+              </Link>
+              <Link href="/mission-finance">
+                <Button
+                  size="default"
+                  variant="outline"
+                  className="border-2 border-emerald-500/50 bg-white dark:bg-slate-900 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 font-bold px-5 sm:px-6 py-2 text-xs rounded-lg shadow-xs transition-all"
+                >
+                  <Coins className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-2 text-emerald-500" />
+                  Mission Finance (TEA)
                 </Button>
               </Link>
             </div>
@@ -416,7 +427,7 @@ export default function HomePage() {
               <CardContent className="p-4 pt-0">
                 <div className="p-2 rounded-lg bg-indigo-50/70 dark:bg-slate-950/60 border border-indigo-200 dark:border-indigo-900 text-[11px] text-slate-700 dark:text-slate-300 flex justify-between font-medium">
                   <span>Elevation Grid:</span>
-                  <span className="font-bold text-indigo-700 dark:text-indigo-300">5m–30m DEM Resolution</span>
+                  <span className="font-bold text-indigo-700 dark:text-indigo-300">NASA LOLA 128 ppd Altimetry (~237m/px)</span>
                 </div>
               </CardContent>
             </Card>
@@ -522,6 +533,52 @@ export default function HomePage() {
                 <div className="p-2 rounded-lg bg-emerald-50/70 dark:bg-slate-950/60 border border-emerald-200 dark:border-emerald-900 text-[11px] text-slate-700 dark:text-slate-300 flex justify-between font-medium">
                   <span>Pre-Configured Sites:</span>
                   <span className="font-bold text-emerald-800 dark:text-emerald-300">4 NASA Artemis Baselines</span>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Card 7: Mission Finance & TEA */}
+            <Card className="bg-emerald-50/80 dark:bg-slate-900 border-2 border-emerald-400 dark:border-emerald-600/70 hover:border-emerald-500 shadow-md rounded-xl flex flex-col justify-between transition-all md:col-span-2 lg:col-span-3">
+              <CardHeader className="p-4 pb-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700 flex items-center justify-center text-emerald-700 dark:text-emerald-300 shrink-0">
+                    <Coins className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-base text-slate-900 dark:text-white font-sans font-bold flex items-center gap-2">
+                      <span>Techno-Economic Analysis (TEA) &amp; Capital Allocation</span>
+                      <Badge className="bg-emerald-600 text-white text-[9px] font-mono font-bold px-1.5 py-0">NEW</Badge>
+                    </CardTitle>
+                    <CardDescription className="text-slate-700 dark:text-slate-300 text-xs leading-relaxed font-normal mt-0.5">
+                      Translates continuous shadow durations and terrain masking into hard engineering economics: cryogenic battery mass sizing, launch cost offsets ($1.2M/kg payload delivery), Levelized Cost of Mission Day (LCMD), and Capital-at-Risk Index (CaRI).
+                    </CardDescription>
+                  </div>
+                </div>
+                <Link href="/mission-finance" className="shrink-0">
+                  <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold gap-1 px-3 shadow-xs">
+                    <span>Explore TEA Engine</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Button>
+                </Link>
+              </CardHeader>
+              <CardContent className="p-4 pt-1">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] font-mono">
+                  <div className="p-1.5 rounded-lg bg-white dark:bg-slate-950/60 border border-emerald-200 dark:border-emerald-900 text-center">
+                    <span className="text-slate-500 dark:text-slate-400 block text-[9px]">CLPS Transit Cost</span>
+                    <span className="font-bold text-emerald-700 dark:text-emerald-400">$1.2M / kg</span>
+                  </div>
+                  <div className="p-1.5 rounded-lg bg-white dark:bg-slate-950/60 border border-emerald-200 dark:border-emerald-900 text-center">
+                    <span className="text-slate-500 dark:text-slate-400 block text-[9px]">Lander Baseline CAPEX</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-200">$120M</span>
+                  </div>
+                  <div className="p-1.5 rounded-lg bg-white dark:bg-slate-950/60 border border-emerald-200 dark:border-emerald-900 text-center">
+                    <span className="text-slate-500 dark:text-slate-400 block text-[9px]">Battery Sizing</span>
+                    <span className="font-bold text-emerald-700 dark:text-emerald-400">180 Wh/kg @ 80% DoD</span>
+                  </div>
+                  <div className="p-1.5 rounded-lg bg-white dark:bg-slate-950/60 border border-emerald-200 dark:border-emerald-900 text-center">
+                    <span className="text-slate-500 dark:text-slate-400 block text-[9px]">Peak Transit Savings</span>
+                    <span className="font-bold text-emerald-700 dark:text-emerald-400">+$102.0M Offset</span>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -707,6 +764,25 @@ export default function HomePage() {
                   </p>
                 </AccordionContent>
               </AccordionItem>
+
+              <AccordionItem value="item-5" className="border border-slate-200 dark:border-slate-800 rounded-xl px-4 bg-slate-50/60 dark:bg-slate-950">
+                <AccordionTrigger className="text-sm font-bold text-slate-900 dark:text-white hover:no-underline py-3">
+                  <div className="flex items-center gap-2.5 text-left">
+                    <Coins className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>5. Techno-Economic Analysis (TEA) &amp; Aerospace Capital Allocation Model</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-xs text-slate-600 dark:text-slate-300 pb-4 leading-relaxed space-y-2">
+                  <p>
+                    Translates topocentric sun illumination and shadow intervals into hard aerospace financial metrics based on NASA Commercial Lunar Payload Services (CLPS) baselines ($120M lander CAPEX, $1.2M/kg payload soft-landing delivery cost, and 180 Wh/kg @ 80% DoD space-qualified Li-ion battery density).
+                  </p>
+                  <div className="p-2.5 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 font-mono text-[11px] text-slate-800 dark:text-slate-200 space-y-1">
+                    <div>Battery Mass Sizing: M_battery = (P_heat &times; &Delta;t_shadow) / (&eta;_DoD &times; &rho;_energy)</div>
+                    <div>Launch Cost Savings: &Delta;C_transit = (M_baseline - M_site) &times; $1.2M/kg</div>
+                    <div>Levelized Cost / Day: LCMD = Adjusted CAPEX / Active Operational Days ($M/day)</div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
           </div>
         </div>
@@ -783,7 +859,7 @@ export default function HomePage() {
             <div className="p-3 border-b border-indigo-100 dark:border-slate-800 flex items-center justify-between flex-wrap gap-2 bg-indigo-50/30 dark:bg-slate-950/40">
               <h3 className="text-xs font-bold text-slate-900 dark:text-white font-sans flex items-center gap-1.5">
                 <Mountain className="w-3.5 h-3.5 text-[#4e6aff]" />
-                Comparative Altimetry &amp; Telemetry Matrix (LOLA DEM 30m Altimetry)
+                Comparative Altimetry &amp; Telemetry Matrix (NASA LOLA 128 ppd Altimetry, ~237m/px)
               </h3>
               <Badge variant="outline" className="text-[10px] font-mono bg-white dark:bg-slate-800 border-indigo-200 dark:border-slate-700 text-[#4e6aff] font-bold">
                 NASA LRO Altimetry
@@ -855,7 +931,7 @@ export default function HomePage() {
         <div className="container mx-auto max-w-6xl my-auto">
           <div className="text-center max-w-3xl mx-auto mb-8 space-y-2">
             <Badge variant="outline" className="text-teal-900 dark:text-teal-200 bg-teal-50 dark:bg-teal-950/60 border-2 border-teal-400 dark:border-teal-700 text-xs font-bold shadow-xs">
-              LOLA 30m Digital Elevation Altimetry &bull; Raymarching
+              NASA LOLA 128 ppd Altimetry (~237m/px) &bull; 360° Raymarching
             </Badge>
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white font-sans tracking-tight">
               360° Polar Horizon Profiler &amp; Shadow Masking

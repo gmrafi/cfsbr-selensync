@@ -7,9 +7,11 @@ import { Button } from "@/components/ui/button"
 const SLIDES = [
   { id: "hero", label: "Mission Overview", selector: "section:first-of-type" },
   { id: "team", label: "Engineering Team", selector: "#team" },
-  { id: "features", label: "Core Capabilities", selector: "#features" },
+  { id: "features", label: "Core Capabilities & TEA", selector: "#features" },
   { id: "landing-sites", label: "Artemis Landing Sites", selector: "#landing-sites" },
   { id: "horizon-profiler", label: "360° Horizon Profiler", selector: "#horizon-profiler" },
+  { id: "dte-windows", label: "DTE Comms Windows", selector: "#dte-windows" },
+  { id: "site-comparison", label: "Site Comparison Matrix", selector: "#site-comparison" },
   { id: "data-sources", label: "NASA Data Sources", selector: "#data-sources" },
   { id: "sdgs", label: "UN Sustainable Goals", selector: "#sdgs" }
 ]
