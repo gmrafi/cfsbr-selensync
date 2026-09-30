@@ -98,7 +98,7 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
   const [showEarthSun, setShowEarthSun] = useState(true);
   const [hoveredSite, setHoveredSite] = useState<any | null>(null);
   const [selectedHistoric, setSelectedHistoric] = useState<HistoricalLunarMission | null>(null);
-  const [isDossierOpen, setIsDossierOpen] = useState(true);
+  const [isDossierOpen, setIsDossierOpen] = useState(false);
   const [hoverCoords, setHoverCoords] = useState<{ lat: number; lon: number } | null>(null);
   const [celestialState, setCelestialState] = useState<{
     sunAlt: number;
@@ -657,41 +657,38 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
         className="w-full flex-1 h-full min-h-0 cursor-grab active:cursor-grabbing"
       />
 
-      {/* Pinned Rich Tactical Site Inspector Dossier */}
-      {isDossierOpen ? (
-        <div className="absolute top-16 left-4 z-20 pointer-events-auto p-4 rounded-xl bg-slate-900/95 backdrop-blur-md border border-slate-700 shadow-2xl max-w-sm w-80 text-xs space-y-3">
+      {/* Modern Clean White Tactical Site Inspector (Opens on Click) */}
+      {isDossierOpen && (
+        <div className="absolute top-14 left-4 z-20 pointer-events-auto p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl max-w-sm w-80 text-xs space-y-3 text-slate-900 dark:text-slate-100 animate-in fade-in-50 zoom-in-95 duration-150">
           {/* Header & Close Button */}
-          <div className="flex items-start justify-between gap-2 pb-2 border-b border-slate-800">
-            <div className="space-y-1">
+          <div className="flex items-start justify-between gap-2 pb-2.5 border-b border-slate-100 dark:border-slate-800">
+            <div className="space-y-1 min-w-0">
               <Badge 
-                className={`text-[10px] font-mono ${
-                  selectedHistoric 
-                    ? "bg-amber-500/20 text-amber-300 border-amber-500/40" 
-                    : "bg-[#4e6aff]/20 text-cyan-300 border-[#4e6aff]/40"
-                }`}
+                variant="outline"
+                className="text-[10px] font-mono border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300"
               >
                 {selectedHistoric ? `${selectedHistoric.agency} • ${selectedHistoric.year}` : activeSite.clpsPriority}
               </Badge>
-              <h3 className="font-bold text-sm text-white flex items-center gap-1.5 leading-snug">
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-1.5 leading-snug truncate">
                 {selectedHistoric ? (
                   <>
-                    <Rocket className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                    <span>{selectedHistoric.name}</span>
+                    <Rocket className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                    <span className="truncate">{selectedHistoric.name}</span>
                   </>
                 ) : (
                   <>
                     <MapPin className="w-3.5 h-3.5 text-[#4e6aff] shrink-0" />
-                    <span>{activeSite.name}</span>
+                    <span className="truncate">{activeSite.name}</span>
                   </>
                 )}
               </h3>
             </div>
             <button 
               onClick={() => setIsDossierOpen(false)}
-              className="text-slate-400 hover:text-white p-1 rounded hover:bg-slate-800 transition-colors"
-              title="Minimize panel"
+              className="text-slate-400 hover:text-slate-700 dark:hover:text-white p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
+              title="Close card"
             >
-              <X className="w-3.5 h-3.5" />
+              <X className="w-4 h-4" />
             </button>
           </div>
 
@@ -699,25 +696,25 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
           {selectedHistoric ? (
             <div className="space-y-2.5">
               <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-                <div className="p-2 bg-slate-950/80 rounded border border-slate-800">
-                  <span className="text-slate-500 text-[10px] block">Coordinates</span>
-                  <span className="font-bold text-slate-200">
+                <div className="p-2 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block">Coordinates</span>
+                  <span className="font-bold text-slate-900 dark:text-slate-100">
                     {Math.abs(selectedHistoric.lat).toFixed(2)}°{selectedHistoric.lat >= 0 ? "N" : "S"}, {Math.abs(selectedHistoric.lon).toFixed(2)}°{selectedHistoric.lon >= 0 ? "E" : "W"}
                   </span>
                 </div>
-                <div className="p-2 bg-slate-950/80 rounded border border-slate-800">
-                  <span className="text-slate-500 text-[10px] block">Landing Type</span>
-                  <span className="font-bold text-amber-300">{selectedHistoric.type}</span>
+                <div className="p-2 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block">Landing Type</span>
+                  <span className="font-bold text-amber-600 dark:text-amber-400">{selectedHistoric.type}</span>
                 </div>
               </div>
-              <div className="p-2.5 bg-slate-950/80 rounded border border-slate-800 text-[11px] text-slate-300 leading-relaxed">
+              <div className="p-2.5 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
                 {selectedHistoric.details}
               </div>
               <Button
                 size="sm"
                 variant="outline"
                 onClick={() => setSelectedHistoric(null)}
-                className="w-full h-7 text-xs border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200"
+                className="w-full h-7 text-xs border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300"
               >
                 <span>Return to Active Candidate Site</span>
               </Button>
@@ -726,41 +723,43 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
             <div className="space-y-2.5">
               {/* Telemetry Metrics */}
               <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-                <div className="p-2 bg-slate-950/80 rounded border border-slate-800">
-                  <span className="text-slate-500 text-[10px] block">LOLA Elevation</span>
+                <div className="p-2 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block">LOLA Elevation</span>
                   <span className="font-bold text-[#4e6aff]">+{activeSite.elevationMeters.toLocaleString()} m</span>
                 </div>
-                <div className="p-2 bg-slate-950/80 rounded border border-slate-800">
-                  <span className="text-slate-500 text-[10px] block">Max Terrain Slope</span>
-                  <span className="font-bold text-emerald-400">{activeSite.maxSlopeDeg}° (&lt;10° Safe)</span>
+                <div className="p-2 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block">Terrain Slope</span>
+                  <span className="font-bold text-emerald-600 dark:text-emerald-400">{activeSite.maxSlopeDeg}° (&lt;10° Safe)</span>
                 </div>
-                <div className="p-2 bg-slate-950/80 rounded border border-slate-800">
-                  <span className="text-slate-500 text-[10px] block">Sun Elevation</span>
-                  <span className={`font-bold ${celestialState.sunAlt > 0 ? "text-amber-400" : "text-slate-400"}`}>
+                <div className="p-2 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block">Sun Elevation</span>
+                  <span className={`font-bold ${celestialState.sunAlt > 0 ? "text-amber-600 dark:text-amber-400" : "text-slate-500"}`}>
                     {celestialState.sunAlt > 0 ? `+${celestialState.sunAlt.toFixed(1)}° (Sunlit)` : `${celestialState.sunAlt.toFixed(1)}° (Shadow)`}
                   </span>
                 </div>
-                <div className="p-2 bg-slate-950/80 rounded border border-slate-800">
-                  <span className="text-slate-500 text-[10px] block">Earth LOS (DTE)</span>
-                  <span className={`font-bold ${celestialState.isDteOk ? "text-emerald-400" : "text-rose-400"}`}>
+                <div className="p-2 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block">Earth LOS (DTE)</span>
+                  <span className={`font-bold ${celestialState.isDteOk ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}>
                     {celestialState.earthAlt > 0 ? `+${celestialState.earthAlt.toFixed(1)}° (Active)` : `${celestialState.earthAlt.toFixed(1)}° (Blocked)`}
                   </span>
                 </div>
               </div>
 
               {/* Water Ice & Scientific Note */}
-              <div className="p-2.5 bg-slate-950/80 rounded border border-slate-800 space-y-1">
+              <div className="p-2.5 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800 space-y-1">
                 <div className="flex items-center justify-between text-[11px]">
-                  <span className="text-slate-400">Volatile Signature:</span>
-                  <span className="font-mono text-purple-300 font-semibold">{activeSite.estimatedIcePurity}</span>
+                  <span className="text-slate-500 dark:text-slate-400">Volatiles (PSR):</span>
+                  <span className="font-mono text-purple-700 dark:text-purple-300 font-semibold truncate block">
+                    {activeSite.estimatedIcePurity}
+                  </span>
                 </div>
-                <p className="text-[11px] text-slate-400 leading-relaxed pt-1 border-t border-slate-800/80">
+                <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed pt-1 border-t border-slate-200 dark:border-slate-800">
                   {activeSite.scientificSignificance}
                 </p>
               </div>
 
               {/* Action Button */}
-              <Button asChild className="w-full bg-[#4e6aff] hover:bg-[#3d57e6] text-white font-medium text-xs h-8 gap-1.5 shadow-md">
+              <Button asChild className="w-full bg-[#4e6aff] hover:bg-[#3d57e6] text-white font-medium text-xs h-8 gap-1.5 shadow-xs">
                 <Link href={`/dashboard?site=${activeSite.id}`}>
                   <Compass className="w-3.5 h-3.5" />
                   <span>Analyze in Flight Cockpit</span>
@@ -770,18 +769,6 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
             </div>
           )}
         </div>
-      ) : (
-        /* Minimized Floating Toggle */
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => setIsDossierOpen(true)}
-          className="absolute top-16 left-4 z-20 pointer-events-auto h-8 px-3 rounded-lg bg-slate-900/90 border-slate-700 text-xs font-mono text-cyan-300 hover:text-white hover:bg-slate-800 shadow-md gap-1.5"
-        >
-          <MapPin className="w-3.5 h-3.5 text-[#4e6aff]" />
-          <span>Inspect {selectedHistoric ? selectedHistoric.name : activeSite.name.split(" ")[0]}</span>
-          <ChevronRight className="w-3.5 h-3.5 ml-1" />
-        </Button>
       )}
 
       {/* Floating Celestial Status Capsule (Sun & Earth Visibility) */}
