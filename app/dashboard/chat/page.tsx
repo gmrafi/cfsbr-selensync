@@ -307,17 +307,6 @@ export default function ChatPage() {
             <Button
               variant="outline"
               size="sm"
-              onClick={triggerDemoAutoType}
-              disabled={isAutoTyping || isLoading}
-              className="text-xs bg-gradient-to-r from-amber-50 to-orange-50 border-amber-300 text-amber-900 hover:bg-amber-100 font-semibold shadow-xs transition-all"
-              title="Automatically type demo query (Ctrl + G)"
-            >
-              <Zap className={`h-3.5 w-3.5 mr-1 text-amber-600 fill-amber-500 ${isAutoTyping ? 'animate-spin' : 'animate-pulse'}`} />
-              {isAutoTyping ? "Typing Query..." : "⚡ Demo Auto-Type (Ctrl+G)"}
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
               onClick={() => setShowWelcomeDialog(true)}
               className="text-xs border-slate-300 hover:bg-slate-100 text-slate-700 h-8"
             >
@@ -564,18 +553,8 @@ export default function ChatPage() {
                 </Button>
               </form>
               <div className="flex items-center justify-between text-[11px] text-slate-500 mt-2 px-1">
-                <span className="truncate">AI: Llama 3.3 70B & Gemini 2.5 • NASA PDS & LOLA calibrated</span>
-                <button
-                  type="button"
-                  onClick={triggerDemoAutoType}
-                  disabled={isAutoTyping || isLoading}
-                  className="text-slate-600 hover:text-[#4e6aff] flex items-center gap-1 font-medium cursor-pointer transition-colors"
-                  title="Click or press Ctrl+G"
-                >
-                  <Zap className="h-3 w-3 text-amber-500 fill-amber-500" />
-                  <span>Demo shortcut:</span>
-                  <kbd className="px-1.5 py-0.5 text-[10px] font-mono bg-slate-100 border border-slate-300 rounded shadow-xs text-slate-700">Ctrl+G</kbd>
-                </button>
+                <span className="truncate">AI models: Llama 3.3 70B & Gemini 2.5 • Trained on NASA PDS, LOLA & Artemis standards</span>
+                <span className="hidden sm:inline">Press Enter to dispatch telemetry query</span>
               </div>
             </div>
           </div>
