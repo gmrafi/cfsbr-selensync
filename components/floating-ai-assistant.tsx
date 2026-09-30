@@ -214,19 +214,14 @@ export default function FloatingAIAssistant() {
         <div className="relative">
           <Button
             onClick={toggleOpen}
-            className="h-14 w-14 rounded-full bg-gradient-to-r from-[#4e6aff] to-[#6d5bff] hover:from-[#3d59ef] hover:to-[#5d4bef] text-white shadow-2xl hover:shadow-[#4e6aff]/50 transition-all duration-300 hover:scale-105 group p-0 overflow-hidden border-2 border-white/60"
+            className="h-14 w-14 rounded-full bg-gradient-to-r from-[#4e6aff] to-[#6d5bff] hover:from-[#3d59ef] hover:to-[#5d4bef] text-white shadow-2xl hover:shadow-[#4e6aff]/50 transition-all duration-300 hover:scale-110 z-50 group"
             aria-label="Open Asteria AI Mission Strategist"
           >
-            <div className="relative w-full h-full flex items-center justify-center">
-              <Avatar className="h-full w-full">
-                <AvatarImage src="/images/asteria-avatar.jpg" alt="Asteria AI" className="object-cover" />
-                <AvatarFallback className="bg-gradient-to-r from-[#4e6aff] to-[#6d5bff] text-white">
-                  <Bot className="h-6 w-6" />
-                </AvatarFallback>
-              </Avatar>
-              <span className="absolute top-0 right-0 flex h-3.5 w-3.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-cyan-500 border-2 border-white"></span>
+            <div className="relative">
+              <Bot className="h-6 w-6 group-hover:scale-110 transition-transform" />
+              <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
               </span>
             </div>
           </Button>
@@ -260,10 +255,9 @@ export default function FloatingAIAssistant() {
       <CardHeader className="bg-gradient-to-r from-[#4e6aff] to-[#6d5bff] text-white p-4 flex flex-row items-center justify-between space-y-0">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <Avatar className="h-10 w-10 border-2 border-white bg-purple-700">
-              <AvatarImage src="/images/asteria-avatar.jpg" alt="Asteria AI" className="object-cover" />
-              <AvatarFallback className="bg-purple-800 text-white font-bold">AST</AvatarFallback>
-            </Avatar>
+            <div className="h-10 w-10 rounded-full bg-white/20 border-2 border-white flex items-center justify-center text-white shadow-sm">
+              <Bot className="h-5 w-5" />
+            </div>
             <span className="absolute bottom-0 right-0 flex h-3 w-3">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 border border-white"></span>
@@ -325,12 +319,9 @@ export default function FloatingAIAssistant() {
                 >
                   {message.sender === "ai" && (
                     <div className="flex flex-col items-center gap-1">
-                      <Avatar className="h-8 w-8 border-2 border-[#4e6aff]/20">
-                        <AvatarImage src="/images/asteria-avatar.jpg" alt="Asteria" className="object-cover" />
-                        <AvatarFallback className="bg-gradient-to-r from-[#4e6aff] to-[#6d5bff] text-white text-xs">
-                          AST
-                        </AvatarFallback>
-                      </Avatar>
+                      <div className="h-8 w-8 rounded-full bg-gradient-to-r from-[#4e6aff] to-[#6d5bff] flex items-center justify-center text-white shadow-xs border border-[#4e6aff]/40">
+                        <Bot className="h-4 w-4" />
+                      </div>
                       <span className="text-[10px] text-gray-600 font-medium">Asteria</span>
                     </div>
                   )}

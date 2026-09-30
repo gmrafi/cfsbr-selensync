@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef, useEffect, useCallback } from "react"
 import UniversalHeader from "@/components/universal-header"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -79,6 +79,13 @@ const LUNAR_SAMPLE_PROMPTS = [
   }
 ]
 
+const DEMO_QUERIES = [
+  "Assess solar illumination stability and cryogenic shadow endurance for Malapert Mountain during the Artemis III window.",
+  "Calculate Direct-to-Earth X-band link margin to NASA DSN 34m dishes with Earth elevation at 4.2°.",
+  "Compare Shackleton Connecting Ridge vs Malapert Peak for a 14-day CLPS mission with 100W base load.",
+  "Analyze line-of-sight RF blockage between Shackleton Rim and Amundsen Crater relay station."
+]
+
 const STRATEGIST_CAPABILITIES = [
   { name: "Solar Ephemeris & Horizon Masking", icon: Sun, desc: "High-resolution topographic illumination modeling" },
   { name: "Direct-to-Earth RF Link Budgets", icon: Radio, desc: "ITU / DSN 34m & 70m carrier margins and loss calculations" },
@@ -101,8 +108,11 @@ export default function ChatPage() {
   const [conversations, setConversations] = useState<Conversation[]>([])
   const [inputMessage, setInputMessage] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [isAutoTyping, setIsAutoTyping] = useState(false)
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
+  const typingTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const demoQueryIndexRef = useRef(0)
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -110,8 +120,17 @@ export default function ChatPage() {
     }
   }, [messages, isLoading])
 
-  const handleSendMessage = async (textOverride?: string) => {
-    const textToSend = textOverride || inputMessage.trim()
+  // Cleanup typing timer on unmount
+  useEffect(() => {
+    return () => {
+      if (typingTimerRef.current) {
+        clearInterval(typingTimerRef.current)
+      }
+    }
+  }, [])
+
+  const handleSendMessage = useCallback(async (textOverride?: string) => {
+    const textToSend = (textOverride !== undefined ? textOverride : inputMessage).trim()
     if (!textToSend || isLoading) return
 
     const userMessage: Message = {
@@ -122,7 +141,7 @@ export default function ChatPage() {
     }
 
     setMessages((prev) => [...prev, userMessage])
-    if (!textOverride) setInputMessage("")
+    setInputMessage("")
     setIsLoading(true)
 
     try {
@@ -162,7 +181,48 @@ export default function ChatPage() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [inputMessage, isLoading, messages])
+
+  // Realistic character-by-character auto-typing demo query
+  const triggerDemoAutoType = useCallback(() => {
+    if (isLoading || isAutoTyping) return
+    setIsAutoTyping(true)
+    const query = DEMO_QUERIES[demoQueryIndexRef.current % DEMO_QUERIES.length]
+    demoQueryIndexRef.current += 1
+
+    let charIndex = 0
+    setInputMessage("")
+
+    if (typingTimerRef.current) clearInterval(typingTimerRef.current)
+
+    typingTimerRef.current = setInterval(() => {
+      charIndex++
+      if (charIndex <= query.length) {
+        setInputMessage(query.slice(0, charIndex))
+      } else {
+        if (typingTimerRef.current) {
+          clearInterval(typingTimerRef.current)
+          typingTimerRef.current = null
+        }
+        setTimeout(() => {
+          setIsAutoTyping(false)
+          handleSendMessage(query)
+        }, 400)
+      }
+    }, 28)
+  }, [isLoading, isAutoTyping, handleSendMessage])
+
+  // Keyboard shortcut listener for Ctrl+G / Cmd+G
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'g' || e.key === 'G')) {
+        e.preventDefault()
+        triggerDemoAutoType()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [triggerDemoAutoType])
 
   const handleCopy = (id: string, text: string) => {
     navigator.clipboard.writeText(text)
@@ -212,34 +272,33 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen lg:h-screen lg:max-h-screen bg-slate-50 flex flex-col lg:overflow-hidden">
       <UniversalHeader />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col gap-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 py-2 sm:px-6 sm:py-3 flex flex-col gap-2.5 min-h-0 lg:overflow-hidden">
         {/* Top Control Banner */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
+        <div className="bg-white border border-slate-200 rounded-xl px-4 py-2 sm:py-2.5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
+          <div className="flex items-center gap-3">
             <div className="relative">
-              <Avatar className="h-14 w-14 border-2 border-[#4e6aff] shadow-md ring-2 ring-[#4e6aff]/20">
-                <AvatarImage src="/images/asteria-avatar.jpg" alt="Asteria AI Mission Strategist" className="object-cover" />
-                <AvatarFallback className="bg-gradient-to-tr from-[#4e6aff] to-[#7c3aed] text-white font-bold text-lg">
-                  AST
-                </AvatarFallback>
-              </Avatar>
-              <span className="absolute bottom-0 right-0 h-4 w-4 bg-emerald-500 border-2 border-white rounded-full"></span>
+              <div className="h-11 w-11 rounded-xl bg-gradient-to-tr from-[#4e6aff] via-[#6366f1] to-[#7c3aed] p-0.5 shadow-sm flex items-center justify-center border-2 border-white/40">
+                <div className="w-full h-full rounded-[10px] bg-slate-950/20 backdrop-blur-xs flex items-center justify-center text-white">
+                  <Bot className="h-6 w-6 text-white drop-shadow-xs" />
+                </div>
+              </div>
+              <span className="absolute bottom-0 right-0 h-3 w-3 bg-emerald-500 border-2 border-white rounded-full"></span>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-bold text-slate-900">Asteria</h1>
-                <Badge className="bg-[#4e6aff]/10 text-[#4e6aff] hover:bg-[#4e6aff]/20 border-[#4e6aff]/30 font-medium">
+                <h1 className="text-lg sm:text-xl font-bold text-slate-900 leading-tight">Asteria</h1>
+                <Badge className="bg-[#4e6aff]/10 text-[#4e6aff] hover:bg-[#4e6aff]/20 border-[#4e6aff]/30 font-medium text-[11px] py-0">
                   AI Mission Strategist
                 </Badge>
-                <Badge variant="outline" className="text-emerald-700 bg-emerald-50 border-emerald-200">
+                <Badge variant="outline" className="text-emerald-700 bg-emerald-50 border-emerald-200 text-[11px] py-0 hidden sm:inline-flex">
                   Online
                 </Badge>
               </div>
-              <p className="text-sm text-slate-600 mt-1">
-                Specialized in CLPS & Artemis South Pole trajectories, solar illumination, and RF telemetry.
+              <p className="text-xs text-slate-500 line-clamp-1">
+                CLPS & Artemis South Pole trajectories, solar illumination, and RF telemetry.
               </p>
             </div>
           </div>
@@ -248,8 +307,19 @@ export default function ChatPage() {
             <Button
               variant="outline"
               size="sm"
+              onClick={triggerDemoAutoType}
+              disabled={isAutoTyping || isLoading}
+              className="text-xs bg-gradient-to-r from-amber-50 to-orange-50 border-amber-300 text-amber-900 hover:bg-amber-100 font-semibold shadow-xs transition-all"
+              title="Automatically type demo query (Ctrl + G)"
+            >
+              <Zap className={`h-3.5 w-3.5 mr-1 text-amber-600 fill-amber-500 ${isAutoTyping ? 'animate-spin' : 'animate-pulse'}`} />
+              {isAutoTyping ? "Typing Query..." : "⚡ Demo Auto-Type (Ctrl+G)"}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
               onClick={() => setShowWelcomeDialog(true)}
-              className="text-xs border-slate-300 hover:bg-slate-100 text-slate-700"
+              className="text-xs border-slate-300 hover:bg-slate-100 text-slate-700 h-8"
             >
               <Info className="h-3.5 w-3.5 mr-1 text-[#4e6aff]" />
               Capabilities
@@ -258,7 +328,7 @@ export default function ChatPage() {
               variant="outline"
               size="sm"
               onClick={handleExportTranscript}
-              className="text-xs border-slate-300 hover:bg-slate-100 text-slate-700"
+              className="text-xs border-slate-300 hover:bg-slate-100 text-slate-700 h-8"
             >
               <Download className="h-3.5 w-3.5 mr-1" />
               Export
@@ -267,7 +337,7 @@ export default function ChatPage() {
               variant="outline"
               size="sm"
               onClick={handleClearChat}
-              className="text-xs border-rose-200 text-rose-600 hover:bg-rose-50"
+              className="text-xs border-rose-200 text-rose-600 hover:bg-rose-50 h-8"
             >
               <Trash2 className="h-3.5 w-3.5 mr-1" />
               Reset
@@ -276,37 +346,37 @@ export default function ChatPage() {
         </div>
 
         {/* Main Grid: Prompt Chips Sidebar & Chat Conversation */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 flex-1 min-h-0 lg:overflow-hidden items-stretch">
           {/* Left Sidebar: Quick Prompts & Mission Specs */}
-          <div className="lg:col-span-4 flex flex-col gap-5 order-2 lg:order-1">
-            <Card className="bg-white border-slate-200 shadow-sm">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base font-semibold text-slate-900 flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-[#4e6aff]" />
+          <div className="hidden lg:flex lg:col-span-4 flex-col gap-3 min-h-0 overflow-y-auto pr-1 order-2 lg:order-1">
+            <Card className="bg-white border-slate-200 shadow-xs">
+              <CardHeader className="py-2.5 px-3.5 pb-2">
+                <CardTitle className="text-xs font-semibold text-slate-900 flex items-center gap-1.5">
+                  <Sparkles className="h-3.5 w-3.5 text-[#4e6aff]" />
                   Mission Prompt Library
                 </CardTitle>
-                <CardDescription className="text-xs text-slate-500">
-                  Select a template to query lunar terrain and telemetry models
+                <CardDescription className="text-[11px] text-slate-500">
+                  Select a template to query lunar terrain and telemetry
                 </CardDescription>
               </CardHeader>
-              <CardContent className="p-4 pt-0 space-y-2.5">
-                {LUNAR_SAMPLE_PROMPTS.map((item, idx) => {
+              <CardContent className="px-3.5 pb-3 space-y-2">
+                {LUNAR_SAMPLE_PROMPTS.slice(0, 4).map((item, idx) => {
                   const Icon = item.icon
                   return (
                     <button
                       key={idx}
                       onClick={() => handleSendMessage(item.prompt)}
-                      className="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-[#4e6aff]/40 hover:bg-blue-50/50 transition-all text-xs group flex items-start gap-3 bg-white"
+                      className="w-full text-left p-2.5 rounded-lg border border-slate-200 hover:border-[#4e6aff]/40 hover:bg-blue-50/50 transition-all text-xs group flex items-start gap-2.5 bg-white cursor-pointer"
                     >
-                      <div className="p-1.5 rounded-lg bg-slate-100 group-hover:bg-[#4e6aff]/10 text-slate-600 group-hover:text-[#4e6aff] transition-colors shrink-0">
-                        <Icon className="h-4 w-4" />
+                      <div className="p-1 rounded bg-slate-100 group-hover:bg-[#4e6aff]/10 text-slate-600 group-hover:text-[#4e6aff] transition-colors shrink-0">
+                        <Icon className="h-3.5 w-3.5" />
                       </div>
-                      <div className="flex-1">
-                        <div className="font-semibold text-slate-800 group-hover:text-[#4e6aff] flex items-center justify-between">
-                          <span>{item.title}</span>
-                          <span className="text-[10px] text-slate-400 font-normal">{item.category}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-medium text-slate-800 group-hover:text-[#4e6aff] flex items-center justify-between text-[11px]">
+                          <span className="truncate">{item.title}</span>
+                          <span className="text-[9px] text-slate-400 font-normal shrink-0 ml-1">{item.category}</span>
                         </div>
-                        <p className="text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                        <p className="text-slate-500 mt-0.5 line-clamp-1 text-[11px] leading-snug">
                           {item.prompt}
                         </p>
                       </div>
@@ -316,31 +386,31 @@ export default function ChatPage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-white to-blue-50/40 border-slate-200 shadow-sm">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-semibold text-slate-900 flex items-center gap-2">
-                  <Terminal className="h-4 w-4 text-[#4e6aff]" />
+            <Card className="bg-gradient-to-br from-white to-blue-50/40 border-slate-200 shadow-xs">
+              <CardHeader className="py-2 px-3.5">
+                <CardTitle className="text-xs font-semibold text-slate-900 flex items-center gap-1.5">
+                  <Terminal className="h-3.5 w-3.5 text-[#4e6aff]" />
                   Active Mission Context
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-4 pt-0 space-y-2 text-xs text-slate-600">
-                <div className="flex justify-between py-1 border-b border-slate-100">
+              <CardContent className="px-3.5 pb-2.5 space-y-1.5 text-[11px] text-slate-600">
+                <div className="flex justify-between py-0.5 border-b border-slate-100">
                   <span className="text-slate-500">Target Region:</span>
                   <span className="font-semibold text-slate-800">Lunar South Pole (&gt;85°S)</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-slate-100">
+                <div className="flex justify-between py-0.5 border-b border-slate-100">
                   <span className="text-slate-500">Default Site:</span>
                   <span className="font-semibold text-slate-800">Malapert Massif (-85.99°, 2.93°)</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-slate-100">
+                <div className="flex justify-between py-0.5 border-b border-slate-100">
                   <span className="text-slate-500">Solar Array:</span>
                   <span className="font-semibold text-slate-800">2.5 m² Vertical (30% Eff)</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-slate-100">
+                <div className="flex justify-between py-0.5 border-b border-slate-100">
                   <span className="text-slate-500">RF Ground:</span>
                   <span className="font-semibold text-slate-800">DSN 34m Beam Waveguide</span>
                 </div>
-                <div className="flex justify-between py-1">
+                <div className="flex justify-between py-0.5">
                   <span className="text-slate-500">AI Model:</span>
                   <span className="font-semibold text-[#4e6aff]">Llama 3.3 70B & Gemini 2.5</span>
                 </div>
@@ -349,26 +419,23 @@ export default function ChatPage() {
           </div>
 
           {/* Right Main Chat Window */}
-          <div className="lg:col-span-8 flex flex-col h-[700px] bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden order-1 lg:order-2">
+          <div className="col-span-1 lg:col-span-8 flex flex-col h-[520px] sm:h-[600px] lg:h-full bg-white border border-slate-200 rounded-xl shadow-xs min-h-0 overflow-hidden order-1 lg:order-2">
             {/* Chat Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 bg-slate-50/40" ref={scrollAreaRef}>
+            <div className="flex-1 overflow-y-auto p-3.5 sm:p-5 space-y-4 bg-slate-50/40 min-h-0" ref={scrollAreaRef}>
               {messages.map((message) => {
                 const isUser = message.sender === "user"
                 return (
                   <div
                     key={message.id}
-                    className={`flex gap-3 sm:gap-4 ${isUser ? "justify-end" : "justify-start"}`}
+                    className={`flex gap-3 ${isUser ? "justify-end" : "justify-start"}`}
                   >
                     {!isUser && (
-                      <Avatar className="h-9 w-9 border border-[#4e6aff]/40 shrink-0 shadow-sm mt-1 ring-1 ring-[#4e6aff]/20">
-                        <AvatarImage src="/images/asteria-avatar.jpg" alt="Asteria" className="object-cover" />
-                        <AvatarFallback className="bg-gradient-to-tr from-[#4e6aff] to-[#7c3aed] text-white font-bold text-xs">
-                          AST
-                        </AvatarFallback>
-                      </Avatar>
+                      <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-[#4e6aff] to-[#7c3aed] flex items-center justify-center shrink-0 shadow-xs mt-0.5 border border-[#4e6aff]/40 text-white">
+                        <Bot className="h-4 w-4" />
+                      </div>
                     )}
 
-                    <div className={`max-w-[85%] sm:max-w-[78%] flex flex-col ${isUser ? "items-end" : "items-start"}`}>
+                    <div className={`max-w-[85%] sm:max-w-[80%] flex flex-col ${isUser ? "items-end" : "items-start"}`}>
                       <div className="flex items-center gap-2 mb-1 px-1">
                         <span className="text-xs font-semibold text-slate-700">
                           {isUser ? "Mission Lead" : "Asteria"}
@@ -379,13 +446,13 @@ export default function ChatPage() {
                       </div>
 
                       <div
-                        className={`rounded-2xl px-4 sm:px-5 py-3.5 text-sm leading-relaxed shadow-sm ${
+                        className={`rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-xs ${
                           isUser
-                            ? "bg-gradient-to-r from-[#4e6aff] to-[#6366f1] text-white rounded-tr-sm"
-                            : "bg-white border border-slate-200 text-slate-800 rounded-tl-sm"
+                            ? "bg-gradient-to-r from-[#4e6aff] to-[#6366f1] text-white rounded-tr-xs"
+                            : "bg-white border border-slate-200 text-slate-800 rounded-tl-xs"
                         }`}
                       >
-                        <div className="whitespace-pre-wrap space-y-2">
+                        <div className="whitespace-pre-wrap space-y-2 text-[13px] sm:text-sm">
                           {message.content.split('\n\n').map((paragraph, pIdx) => {
                             // Basic bold parsing
                             const formatted = paragraph.split(/(\*\*.*?\*\*)/g).map((chunk, cIdx) => {
@@ -401,21 +468,21 @@ export default function ChatPage() {
 
                       {/* AI Response Action Buttons */}
                       {!isUser && (
-                        <div className="flex items-center gap-1 mt-1.5 px-1 text-slate-400 text-xs">
+                        <div className="flex items-center gap-1 mt-1 px-1 text-slate-400 text-xs">
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => handleCopy(message.id, message.content)}
-                            className="h-7 px-2 text-slate-500 hover:text-[#4e6aff] hover:bg-slate-100"
+                            className="h-6 px-2 text-slate-500 hover:text-[#4e6aff] hover:bg-slate-100 text-[11px]"
                           >
                             {copiedId === message.id ? (
                               <>
-                                <Check className="h-3.5 w-3.5 mr-1 text-emerald-600" />
+                                <Check className="h-3 w-3 mr-1 text-emerald-600" />
                                 <span className="text-emerald-600">Copied</span>
                               </>
                             ) : (
                               <>
-                                <Copy className="h-3.5 w-3.5 mr-1" />
+                                <Copy className="h-3 w-3 mr-1" />
                                 <span>Copy</span>
                               </>
                             )}
@@ -424,25 +491,25 @@ export default function ChatPage() {
                             variant="ghost"
                             size="sm"
                             onClick={() => toggleLike(message.id)}
-                            className={`h-7 px-2 ${message.liked ? 'text-[#4e6aff] bg-blue-50' : 'text-slate-500 hover:text-[#4e6aff]'}`}
+                            className={`h-6 px-2 ${message.liked ? 'text-[#4e6aff] bg-blue-50' : 'text-slate-500 hover:text-[#4e6aff]'}`}
                           >
-                            <ThumbsUp className="h-3.5 w-3.5 mr-1" />
+                            <ThumbsUp className="h-3 w-3" />
                           </Button>
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => toggleDislike(message.id)}
-                            className={`h-7 px-2 ${message.disliked ? 'text-rose-600 bg-rose-50' : 'text-slate-500 hover:text-rose-600'}`}
+                            className={`h-6 px-2 ${message.disliked ? 'text-rose-600 bg-rose-50' : 'text-slate-500 hover:text-rose-600'}`}
                           >
-                            <ThumbsDown className="h-3.5 w-3.5 mr-1" />
+                            <ThumbsDown className="h-3 w-3" />
                           </Button>
                         </div>
                       )}
                     </div>
 
                     {isUser && (
-                      <Avatar className="h-9 w-9 border border-slate-300 shrink-0 shadow-sm mt-1">
-                        <AvatarFallback className="bg-slate-800 text-white font-bold text-xs">
+                      <Avatar className="h-8 w-8 border border-slate-300 shrink-0 shadow-xs mt-0.5">
+                        <AvatarFallback className="bg-slate-800 text-white font-bold text-[10px]">
                           YOU
                         </AvatarFallback>
                       </Avatar>
@@ -453,20 +520,18 @@ export default function ChatPage() {
 
               {isLoading && (
                 <div className="flex gap-3 items-start">
-                  <Avatar className="h-9 w-9 border border-[#4e6aff]/40 shrink-0 shadow-sm mt-1">
-                    <AvatarFallback className="bg-gradient-to-tr from-[#4e6aff] to-[#7c3aed] text-white font-bold text-xs">
-                      AZ
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-sm px-5 py-4 shadow-sm">
+                  <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-[#4e6aff] to-[#7c3aed] flex items-center justify-center shrink-0 shadow-xs mt-0.5 border border-[#4e6aff]/40 text-white">
+                    <Bot className="h-4 w-4" />
+                  </div>
+                  <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-xs px-4 py-3 shadow-xs">
                     <div className="flex items-center gap-3">
                       <div className="flex gap-1.5">
-                        <div className="w-2.5 h-2.5 bg-[#4e6aff] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                        <div className="w-2.5 h-2.5 bg-[#4e6aff] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                        <div className="w-2.5 h-2.5 bg-[#4e6aff] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                        <div className="w-2 h-2 bg-[#4e6aff] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                        <div className="w-2 h-2 bg-[#4e6aff] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                        <div className="w-2 h-2 bg-[#4e6aff] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                       </div>
                       <span className="text-xs font-medium text-slate-500">
-                        Afshara is computing orbital ephemeris and terrain visibility...
+                        Asteria is computing orbital ephemeris and terrain visibility...
                       </span>
                     </div>
                   </div>
@@ -475,7 +540,7 @@ export default function ChatPage() {
             </div>
 
             {/* Input Bar */}
-            <div className="p-4 border-t border-slate-200 bg-white">
+            <div className="p-3 sm:p-3.5 border-t border-slate-200 bg-white shrink-0">
               <form
                 onSubmit={(e) => {
                   e.preventDefault()
@@ -486,21 +551,31 @@ export default function ChatPage() {
                 <Input
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
-                  placeholder="Ask Afshara about lunar south pole illumination, link budgets, or CLPS landing sites..."
-                  className="flex-1 bg-slate-50 border-slate-200 focus-visible:ring-[#4e6aff] text-slate-900 placeholder:text-slate-400 py-5 text-sm"
-                  disabled={isLoading}
+                  placeholder="Ask Asteria about lunar south pole illumination, link budgets, or CLPS landing sites..."
+                  className="flex-1 bg-slate-50 border-slate-200 focus-visible:ring-[#4e6aff] text-slate-900 placeholder:text-slate-400 py-4 text-xs sm:text-sm"
+                  disabled={isLoading || isAutoTyping}
                 />
                 <Button
                   type="submit"
-                  disabled={isLoading || !inputMessage.trim()}
-                  className="bg-[#4e6aff] hover:bg-[#3d59ef] text-white px-5 py-5 rounded-xl transition-all shadow-md hover:shadow-[#4e6aff]/30"
+                  disabled={isLoading || isAutoTyping || !inputMessage.trim()}
+                  className="bg-[#4e6aff] hover:bg-[#3d59ef] text-white px-4 py-4 rounded-xl transition-all shadow-sm hover:shadow-[#4e6aff]/30"
                 >
                   <Send className="h-4 w-4" />
                 </Button>
               </form>
               <div className="flex items-center justify-between text-[11px] text-slate-500 mt-2 px-1">
-                <span>AI models: Llama 3.3 70B & Gemini 2.5 • Trained on NASA PDS, LOLA & Artemis standards</span>
-                <span className="hidden sm:inline">Press Enter to dispatch telemetry query</span>
+                <span className="truncate">AI: Llama 3.3 70B & Gemini 2.5 • NASA PDS & LOLA calibrated</span>
+                <button
+                  type="button"
+                  onClick={triggerDemoAutoType}
+                  disabled={isAutoTyping || isLoading}
+                  className="text-slate-600 hover:text-[#4e6aff] flex items-center gap-1 font-medium cursor-pointer transition-colors"
+                  title="Click or press Ctrl+G"
+                >
+                  <Zap className="h-3 w-3 text-amber-500 fill-amber-500" />
+                  <span>Demo shortcut:</span>
+                  <kbd className="px-1.5 py-0.5 text-[10px] font-mono bg-slate-100 border border-slate-300 rounded shadow-xs text-slate-700">Ctrl+G</kbd>
+                </button>
               </div>
             </div>
           </div>
@@ -512,12 +587,9 @@ export default function ChatPage() {
         <DialogContent className="max-w-xl bg-white border border-slate-200 text-slate-900">
           <DialogHeader>
             <div className="flex items-center gap-3 mb-2">
-              <Avatar className="h-12 w-12 border-2 border-[#4e6aff] shadow-sm ring-1 ring-[#4e6aff]/20">
-                <AvatarImage src="/images/asteria-avatar.jpg" alt="Asteria AI" className="object-cover" />
-                <AvatarFallback className="bg-gradient-to-tr from-[#4e6aff] to-[#7c3aed] text-white font-bold">
-                  AST
-                </AvatarFallback>
-              </Avatar>
+              <div className="h-12 w-12 rounded-xl bg-gradient-to-tr from-[#4e6aff] to-[#7c3aed] flex items-center justify-center text-white shadow-sm border border-[#4e6aff]/40">
+                <Bot className="h-6 w-6 text-white" />
+              </div>
               <div>
                 <DialogTitle className="text-lg font-bold text-slate-900">
                   Asteria — AI Lunar Mission Strategist
