@@ -76,6 +76,42 @@ const LUNAR_SAMPLE_PROMPTS = [
     prompt: "Propose battery reserve and sleep-mode strategies during a 54-hour topographic eclipse.",
     icon: Shield,
     category: "Operations"
+  },
+  {
+    title: "Water-Ice ISRU Prospecting",
+    prompt: "Assess water-ice volatile extraction feasibility and rover traverse safety inside Faustini Crater PSR.",
+    icon: Globe,
+    category: "Resources"
+  },
+  {
+    title: "Slope & Tip-Over Risk",
+    prompt: "Evaluate terrain slope hazard and tip-over probability for Blue Ghost lander on de Gerlache Ridge.",
+    icon: TrendingUp,
+    category: "Landing Hazard"
+  },
+  {
+    title: "Nova-C vs Griffin Trade",
+    prompt: "Compare Intuitive Machines Nova-C vs Astrobotic Griffin for a 14-day surface mission at de Gerlache Ridge.",
+    icon: Rocket,
+    category: "Lander Trade"
+  },
+  {
+    title: "DSN Ground Network Visibility",
+    prompt: "Verify Ka-band high-gain downlink telemetry rates to Madrid DSN 70m station at -86.5°S latitude.",
+    icon: Satellite,
+    category: "Telemetry"
+  },
+  {
+    title: "Cryogenic Sleep Budget",
+    prompt: "Propose an emergency sleep-mode power budget for Intuitive Machines Nova-C under 12-hour shadow transit.",
+    icon: Sparkles,
+    category: "Power Budget"
+  },
+  {
+    title: "MCDA Site Ranking Matrix",
+    prompt: "What is the optimal landing site score using the 0-100 MCDA matrix for Haworth Crater rim?",
+    icon: CheckCircle2,
+    category: "Scoring"
   }
 ]
 
@@ -83,7 +119,15 @@ const DEMO_QUERIES = [
   "Assess solar illumination stability and cryogenic shadow endurance for Malapert Mountain during the Artemis III window.",
   "Calculate Direct-to-Earth X-band link margin to NASA DSN 34m dishes with Earth elevation at 4.2°.",
   "Compare Shackleton Connecting Ridge vs Malapert Peak for a 14-day CLPS mission with 100W base load.",
-  "Analyze line-of-sight RF blockage between Shackleton Rim and Amundsen Crater relay station."
+  "Analyze line-of-sight RF blockage between Shackleton Rim and Amundsen Crater relay station.",
+  "Propose an emergency sleep-mode power budget for Intuitive Machines Nova-C under 12-hour shadow transit.",
+  "What is the optimal landing site score using the 0-100 MCDA matrix for Haworth Crater rim?",
+  "Why are vertical cylindrical solar arrays superior to flat horizontal panels below 85°S latitude?",
+  "Assess water-ice volatile extraction feasibility and rover traverse safety inside Faustini Crater PSR.",
+  "Compare Intuitive Machines Nova-C vs Astrobotic Griffin for a 14-day surface mission at de Gerlache Ridge.",
+  "Verify Ka-band high-gain downlink telemetry rates to Madrid DSN 70m station at -86.5°S latitude.",
+  "Evaluate thermal survival strategies for Astrobotic Griffin lander during a 54-hour topographic eclipse.",
+  "Model surface slope hazard and tip-over probability for Blue Ghost lander on de Gerlache Ridge."
 ]
 
 const STRATEGIST_CAPABILITIES = [
@@ -93,18 +137,108 @@ const STRATEGIST_CAPABILITIES = [
   { name: "CLPS Payload Optimization", icon: Rocket, desc: "Nova-C, Griffin, and Blue Ghost mission profile tuning" },
 ]
 
-export default function ChatPage() {
-  const [showWelcomeDialog, setShowWelcomeDialog] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([
+// Pre-seeded 6 rich aerospace conversations (6 * 2 = 12 Q&A messages + initial greeting)
+const getInitialMessages = (): Message[] => {
+  const now = Date.now()
+  return [
     {
-      id: "1",
+      id: "init-0",
       content:
         "Greetings! I'm **Asteria** (Autonomous Surface Topography & Ephemeris Risk Intelligence Assistant), your **AI Lunar Mission Strategist** for SelenSync. I specialize in NASA Artemis and CLPS mission optimization at the lunar south pole.\n\nI can assist you with:\n- **Solar Illumination & Power Windows** (topographic shadow calculations)\n- **Direct-to-Earth (DTE) RF Link Margins** (DSN 34m/70m stations)\n- **Landing Site Feasibility Analysis** (Malapert, Shackleton, de Gerlache, Haworth)\n- **Thermal Management & Eclipse Survival Strategies**\n\nWhat lunar mission scenario would you like to evaluate?",
       sender: "ai",
-      timestamp: new Date(),
+      timestamp: new Date(now - 22 * 60 * 1000),
       provider: "groq"
     },
-  ])
+    // Conversation 1 (Site Selection & MCDA)
+    {
+      id: "conv-1-u",
+      content: "Evaluate Malapert Mountain (85.99°S, 2.93°E) for the upcoming Artemis III landing window.",
+      sender: "user",
+      timestamp: new Date(now - 20 * 60 * 1000)
+    },
+    {
+      id: "conv-1-a",
+      content: "### Feasibility Evaluation: Malapert Mountain Massif\n- **MCDA Suitability Score**: **84.8 / 100** (Tier-1 Prime Candidate)\n- **Solar Illumination**: **86.4%** continuous daylight during lunar summer. Low grazing solar angles (1.4° – 2.8°) require **2.5 m² vertical cylindrical solar arrays** to mitigate 97% cosine loss.\n- **Direct-to-Earth (DTE) RF Visibility**: Earth elevation maintains **+4.1° to +6.8°** clearance above surrounding massifs, ensuring uninterrupted line-of-sight to NASA DSN 34m/70m subnetworks.\n- **Slope & Landing Hazard**: Summit plateau offers contiguous landing patches with **< 5.2° slope**, safely below the 10° dynamic tip-over threshold.",
+      sender: "ai",
+      timestamp: new Date(now - 19 * 60 * 1000),
+      provider: "groq"
+    },
+    // Conversation 2 (Telecommunications & Link Margin)
+    {
+      id: "conv-2-u",
+      content: "Calculate the direct-to-Earth X-band link margin to NASA DSN Canberra 34m beam waveguide station.",
+      sender: "user",
+      timestamp: new Date(now - 16 * 60 * 1000)
+    },
+    {
+      id: "conv-2-a",
+      content: "### DTE RF Link Budget: Canberra Complex (DSS-43 / DSS-34)\n- **Carrier Frequency**: X-band Downlink 8.45 GHz\n- **Free Space Path Loss (FSPL)**: **-216.4 dB** (at 384,400 km mean distance)\n- **Lander EIRP**: 15W High-Gain Antenna (HGA) = **+32.5 dBW**\n- **Ground Station G/T**: **+53.2 dB/K** (Cryogenic Low Noise Amplifier)\n- **Calculated Link Margin**: **+5.8 dB** (exceeds NASA's +3.0 dB flight rule reserve).\n- **Supported Data Rate**: Sustains **2.0 Mbps uncompressed telemetry** and HD mission video streaming.",
+      sender: "ai",
+      timestamp: new Date(now - 15 * 60 * 1000),
+      provider: "groq"
+    },
+    // Conversation 3 (Cryogenic Shadow & Eclipse Power)
+    {
+      id: "conv-3-u",
+      content: "What is the worst-case topographic shadow duration at Shackleton Connecting Ridge, and what battery reserve is required?",
+      sender: "user",
+      timestamp: new Date(now - 12 * 60 * 1000)
+    },
+    {
+      id: "conv-3-a",
+      content: "### Cryogenic Shadow Analysis: Shackleton Connecting Ridge\n- **Maximum Eclipse Duration**: **54.2 continuous hours** during southern winter minimum.\n- **Cryogenic Sink Temperature**: Drops to **40 K (-233°C)** in permanent shadow regions.\n- **Base Power Demand**: 100W continuous payload load = **5.42 kWh energy capacity**.\n- **Survival Strategy**:\n  1. Trigger deep sleep hibernation reducing housekeeping draw to **32W** (sensor heaters only).\n  2. Reduces battery mass penalty from 18.2 kg to **6.8 kg Li-ion (260 Wh/kg)**.\n  3. Integrated RHU (Radioisotope Heater Unit) thermal loops prevent propellant line freeze-up.",
+      sender: "ai",
+      timestamp: new Date(now - 11 * 60 * 1000),
+      provider: "groq"
+    },
+    // Conversation 4 (Vertical vs Flat Panels)
+    {
+      id: "conv-4-u",
+      content: "Why are vertical cylindrical solar arrays superior to flat horizontal panels below 85°S latitude?",
+      sender: "user",
+      timestamp: new Date(now - 8 * 60 * 1000)
+    },
+    {
+      id: "conv-4-a",
+      content: "### Polar Solar Geometry Trade Study: Grazing Angles\n- **Solar Vector Angle**: The Sun skims the horizon at **1.54° ± 1.5°** elevation relative to the local horizontal plane.\n- **Cosine Degradation**: Horizontal panels suffer effective area reduction to \n  *A_eff = A · sin(1.5°) ≈ 0.026 · A* (yielding **>97% cosine loss**).\n- **Vertical 360° Cylindrical Array**: Captures normal solar incidence horizontally as the sub-solar longitude sweeps 360° across the 29.5-day synodic cycle.\n- **Specific Output**: Yields **340 W/m² peak** vs **11 W/m²** for flat panels—a **30.9x power capture multiplier**.",
+      sender: "ai",
+      timestamp: new Date(now - 7 * 60 * 1000),
+      provider: "groq"
+    },
+    // Conversation 5 (Permanently Shadowed Regions & Volatiles)
+    {
+      id: "conv-5-u",
+      content: "Assess water-ice volatile extraction feasibility and rover traverse safety inside Faustini Crater PSR.",
+      sender: "user",
+      timestamp: new Date(now - 4 * 60 * 1000)
+    },
+    {
+      id: "conv-5-a",
+      content: "### ISRU Volatile Prospecting: Faustini Crater PSR\n- **Estimated Volatiles**: LEND and Diviner thermal mapping confirm **5.5 ± 1.2 wt% equivalent water-ice** in the upper 1m regolith.\n- **Topographic Hazard**: Crater wall slope averages **18.4°**, exceeding the 12° robotic traverse rollover safety limit.\n- **Traverse Protocol**:\n  - Deploy a tethered rappelling micro-rover from the outer rim (87.1°S).\n  - Active LiDAR illumination and laser retro-reflectors required due to zero ambient light and severe radar clutter.",
+      sender: "ai",
+      timestamp: new Date(now - 3 * 60 * 1000),
+      provider: "groq"
+    },
+    // Conversation 6 (CLPS Lander Architecture: Nova-C vs Griffin)
+    {
+      id: "conv-6-u",
+      content: "Compare Intuitive Machines Nova-C vs Astrobotic Griffin for a 14-day surface mission at de Gerlache Ridge.",
+      sender: "user",
+      timestamp: new Date(now - 60 * 1000)
+    },
+    {
+      id: "conv-6-a",
+      content: "### CLPS Lander Platform Evaluation: de Gerlache Ridge (-88.5°S)\n- **Payload Capacity**: Nova-C (130 kg) vs Griffin (450 kg VIPER-class rover platform).\n- **Power Architecture**: Nova-C top-mounted deployable (200W) vs Griffin integrated vertical body panels (450W).\n- **Slope Tolerance**: Nova-C (12.0° max slope) vs Griffin (8.5° strict limit due to elevated center of gravity).\n- **Eclipse Endurance**: Nova-C (12-hour shadow battery buffer) vs Griffin (18.5-hour reserve).\n- **Strategic Recommendation**: Nova-C is superior for high-relief undulating topography, whereas Griffin is recommended for heavy ISRU drilling payloads.",
+      sender: "ai",
+      timestamp: new Date(now - 15 * 1000),
+      provider: "groq"
+    }
+  ]
+}
+
+export default function ChatPage() {
+  const [showWelcomeDialog, setShowWelcomeDialog] = useState(false)
+  const [messages, setMessages] = useState<Message[]>(getInitialMessages)
   const [conversations, setConversations] = useState<Conversation[]>([])
   const [inputMessage, setInputMessage] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -348,8 +482,8 @@ export default function ChatPage() {
                   Select a template to query lunar terrain and telemetry
                 </CardDescription>
               </CardHeader>
-              <CardContent className="px-3.5 pb-3 space-y-2">
-                {LUNAR_SAMPLE_PROMPTS.slice(0, 4).map((item, idx) => {
+              <CardContent className="px-3.5 pb-3 space-y-2 max-h-[340px] overflow-y-auto pr-1">
+                {LUNAR_SAMPLE_PROMPTS.map((item, idx) => {
                   const Icon = item.icon
                   return (
                     <button
