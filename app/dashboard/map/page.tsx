@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
 import { useTheme } from "next-themes";
 import { LUNAR_SOUTH_POLE_CANDIDATES, LunarCandidateSite } from "@/lib/gis/lunar-sites";
@@ -29,7 +29,9 @@ import {
   AlertTriangle,
   Database,
   Rocket,
-  MessageSquare
+  MessageSquare,
+  Maximize2,
+  Minimize2
 } from "lucide-react";
 import Link from "next/link";
 import LunarPolarMapCanvas from "@/components/lunar/map/lunar-polar-map-canvas";
@@ -160,6 +162,53 @@ export default function LunarMapPage() {
   const celestial = useMemo(() => {
     return getLunarSunEarthPositions(activeSite.lat, activeSite.lon, simulatedDate);
   }, [activeSite, simulatedDate]);
+
+  // Fullscreen Moon Mode State & Controller
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const mapSectionRef = useRef<HTMLElement>(null);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      if (mapSectionRef.current?.requestFullscreen) {
+        mapSectionRef.current.requestFullscreen().catch(() => {
+          setIsFullscreen(prev => !prev);
+        });
+      } else {
+        setIsFullscreen(prev => !prev);
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      }
+      setIsFullscreen(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleFsChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "f" || e.key === "F") {
+        const tag = (e.target as HTMLElement)?.tagName;
+        if (tag !== "INPUT" && tag !== "TEXTAREA") {
+          toggleFullscreen();
+        }
+      }
+      if (e.key === "Escape" && isFullscreen) {
+        if (document.fullscreenElement) {
+          document.exitFullscreen().catch(() => {});
+        }
+        setIsFullscreen(false);
+      }
+    };
+    document.addEventListener("fullscreenchange", handleFsChange);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFsChange);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isFullscreen]);
 
   return (
     <div className={`h-screen w-screen overflow-hidden flex flex-col font-sans select-none antialiased transition-colors ${
@@ -433,46 +482,92 @@ export default function LunarMapPage() {
         </section>
 
         {/* RIGHT 8 COLS: Full Planetary GIS Map & Relays */}
-        <section className="col-span-12 lg:col-span-8 h-full overflow-hidden flex flex-col min-h-0">
+        <section 
+          ref={mapSectionRef}
+          className={
+            isFullscreen
+              ? "fixed inset-0 z-50 bg-slate-950 text-slate-100 flex flex-col p-3 w-screen h-screen overflow-hidden"
+              : "col-span-12 lg:col-span-8 h-full overflow-hidden flex flex-col min-h-0"
+          }
+        >
           <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col space-y-2">
-            <div className="flex items-center justify-between shrink-0">
-              <TabsList className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-0.5 h-8">
-                <TabsTrigger 
-                  value="3d-globe" 
-                  className="gap-1.5 text-xs px-2.5 py-1 font-medium data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-[#4e6aff] dark:data-[state=active]:text-cyan-300 data-[state=active]:shadow-xs"
+            <div className="flex items-center justify-between shrink-0 gap-2 flex-wrap pb-0.5">
+              <div className="flex items-center gap-2">
+                <TabsList className="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-0.5 h-8">
+                  <TabsTrigger 
+                    value="3d-globe" 
+                    className="gap-1.5 text-xs px-2.5 py-1 font-medium data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-[#4e6aff] dark:data-[state=active]:text-cyan-300 data-[state=active]:shadow-xs"
+                  >
+                    <Globe className="w-3.5 h-3.5" />
+                    <span>3D Lunar Globe</span>
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="real-gis" 
+                    className="gap-1.5 text-xs px-2.5 py-1 font-medium data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-slate-900 dark:data-[state=active]:text-white data-[state=active]:shadow-xs"
+                  >
+                    <Compass className="w-3.5 h-3.5" />
+                    <span>Photographic 2D GIS</span>
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="polar-gis" 
+                    className="gap-1.5 text-xs px-2.5 py-1 font-medium data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-slate-900 dark:data-[state=active]:text-white data-[state=active]:shadow-xs"
+                  >
+                    <Layers className="w-3.5 h-3.5" />
+                    <span>Polar Stereographic</span>
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="dsn-relay" 
+                    className="gap-1.5 text-xs px-2.5 py-1 font-medium data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-emerald-600 dark:data-[state=active]:text-emerald-400 data-[state=active]:shadow-xs"
+                  >
+                    <Radio className="w-3.5 h-3.5" />
+                    <span>NASA DSN Relay</span>
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="transect" 
+                    className="gap-1.5 text-xs px-2.5 py-1 font-medium data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-purple-600 dark:data-[state=active]:text-purple-400 data-[state=active]:shadow-xs"
+                  >
+                    <Mountain className="w-3.5 h-3.5" />
+                    <span>Altimetric Transect</span>
+                  </TabsTrigger>
+                </TabsList>
+                {isFullscreen && (
+                  <Badge variant="outline" className="hidden md:inline-flex text-[11px] font-mono bg-cyan-950/60 border-cyan-700/60 text-cyan-300">
+                    {activeSite.name} ({activeSite.lat.toFixed(2)}°S, {activeSite.lon.toFixed(2)}°E) • LOLA +{activeSite.elevationMeters}m
+                  </Badge>
+                )}
+              </div>
+
+              {/* Fullscreen Toggle Button */}
+              <div className="flex items-center gap-2">
+                {isFullscreen && (
+                  <span className="text-[10px] text-slate-400 font-mono hidden lg:inline">
+                    Press &apos;F&apos; or &apos;Esc&apos; to exit
+                  </span>
+                )}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={toggleFullscreen}
+                  className={`h-8 px-2.5 text-xs font-semibold shadow-xs gap-1.5 transition-all ${
+                    isFullscreen
+                      ? "bg-rose-950/50 border-rose-600 text-rose-300 hover:bg-rose-900/70 hover:text-white"
+                      : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  }`}
+                  title={isFullscreen ? "Exit Fullscreen (Esc or F)" : "View Moon in Fullscreen (F)"}
                 >
-                  <Globe className="w-3.5 h-3.5" />
-                  <span>3D Lunar Globe</span>
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="real-gis" 
-                  className="gap-1.5 text-xs px-2.5 py-1 font-medium data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-slate-900 dark:data-[state=active]:text-white data-[state=active]:shadow-xs"
-                >
-                  <Compass className="w-3.5 h-3.5" />
-                  <span>Photographic 2D GIS</span>
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="polar-gis" 
-                  className="gap-1.5 text-xs px-2.5 py-1 font-medium data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-slate-900 dark:data-[state=active]:text-white data-[state=active]:shadow-xs"
-                >
-                  <Layers className="w-3.5 h-3.5" />
-                  <span>Polar Stereographic</span>
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="dsn-relay" 
-                  className="gap-1.5 text-xs px-2.5 py-1 font-medium data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-emerald-600 dark:data-[state=active]:text-emerald-400 data-[state=active]:shadow-xs"
-                >
-                  <Radio className="w-3.5 h-3.5" />
-                  <span>NASA DSN Relay</span>
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="transect" 
-                  className="gap-1.5 text-xs px-2.5 py-1 font-medium data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-purple-600 dark:data-[state=active]:text-purple-400 data-[state=active]:shadow-xs"
-                >
-                  <Mountain className="w-3.5 h-3.5" />
-                  <span>Altimetric Transect</span>
-                </TabsTrigger>
-              </TabsList>
+                  {isFullscreen ? (
+                    <>
+                      <Minimize2 className="w-3.5 h-3.5 text-rose-400" />
+                      <span>Exit Fullscreen</span>
+                    </>
+                  ) : (
+                    <>
+                      <Maximize2 className="w-3.5 h-3.5 text-[#4e6aff]" />
+                      <span>Fullscreen</span>
+                    </>
+                  )}
+                </Button>
+              </div>
             </div>
 
             {/* TAB 1: 3D PHOTOREALISTIC LUNAR GLOBE */}

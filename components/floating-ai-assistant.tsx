@@ -58,6 +58,7 @@ export default function FloatingAIAssistant() {
   const user: any = null;
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
+  const [isDismissed, setIsDismissed] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
   const [isMaximized, setIsMaximized] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
@@ -202,24 +203,48 @@ export default function FloatingAIAssistant() {
     })
   }
 
+  if (isDismissed) return null
+
   if (!isOpen) {
     // Position on left for homepage, right for other pages
     const buttonPosition = pathname === '/' ? 'left-6' : 'right-6'
     
     return (
-      <Button
-        onClick={toggleOpen}
-        className={`fixed bottom-6 ${buttonPosition} h-14 w-14 rounded-full bg-gradient-to-r from-[#4e6aff] to-[#6d5bff] hover:from-[#3d59ef] hover:to-[#5d4bef] text-white shadow-2xl hover:shadow-[#4e6aff]/50 transition-all duration-300 hover:scale-110 z-50 group`}
-        aria-label="Open AI Mission Strategist"
-      >
+      <div className={`fixed bottom-6 ${buttonPosition} z-50 group/floating flex items-center`}>
         <div className="relative">
-          <Bot className="h-6 w-6 group-hover:scale-110 transition-transform" />
-          <span className="absolute -top-1 -right-1 flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
-          </span>
+          <Button
+            onClick={toggleOpen}
+            className="h-14 w-14 rounded-full bg-gradient-to-r from-[#4e6aff] to-[#6d5bff] hover:from-[#3d59ef] hover:to-[#5d4bef] text-white shadow-2xl hover:shadow-[#4e6aff]/50 transition-all duration-300 hover:scale-105 group p-0 overflow-hidden border-2 border-white/60"
+            aria-label="Open Asteria AI Mission Strategist"
+          >
+            <div className="relative w-full h-full flex items-center justify-center">
+              <Avatar className="h-full w-full">
+                <AvatarImage src="/images/asteria-avatar.jpg" alt="Asteria AI" className="object-cover" />
+                <AvatarFallback className="bg-gradient-to-r from-[#4e6aff] to-[#6d5bff] text-white">
+                  <Bot className="h-6 w-6" />
+                </AvatarFallback>
+              </Avatar>
+              <span className="absolute top-0 right-0 flex h-3.5 w-3.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-cyan-500 border-2 border-white"></span>
+              </span>
+            </div>
+          </Button>
+
+          {/* Discreet close/dismiss X button (removes from screen, returns on refresh) */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              setIsDismissed(true)
+            }}
+            title="Hide assistant for this session (returns on page refresh)"
+            className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-slate-900/95 text-slate-300 hover:text-white hover:bg-rose-600 border border-white/60 shadow-md flex items-center justify-center transition-all opacity-85 hover:opacity-100 hover:scale-110 cursor-pointer"
+            aria-label="Hide assistant button"
+          >
+            <X className="h-3 w-3" />
+          </button>
         </div>
-      </Button>
+      </div>
     )
   }
 
@@ -236,6 +261,7 @@ export default function FloatingAIAssistant() {
         <div className="flex items-center gap-3">
           <div className="relative">
             <Avatar className="h-10 w-10 border-2 border-white bg-purple-700">
+              <AvatarImage src="/images/asteria-avatar.jpg" alt="Asteria AI" className="object-cover" />
               <AvatarFallback className="bg-purple-800 text-white font-bold">AST</AvatarFallback>
             </Avatar>
             <span className="absolute bottom-0 right-0 flex h-3 w-3">
@@ -300,6 +326,7 @@ export default function FloatingAIAssistant() {
                   {message.sender === "ai" && (
                     <div className="flex flex-col items-center gap-1">
                       <Avatar className="h-8 w-8 border-2 border-[#4e6aff]/20">
+                        <AvatarImage src="/images/asteria-avatar.jpg" alt="Asteria" className="object-cover" />
                         <AvatarFallback className="bg-gradient-to-r from-[#4e6aff] to-[#6d5bff] text-white text-xs">
                           AST
                         </AvatarFallback>

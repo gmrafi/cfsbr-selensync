@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import {
   Dialog,
@@ -220,7 +220,8 @@ export default function ChatPage() {
         <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <div className="relative">
-              <Avatar className="h-14 w-14 border-2 border-[#4e6aff] shadow-md">
+              <Avatar className="h-14 w-14 border-2 border-[#4e6aff] shadow-md ring-2 ring-[#4e6aff]/20">
+                <AvatarImage src="/images/asteria-avatar.jpg" alt="Asteria AI Mission Strategist" className="object-cover" />
                 <AvatarFallback className="bg-gradient-to-tr from-[#4e6aff] to-[#7c3aed] text-white font-bold text-lg">
                   AST
                 </AvatarFallback>
@@ -359,9 +360,10 @@ export default function ChatPage() {
                     className={`flex gap-3 sm:gap-4 ${isUser ? "justify-end" : "justify-start"}`}
                   >
                     {!isUser && (
-                      <Avatar className="h-9 w-9 border border-[#4e6aff]/40 shrink-0 shadow-sm mt-1">
+                      <Avatar className="h-9 w-9 border border-[#4e6aff]/40 shrink-0 shadow-sm mt-1 ring-1 ring-[#4e6aff]/20">
+                        <AvatarImage src="/images/asteria-avatar.jpg" alt="Asteria" className="object-cover" />
                         <AvatarFallback className="bg-gradient-to-tr from-[#4e6aff] to-[#7c3aed] text-white font-bold text-xs">
-                          AZ
+                          AST
                         </AvatarFallback>
                       </Avatar>
                     )}
@@ -369,7 +371,7 @@ export default function ChatPage() {
                     <div className={`max-w-[85%] sm:max-w-[78%] flex flex-col ${isUser ? "items-end" : "items-start"}`}>
                       <div className="flex items-center gap-2 mb-1 px-1">
                         <span className="text-xs font-semibold text-slate-700">
-                          {isUser ? "Mission Lead" : "Afshara"}
+                          {isUser ? "Mission Lead" : "Asteria"}
                         </span>
                         <span className="text-[10px] text-slate-400">
                           {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -510,7 +512,8 @@ export default function ChatPage() {
         <DialogContent className="max-w-xl bg-white border border-slate-200 text-slate-900">
           <DialogHeader>
             <div className="flex items-center gap-3 mb-2">
-              <Avatar className="h-12 w-12 border-2 border-[#4e6aff]">
+              <Avatar className="h-12 w-12 border-2 border-[#4e6aff] shadow-sm ring-1 ring-[#4e6aff]/20">
+                <AvatarImage src="/images/asteria-avatar.jpg" alt="Asteria AI" className="object-cover" />
                 <AvatarFallback className="bg-gradient-to-tr from-[#4e6aff] to-[#7c3aed] text-white font-bold">
                   AST
                 </AvatarFallback>

@@ -68,7 +68,9 @@ export default function CockpitAITerminal({
     <div className={`h-full flex flex-col p-3 select-none overflow-hidden text-xs ${containerBg}`}>
       <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2 shrink-0">
         <div className="flex items-center gap-1.5 text-[#4e6aff] font-bold text-xs">
-          <Terminal className="w-4 h-4" />
+          <div className="w-5 h-5 rounded-full overflow-hidden border border-[#4e6aff]/40 shrink-0 shadow-2xs">
+            <img src="/images/asteria-avatar.jpg" alt="Asteria" className="w-full h-full object-cover" />
+          </div>
           <span>Asteria AI Mission Strategist</span>
         </div>
         <Badge variant="outline" className="text-[10px] bg-blue-50 text-[#4e6aff] border-blue-200">
