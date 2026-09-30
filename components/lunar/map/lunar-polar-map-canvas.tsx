@@ -263,51 +263,60 @@ export default function LunarPolarMapCanvas({
     // 5. Dynamic Solar Illumination Ray & Shadow Wedge
     if (showSolarRays) {
       const sunAzRad = ((polarSunEarth.sun.azimuthDegrees - 90) * Math.PI) / 180;
-      // Solar Vector Arrow
+      const sunTipX = baseRadius * 0.92 * Math.cos(sunAzRad);
+      const sunTipY = baseRadius * 0.92 * Math.sin(sunAzRad);
+
       ctx.save();
-      ctx.strokeStyle = "#f59e0b"; // Gold sun ray
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = "rgba(245, 158, 11, 0.75)"; // Amber ray
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 4]);
       ctx.beginPath();
       ctx.moveTo(0, 0);
-      ctx.lineTo(baseRadius * 0.9 * Math.cos(sunAzRad), baseRadius * 0.9 * Math.sin(sunAzRad));
+      ctx.lineTo(sunTipX, sunTipY);
       ctx.stroke();
+      ctx.setLineDash([]);
 
-      // Sun icon at tip
-      const sunTipX = baseRadius * 0.9 * Math.cos(sunAzRad);
-      const sunTipY = baseRadius * 0.9 * Math.sin(sunAzRad);
+      // Tactical Solar Azimuth Indicator
       ctx.fillStyle = "#f59e0b";
       ctx.beginPath();
-      ctx.arc(sunTipX, sunTipY, 6, 0, Math.PI * 2);
+      ctx.arc(sunTipX, sunTipY, 4, 0, Math.PI * 2);
       ctx.fill();
-      ctx.fillStyle = "#fff";
-      ctx.font = "bold 9px sans-serif";
+
+      // Monospace Telemetry Label
+      ctx.fillStyle = isDarkMode ? "rgba(253, 230, 138, 0.9)" : "rgba(180, 83, 9, 0.9)";
+      ctx.font = "bold 8.5px monospace";
       ctx.textAlign = "center";
-      ctx.fillText("☀️ SUN", sunTipX, sunTipY - 9);
+      ctx.fillText(`SOLAR AZ ${polarSunEarth.sun.azimuthDegrees.toFixed(1)}° (${polarSunEarth.sun.altitudeDegrees >= 0 ? "+" : ""}${polarSunEarth.sun.altitudeDegrees.toFixed(1)}°EL)`, sunTipX, sunTipY - 8);
       ctx.restore();
     }
 
     // 6. Direct-to-Earth (DTE) Azimuth Vector
     if (showDTEVector) {
       const earthAzRad = ((polarSunEarth.earth.azimuthDegrees - 90) * Math.PI) / 180;
+      const earthTipX = baseRadius * 0.88 * Math.cos(earthAzRad);
+      const earthTipY = baseRadius * 0.88 * Math.sin(earthAzRad);
+
       ctx.save();
-      ctx.strokeStyle = "#3b82f6"; // Blue Earth vector
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = "rgba(59, 130, 246, 0.75)"; // Cyan/Blue vector
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([3, 3]);
       ctx.beginPath();
       ctx.moveTo(0, 0);
-      ctx.lineTo(baseRadius * 0.85 * Math.cos(earthAzRad), baseRadius * 0.85 * Math.sin(earthAzRad));
+      ctx.lineTo(earthTipX, earthTipY);
       ctx.stroke();
+      ctx.setLineDash([]);
 
-      // Earth icon at tip
-      const earthTipX = baseRadius * 0.85 * Math.cos(earthAzRad);
-      const earthTipY = baseRadius * 0.85 * Math.sin(earthAzRad);
+      // Tactical Earth LOS Indicator
       ctx.fillStyle = "#3b82f6";
       ctx.beginPath();
-      ctx.arc(earthTipX, earthTipY, 6, 0, Math.PI * 2);
+      ctx.arc(earthTipX, earthTipY, 4, 0, Math.PI * 2);
       ctx.fill();
-      ctx.fillStyle = "#fff";
-      ctx.font = "bold 9px sans-serif";
+
+      // Monospace Telemetry Label
+      ctx.fillStyle = isDarkMode ? "rgba(191, 219, 254, 0.9)" : "rgba(29, 78, 216, 0.9)";
+      ctx.font = "bold 8.5px monospace";
       ctx.textAlign = "center";
-      ctx.fillText("🌍 EARTH", earthTipX, earthTipY - 9);
+      ctx.fillText(`EARTH LOS ${polarSunEarth.earth.azimuthDegrees.toFixed(1)}° (${polarSunEarth.earth.altitudeDegrees >= 0 ? "+" : ""}${polarSunEarth.earth.altitudeDegrees.toFixed(1)}°EL)`, earthTipX, earthTipY - 8);
       ctx.restore();
     }
 

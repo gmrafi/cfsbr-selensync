@@ -185,7 +185,7 @@ export default function LunarLeafletGIS({ activeSite, onSelectSite, simulatedDat
         }).addTo(map);
 
         craterCircle.bindTooltip(
-          `<strong>${crater.name}</strong><br/>${crater.isPSR ? "❄️ Cryogenic PSR Cold Trap" : "High Elevation Rim"} (${crater.depth}m)`,
+          `<strong>${crater.name}</strong><br/>${crater.isPSR ? "Cryogenic PSR Cold Trap (<40 K)" : "High Elevation Rim"} (${crater.depth}m)`,
           { sticky: true, className: "lunar-tooltip" }
         );
       });
