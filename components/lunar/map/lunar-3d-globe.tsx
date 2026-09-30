@@ -106,6 +106,9 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
     isDteOk: boolean;
   }>({ sunAlt: 0, earthAlt: 0, isDteOk: false });
 
+  const pointerDownPosRef = useRef<{ x: number; y: number } | null>(null);
+  const isUserInteractingRef = useRef(false);
+
   // Initialize Three.js with OrbitControls, Moon, Earth & Sun
   useEffect(() => {
     const container = mountRef.current;
@@ -136,10 +139,9 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
     });
     scene.add(new THREE.Points(starGeo, starMat));
 
-    // 2. Camera
+    // 2. Camera - positioned with 3D space orbital perspective
     const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 1000);
-    // Focus down towards the south pole from an angle
-    camera.position.set(0, -18, 20);
+    camera.position.set(0, -16, 22);
     cameraRef.current = camera;
 
     // 3. WebGL Renderer
@@ -152,22 +154,35 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
+    renderer.domElement.style.touchAction = "none";
+    renderer.domElement.style.outline = "none";
+    renderer.domElement.style.width = "100%";
+    renderer.domElement.style.height = "100%";
     container.innerHTML = "";
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
-    // 4. OrbitControls for Flawless Mouse / Wheel Zoom & Rotation
+    // 4. OrbitControls with flawless mouse/touch drag, orbit & zoom
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.dampingFactor = 0.06;
-    controls.rotateSpeed = 0.75;
+    controls.dampingFactor = 0.07;
+    controls.rotateSpeed = 0.85;
     controls.zoomSpeed = 1.2;
-    controls.minDistance = 9.8; // Allows zooming right into surface craters!
-    controls.maxDistance = 75.0; // Outer zoom limit to see Earth & Sun!
+    controls.minDistance = 9.6; // Allows zooming right into surface craters!
+    controls.maxDistance = 85.0; // Outer zoom limit to see Earth & Sun!
+    controls.minPolarAngle = 0.08; // Prevent gimbal lock at North Pole
+    controls.maxPolarAngle = Math.PI - 0.08; // Prevent gimbal lock at South Pole
     controls.autoRotate = false;
     controls.autoRotateSpeed = 0.8;
     controls.target.set(0, 0, 0);
     controlsRef.current = controls;
+
+    controls.addEventListener("start", () => {
+      isUserInteractingRef.current = true;
+    });
+    controls.addEventListener("end", () => {
+      isUserInteractingRef.current = false;
+    });
 
     // 5. Lighting Simulation
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
@@ -203,7 +218,7 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
     moonMeshRef.current = moonMesh;
 
     // 7. Celestial Body: 3D Earth (Blue Marble Sphere)
-    const earthRadius = 3.2; // 3.6x smaller than real scale for optimal in-frame composition
+    const earthRadius = 3.2;
     const earthGeo = new THREE.SphereGeometry(earthRadius, 48, 48);
     const earthTex = textureLoader.load("/earth_surface_nasa.jpg");
     const earthMat = new THREE.MeshStandardMaterial({
@@ -366,6 +381,7 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
       if (!container || !rendererRef.current || !cameraRef.current) return;
       const w = container.clientWidth;
       const h = container.clientHeight;
+      if (w === 0 || h === 0) return;
       cameraRef.current.aspect = w / h;
       cameraRef.current.updateProjectionMatrix();
       rendererRef.current.setSize(w, h);
@@ -395,7 +411,6 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
     });
 
     // 1. Earth 3D Coordinate in Selenocentric Space
-    // Position Earth along subEarth vector at a visible orbit distance of 36 units
     const earthPos = latLonToVector3(
       ephem.subEarthPoint.latitude,
       ephem.subEarthPoint.longitude,
@@ -407,7 +422,6 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
     }
 
     // 2. Sun 3D Coordinate in Selenocentric Space
-    // Position Sun along subSolar vector at distance 54 units
     const sunPos = latLonToVector3(
       ephem.subSolarPoint.latitude,
       ephem.subSolarPoint.longitude,
@@ -441,42 +455,44 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
     }
   }, [isAutoSpin]);
 
-  // Smooth Focus on Site
-  const focusOnSite = useCallback((lat: number, lon: number) => {
+  // Smooth Focus on Site with Safe 3D Orbital Perspective (eliminates gimbal lock / freeze)
+  const focusOnSite = useCallback((lat: number, lon: number, distance = 22) => {
     if (!cameraRef.current || !controlsRef.current) return;
-    const pos = latLonToVector3(lat, lon, 9);
-    const normal = pos.clone().normalize();
-    const camTarget = normal.clone().multiplyScalar(19);
+    
+    // For high polar latitudes (lat < -75 or > 75), angle the camera naturally at ~60°-68°
+    // so it provides an orbital vista looking into the crater without hitting vertical Y-axis gimbal lock
+    let viewLat = lat;
+    if (lat < -75) {
+      viewLat = -66;
+    } else if (lat > 75) {
+      viewLat = 66;
+    }
+
+    const camTarget = latLonToVector3(viewLat, lon, distance);
 
     controlsRef.current.autoRotate = false;
     setIsAutoSpin(false);
 
-    // Smoothly set camera position
+    // Smoothly animate camera position
     const startPos = cameraRef.current.position.clone();
     let progress = 0;
 
     const lerpCamera = () => {
-      progress += 0.04;
+      progress += 0.05;
       if (progress <= 1 && cameraRef.current && controlsRef.current) {
         cameraRef.current.position.lerpVectors(startPos, camTarget, progress);
         controlsRef.current.target.set(0, 0, 0);
+        controlsRef.current.update();
         requestAnimationFrame(lerpCamera);
       }
     };
     lerpCamera();
   }, []);
 
-  // Sync when activeSite changes from external UI
-  useEffect(() => {
-    if (activeSite) {
-      focusOnSite(activeSite.lat, activeSite.lon);
-    }
-  }, [activeSite, focusOnSite]);
-
-  // Raycast hover coordinates and clickable pins
+  // Raycast hover coordinates and pins on pointer move
   const handlePointerMove = (e: React.PointerEvent) => {
     const container = mountRef.current;
-    if (!container || !cameraRef.current || !moonMeshRef.current) return;
+    if (!container || !cameraRef.current || !moonMeshRef.current || isUserInteractingRef.current) return;
 
     const rect = container.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
@@ -512,7 +528,22 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
     }
   };
 
+  // Record initial press coordinates to separate click from orbit drag
   const handlePointerDown = (e: React.PointerEvent) => {
+    pointerDownPosRef.current = { x: e.clientX, y: e.clientY };
+  };
+
+  // Only trigger site selection if the user clicked (not dragged to rotate)
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (!pointerDownPosRef.current) return;
+    const dx = e.clientX - pointerDownPosRef.current.x;
+    const dy = e.clientY - pointerDownPosRef.current.y;
+    const dragDistance = Math.hypot(dx, dy);
+    pointerDownPosRef.current = null;
+
+    // If mouse moved > 5 pixels, user was freely rotating the globe!
+    if (dragDistance > 5) return;
+
     const container = mountRef.current;
     if (!container || !cameraRef.current || !pinsGroupRef.current) return;
 
@@ -534,7 +565,7 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
         onSelectSite(data as LunarCandidateSite);
       }
       setIsDossierOpen(true);
-      focusOnSite(data.lat, data.lon);
+      focusOnSite(data.lat, data.lon, 20);
     }
   };
 
@@ -548,12 +579,12 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
 
   // Reset to South Pole View
   const handleResetSouthPole = () => {
-    focusOnSite(-89.9, 0.0);
+    focusOnSite(-89.9, 0.0, 22);
   };
 
-  // View Apollo 11 Equator
-  const handleViewApollo11 = () => {
-    focusOnSite(0.674, 23.473);
+  // Free Space Orbital Overview View
+  const handleFreeSpaceOverview = () => {
+    focusOnSite(-35, 45, 32);
   };
 
   // View Earth Perspective
@@ -609,6 +640,18 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
             <span>{isAutoSpin ? "Pause" : "Spin"}</span>
           </Button>
 
+          {/* Free Orbit View */}
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={handleFreeSpaceOverview}
+            className="h-6 px-2 text-[11px] rounded-md font-medium text-slate-400 hover:text-white"
+            title="Overview orbital view of Moon in 3D deep space"
+          >
+            <Sparkles className="w-3 h-3 mr-1 text-cyan-400" />
+            <span>Free Orbit</span>
+          </Button>
+
           {/* South Pole Quick Focus */}
           <Button
             size="sm"
@@ -644,7 +687,7 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
               {hoverCoords.lat.toFixed(2)}°{hoverCoords.lat >= 0 ? "N" : "S"}, {Math.abs(hoverCoords.lon).toFixed(2)}°{hoverCoords.lon >= 0 ? "E" : "W"}
             </span>
           ) : (
-            <span className="text-slate-500 font-sans text-[11px]">Scroll wheel to zoom | Drag to orbit</span>
+            <span className="text-slate-500 font-sans text-[11px]">Scroll wheel to zoom | Drag to orbit in 3D space</span>
           )}
         </div>
       </div>
@@ -654,7 +697,9 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
         ref={mountRef}
         onPointerMove={handlePointerMove}
         onPointerDown={handlePointerDown}
-        className="w-full flex-1 h-full min-h-0 cursor-grab active:cursor-grabbing"
+        onPointerUp={handlePointerUp}
+        style={{ touchAction: "none" }}
+        className="w-full flex-1 h-full min-h-0 cursor-grab active:cursor-grabbing select-none"
       />
 
       {/* Modern Clean White Tactical Site Inspector (Opens on Click) */}
@@ -663,29 +708,26 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
           {/* Header & Close Button */}
           <div className="flex items-start justify-between gap-2 pb-2.5 border-b border-slate-100 dark:border-slate-800">
             <div className="space-y-1 min-w-0">
-              <Badge 
-                variant="outline"
-                className="text-[10px] font-mono border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300"
-              >
-                {selectedHistoric ? `${selectedHistoric.agency} • ${selectedHistoric.year}` : activeSite.clpsPriority}
-              </Badge>
-              <h3 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-1.5 leading-snug truncate">
-                {selectedHistoric ? (
-                  <>
-                    <Rocket className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-                    <span className="truncate">{selectedHistoric.name}</span>
-                  </>
-                ) : (
-                  <>
-                    <MapPin className="w-3.5 h-3.5 text-[#4e6aff] shrink-0" />
-                    <span className="truncate">{activeSite.name}</span>
-                  </>
-                )}
+              <div className="flex items-center gap-1.5">
+                <Badge 
+                  variant="outline"
+                  className="text-[10px] font-mono border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 font-normal px-1.5 py-0"
+                >
+                  {selectedHistoric ? `${selectedHistoric.agency} • ${selectedHistoric.year}` : activeSite.clpsPriority}
+                </Badge>
+              </div>
+              <h3 className="font-semibold text-sm text-slate-900 dark:text-white leading-snug truncate">
+                {selectedHistoric ? selectedHistoric.name : activeSite.name}
               </h3>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+                {selectedHistoric 
+                  ? `${Math.abs(selectedHistoric.lat).toFixed(2)}°${selectedHistoric.lat >= 0 ? "N" : "S"}, ${Math.abs(selectedHistoric.lon).toFixed(2)}°${selectedHistoric.lon >= 0 ? "E" : "W"}`
+                  : `${activeSite.lat.toFixed(2)}°S, ${activeSite.lon.toFixed(2)}°E`}
+              </p>
             </div>
             <button 
               onClick={() => setIsDossierOpen(false)}
-              className="text-slate-400 hover:text-slate-700 dark:hover:text-white p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
+              className="text-slate-400 hover:text-slate-700 dark:hover:text-white p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
               title="Close card"
             >
               <X className="w-4 h-4" />
@@ -696,18 +738,16 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
           {selectedHistoric ? (
             <div className="space-y-2.5">
               <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-                <div className="p-2 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
-                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block">Coordinates</span>
-                  <span className="font-bold text-slate-900 dark:text-slate-100">
-                    {Math.abs(selectedHistoric.lat).toFixed(2)}°{selectedHistoric.lat >= 0 ? "N" : "S"}, {Math.abs(selectedHistoric.lon).toFixed(2)}°{selectedHistoric.lon >= 0 ? "E" : "W"}
-                  </span>
+                <div className="p-2 bg-slate-50 dark:bg-slate-950/60 rounded-md border border-slate-200 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block font-sans">Mission Type</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">{selectedHistoric.type}</span>
                 </div>
-                <div className="p-2 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
-                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block">Landing Type</span>
-                  <span className="font-bold text-amber-600 dark:text-amber-400">{selectedHistoric.type}</span>
+                <div className="p-2 bg-slate-50 dark:bg-slate-950/60 rounded-md border border-slate-200 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block font-sans">Agency</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">{selectedHistoric.agency}</span>
                 </div>
               </div>
-              <div className="p-2.5 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+              <div className="p-2.5 bg-slate-50 dark:bg-slate-950/60 rounded-md border border-slate-200 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">
                 {selectedHistoric.details}
               </div>
               <Button
@@ -721,35 +761,35 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
             </div>
           ) : (
             <div className="space-y-2.5">
-              {/* Telemetry Metrics */}
+              {/* Clean Monochrome Telemetry Metrics */}
               <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-                <div className="p-2 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
-                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block">LOLA Elevation</span>
-                  <span className="font-bold text-[#4e6aff]">+{activeSite.elevationMeters.toLocaleString()} m</span>
+                <div className="p-2 bg-slate-50 dark:bg-slate-950/60 rounded-md border border-slate-200 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block font-sans">LOLA Elevation</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">+{activeSite.elevationMeters.toLocaleString()} m</span>
                 </div>
-                <div className="p-2 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
-                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block">Terrain Slope</span>
-                  <span className="font-bold text-emerald-600 dark:text-emerald-400">{activeSite.maxSlopeDeg}° (&lt;10° Safe)</span>
+                <div className="p-2 bg-slate-50 dark:bg-slate-950/60 rounded-md border border-slate-200 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block font-sans">Terrain Slope</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">{activeSite.maxSlopeDeg}° (&lt;10° Safe)</span>
                 </div>
-                <div className="p-2 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
-                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block">Sun Elevation</span>
-                  <span className={`font-bold ${celestialState.sunAlt > 0 ? "text-amber-600 dark:text-amber-400" : "text-slate-500"}`}>
+                <div className="p-2 bg-slate-50 dark:bg-slate-950/60 rounded-md border border-slate-200 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block font-sans">Sun Elevation</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">
                     {celestialState.sunAlt > 0 ? `+${celestialState.sunAlt.toFixed(1)}° (Sunlit)` : `${celestialState.sunAlt.toFixed(1)}° (Shadow)`}
                   </span>
                 </div>
-                <div className="p-2 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800">
-                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block">Earth LOS (DTE)</span>
-                  <span className={`font-bold ${celestialState.isDteOk ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}>
-                    {celestialState.earthAlt > 0 ? `+${celestialState.earthAlt.toFixed(1)}° (Active)` : `${celestialState.earthAlt.toFixed(1)}° (Blocked)`}
+                <div className="p-2 bg-slate-50 dark:bg-slate-950/60 rounded-md border border-slate-200 dark:border-slate-800">
+                  <span className="text-slate-500 dark:text-slate-400 text-[10px] block font-sans">Earth Line-of-Sight</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-100">
+                    {celestialState.earthAlt > 0 ? `+${celestialState.earthAlt.toFixed(1)}° (LOS OK)` : `${celestialState.earthAlt.toFixed(1)}° (Blocked)`}
                   </span>
                 </div>
               </div>
 
               {/* Water Ice & Scientific Note */}
-              <div className="p-2.5 bg-slate-50 dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800 space-y-1">
+              <div className="p-2.5 bg-slate-50 dark:bg-slate-950/60 rounded-md border border-slate-200 dark:border-slate-800 space-y-1">
                 <div className="flex items-center justify-between text-[11px]">
                   <span className="text-slate-500 dark:text-slate-400">Volatiles (PSR):</span>
-                  <span className="font-mono text-purple-700 dark:text-purple-300 font-semibold truncate block">
+                  <span className="font-mono text-slate-800 dark:text-slate-200 font-semibold truncate block">
                     {activeSite.estimatedIcePurity}
                   </span>
                 </div>
@@ -759,9 +799,8 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
               </div>
 
               {/* Action Button */}
-              <Button asChild className="w-full bg-[#4e6aff] hover:bg-[#3d57e6] text-white font-medium text-xs h-8 gap-1.5 shadow-xs">
+              <Button asChild className="w-full bg-slate-900 hover:bg-slate-800 text-white dark:bg-slate-100 dark:hover:bg-slate-200 dark:text-slate-900 font-medium text-xs h-8 gap-1.5 shadow-xs">
                 <Link href={`/dashboard?site=${activeSite.id}`}>
-                  <Compass className="w-3.5 h-3.5" />
                   <span>Analyze in Flight Cockpit</span>
                   <ArrowRight className="w-3.5 h-3.5 ml-auto" />
                 </Link>
