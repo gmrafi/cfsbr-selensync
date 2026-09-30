@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useState, useMemo } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -11,6 +11,7 @@ import {
   BookOpen, Play, CheckCircle, Clock, Award, Rocket, Globe, Shield, Calculator,
   ExternalLink, FlaskConical, Search, Satellite, ChevronDown, ChevronUp, FileText
 } from "lucide-react"
+import UniversalHeader from "@/components/universal-header"
 import ResourceCard from "@/components/dashboard/resources/resource-card"
 import { resources } from "@/lib/resources"
 
@@ -140,12 +141,15 @@ export default function ResourcesPage() {
   )
 
   return (
-    <div className="space-y-6">
-      {/* Page header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Resources & Research Hub</h1>
-        <p className="text-sm text-gray-500 mt-1">Scientific literature, NASA data sources, and learning paths for lunar mission planning</p>
-      </div>
+    <div className="min-h-screen bg-slate-50/50 dark:bg-slate-950">
+      <UniversalHeader />
+      
+      <main className="container mx-auto px-4 sm:px-6 py-8 max-w-7xl space-y-6">
+        {/* Page header */}
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Resources & Research Hub</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Scientific literature, NASA data sources, and learning paths for lunar mission planning</p>
+        </div>
 
       <Tabs defaultValue="papers" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
@@ -339,6 +343,7 @@ export default function ResourcesPage() {
           </div>
         </TabsContent>
       </Tabs>
+      </main>
     </div>
   )
 }
