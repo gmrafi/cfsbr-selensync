@@ -19,8 +19,13 @@ import {
   Globe2,
   Sparkles,
   Eye,
-  EyeOff
+  EyeOff,
+  ArrowRight,
+  X,
+  ChevronRight,
+  Activity
 } from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { LUNAR_SOUTH_POLE_CANDIDATES, LunarCandidateSite } from "@/lib/gis/lunar-sites";
@@ -92,6 +97,8 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
   const [isAutoSpin, setIsAutoSpin] = useState(false);
   const [showEarthSun, setShowEarthSun] = useState(true);
   const [hoveredSite, setHoveredSite] = useState<any | null>(null);
+  const [selectedHistoric, setSelectedHistoric] = useState<HistoricalLunarMission | null>(null);
+  const [isDossierOpen, setIsDossierOpen] = useState(true);
   const [hoverCoords, setHoverCoords] = useState<{ lat: number; lon: number } | null>(null);
   const [celestialState, setCelestialState] = useState<{
     sunAlt: number;
@@ -520,9 +527,13 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
     const pinObj = pinHits.find((h) => (h.object as any).siteData);
     if (pinObj) {
       const data = (pinObj.object as any).siteData;
-      if (!data.isHistoric) {
+      if (data.isHistoric) {
+        setSelectedHistoric(data as HistoricalLunarMission);
+      } else {
+        setSelectedHistoric(null);
         onSelectSite(data as LunarCandidateSite);
       }
+      setIsDossierOpen(true);
       focusOnSite(data.lat, data.lon);
     }
   };
@@ -646,34 +657,131 @@ export default function Lunar3DGlobe({ activeSite, onSelectSite, simulatedDate }
         className="w-full flex-1 h-full min-h-0 cursor-grab active:cursor-grabbing"
       />
 
-      {/* Floating Detailed Hover Card */}
-      {hoveredSite && (
-        <div className="absolute top-16 left-4 z-20 pointer-events-none p-3 rounded-lg bg-slate-900/95 border border-slate-700 shadow-xl max-w-xs animate-in fade-in-50">
-          <div className="flex items-center justify-between mb-1">
-            <Badge 
-              className={`text-[10px] ${
-                hoveredSite.isHistoric 
-                  ? "bg-amber-500/20 text-amber-300 border-amber-500/40" 
-                  : "bg-[#4e6aff]/20 text-cyan-300 border-[#4e6aff]/40"
-              }`}
+      {/* Pinned Rich Tactical Site Inspector Dossier */}
+      {isDossierOpen ? (
+        <div className="absolute top-16 left-4 z-20 pointer-events-auto p-4 rounded-xl bg-slate-900/95 backdrop-blur-md border border-slate-700 shadow-2xl max-w-sm w-80 text-xs space-y-3">
+          {/* Header & Close Button */}
+          <div className="flex items-start justify-between gap-2 pb-2 border-b border-slate-800">
+            <div className="space-y-1">
+              <Badge 
+                className={`text-[10px] font-mono ${
+                  selectedHistoric 
+                    ? "bg-amber-500/20 text-amber-300 border-amber-500/40" 
+                    : "bg-[#4e6aff]/20 text-cyan-300 border-[#4e6aff]/40"
+                }`}
+              >
+                {selectedHistoric ? `${selectedHistoric.agency} • ${selectedHistoric.year}` : activeSite.clpsPriority}
+              </Badge>
+              <h3 className="font-bold text-sm text-white flex items-center gap-1.5 leading-snug">
+                {selectedHistoric ? (
+                  <>
+                    <Rocket className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                    <span>{selectedHistoric.name}</span>
+                  </>
+                ) : (
+                  <>
+                    <MapPin className="w-3.5 h-3.5 text-[#4e6aff] shrink-0" />
+                    <span>{activeSite.name}</span>
+                  </>
+                )}
+              </h3>
+            </div>
+            <button 
+              onClick={() => setIsDossierOpen(false)}
+              className="text-slate-400 hover:text-white p-1 rounded hover:bg-slate-800 transition-colors"
+              title="Minimize panel"
             >
-              {hoveredSite.isHistoric ? `${hoveredSite.agency} • ${hoveredSite.year}` : hoveredSite.clpsPriority}
-            </Badge>
-            <span className="text-[10px] font-mono text-slate-400">
-              {hoveredSite.lat.toFixed(2)}°S, {hoveredSite.lon.toFixed(2)}°E
-            </span>
+              <X className="w-3.5 h-3.5" />
+            </button>
           </div>
-          <h4 className="font-bold text-xs text-white flex items-center gap-1.5">
-            {hoveredSite.isHistoric && <Rocket className="w-3 h-3 text-amber-400" />}
-            <span>{hoveredSite.name}</span>
-          </h4>
-          <p className="text-[11px] text-slate-400 mt-1 line-clamp-2">
-            {hoveredSite.details || hoveredSite.scientificSignificance}
-          </p>
-          <div className="mt-2 text-[10px] text-cyan-400 font-mono">
-            {hoveredSite.isHistoric ? "Historic Mission Landing Site" : "Click beacon to lock & select site"}
-          </div>
+
+          {/* Historical vs Candidate Site Telemetry Grid */}
+          {selectedHistoric ? (
+            <div className="space-y-2.5">
+              <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+                <div className="p-2 bg-slate-950/80 rounded border border-slate-800">
+                  <span className="text-slate-500 text-[10px] block">Coordinates</span>
+                  <span className="font-bold text-slate-200">
+                    {Math.abs(selectedHistoric.lat).toFixed(2)}°{selectedHistoric.lat >= 0 ? "N" : "S"}, {Math.abs(selectedHistoric.lon).toFixed(2)}°{selectedHistoric.lon >= 0 ? "E" : "W"}
+                  </span>
+                </div>
+                <div className="p-2 bg-slate-950/80 rounded border border-slate-800">
+                  <span className="text-slate-500 text-[10px] block">Landing Type</span>
+                  <span className="font-bold text-amber-300">{selectedHistoric.type}</span>
+                </div>
+              </div>
+              <div className="p-2.5 bg-slate-950/80 rounded border border-slate-800 text-[11px] text-slate-300 leading-relaxed">
+                {selectedHistoric.details}
+              </div>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setSelectedHistoric(null)}
+                className="w-full h-7 text-xs border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200"
+              >
+                <span>Return to Active Candidate Site</span>
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-2.5">
+              {/* Telemetry Metrics */}
+              <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+                <div className="p-2 bg-slate-950/80 rounded border border-slate-800">
+                  <span className="text-slate-500 text-[10px] block">LOLA Elevation</span>
+                  <span className="font-bold text-[#4e6aff]">+{activeSite.elevationMeters.toLocaleString()} m</span>
+                </div>
+                <div className="p-2 bg-slate-950/80 rounded border border-slate-800">
+                  <span className="text-slate-500 text-[10px] block">Max Terrain Slope</span>
+                  <span className="font-bold text-emerald-400">{activeSite.maxSlopeDeg}° (&lt;10° Safe)</span>
+                </div>
+                <div className="p-2 bg-slate-950/80 rounded border border-slate-800">
+                  <span className="text-slate-500 text-[10px] block">Sun Elevation</span>
+                  <span className={`font-bold ${celestialState.sunAlt > 0 ? "text-amber-400" : "text-slate-400"}`}>
+                    {celestialState.sunAlt > 0 ? `+${celestialState.sunAlt.toFixed(1)}° (Sunlit)` : `${celestialState.sunAlt.toFixed(1)}° (Shadow)`}
+                  </span>
+                </div>
+                <div className="p-2 bg-slate-950/80 rounded border border-slate-800">
+                  <span className="text-slate-500 text-[10px] block">Earth LOS (DTE)</span>
+                  <span className={`font-bold ${celestialState.isDteOk ? "text-emerald-400" : "text-rose-400"}`}>
+                    {celestialState.earthAlt > 0 ? `+${celestialState.earthAlt.toFixed(1)}° (Active)` : `${celestialState.earthAlt.toFixed(1)}° (Blocked)`}
+                  </span>
+                </div>
+              </div>
+
+              {/* Water Ice & Scientific Note */}
+              <div className="p-2.5 bg-slate-950/80 rounded border border-slate-800 space-y-1">
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="text-slate-400">Volatile Signature:</span>
+                  <span className="font-mono text-purple-300 font-semibold">{activeSite.estimatedIcePurity}</span>
+                </div>
+                <p className="text-[11px] text-slate-400 leading-relaxed pt-1 border-t border-slate-800/80">
+                  {activeSite.scientificSignificance}
+                </p>
+              </div>
+
+              {/* Action Button */}
+              <Button asChild className="w-full bg-[#4e6aff] hover:bg-[#3d57e6] text-white font-medium text-xs h-8 gap-1.5 shadow-md">
+                <Link href={`/dashboard?site=${activeSite.id}`}>
+                  <Compass className="w-3.5 h-3.5" />
+                  <span>Analyze in Flight Cockpit</span>
+                  <ArrowRight className="w-3.5 h-3.5 ml-auto" />
+                </Link>
+              </Button>
+            </div>
+          )}
         </div>
+      ) : (
+        /* Minimized Floating Toggle */
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => setIsDossierOpen(true)}
+          className="absolute top-16 left-4 z-20 pointer-events-auto h-8 px-3 rounded-lg bg-slate-900/90 border-slate-700 text-xs font-mono text-cyan-300 hover:text-white hover:bg-slate-800 shadow-md gap-1.5"
+        >
+          <MapPin className="w-3.5 h-3.5 text-[#4e6aff]" />
+          <span>Inspect {selectedHistoric ? selectedHistoric.name : activeSite.name.split(" ")[0]}</span>
+          <ChevronRight className="w-3.5 h-3.5 ml-1" />
+        </Button>
       )}
 
       {/* Floating Celestial Status Capsule (Sun & Earth Visibility) */}

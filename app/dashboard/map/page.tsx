@@ -410,7 +410,7 @@ export default function LunarMapPage() {
                 </div>
               </div>
 
-              {/* Terrain Safety Envelope */}
+              {/* Terrain Safety & Volatile Envelope */}
               <div className="grid grid-cols-2 gap-2 text-[11px]">
                 <div className="p-2 rounded bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
                   <span className="text-slate-500 block text-[10px]">Slope Margin:</span>
@@ -420,19 +420,48 @@ export default function LunarMapPage() {
                 </div>
                 <div className="p-2 rounded bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
                   <span className="text-slate-500 block text-[10px]">Water Ice (PSR):</span>
-                  <span className="font-mono font-semibold text-purple-600 dark:text-purple-300">{activeSite.estimatedIcePurity}</span>
+                  <span className="font-mono font-semibold text-purple-600 dark:text-purple-300 truncate block">
+                    {activeSite.estimatedIcePurity}
+                  </span>
                 </div>
               </div>
 
-              {/* Direct Cockpit Launch */}
-              <div className="pt-1">
+              {/* Target Artemis & CLPS Missions */}
+              <div className="p-2 rounded bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-1">
+                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider block">
+                  Candidate Missions & Science Objectives:
+                </span>
+                <div className="flex flex-wrap gap-1">
+                  {activeSite.targetMissions.map((m, idx) => (
+                    <Badge key={idx} variant="secondary" className="text-[9px] px-1.5 py-0 font-normal">
+                      {m}
+                    </Badge>
+                  ))}
+                </div>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 italic pt-1 border-t border-slate-200 dark:border-slate-800">
+                  {activeSite.scientificInterest}
+                </p>
+              </div>
+
+              {/* Direct Actions: Flight Cockpit & Financial Model */}
+              <div className="grid grid-cols-2 gap-2 pt-1">
                 <Button 
                   asChild
-                  className="w-full bg-[#4e6aff] hover:bg-[#3d57e6] text-white font-medium text-xs gap-2 shadow-xs h-8"
+                  className="bg-[#4e6aff] hover:bg-[#3d57e6] text-white font-medium text-xs gap-1.5 shadow-xs h-8 col-span-2 sm:col-span-1"
                 >
-                  <Link href="/dashboard">
+                  <Link href={`/dashboard?site=${activeSite.id}`}>
                     <Compass className="w-3.5 h-3.5" />
-                    <span>Engage in Mission Cockpit</span>
+                    <span>Flight Cockpit</span>
+                  </Link>
+                </Button>
+                <Button 
+                  asChild
+                  variant="outline"
+                  className="border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 font-medium text-xs gap-1.5 shadow-xs h-8 col-span-2 sm:col-span-1"
+                >
+                  <Link href="/mission-finance">
+                    <Rocket className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                    <span>Finance Risk</span>
                   </Link>
                 </Button>
               </div>
