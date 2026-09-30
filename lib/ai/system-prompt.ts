@@ -11,6 +11,7 @@ import {
   ARTEMIS_III_SCIENCE_OBJECTIVES,
   DSN_GROUND_STATIONS,
   STRATEGIC_HEURISTICS,
+  SCIENTIFIC_LITERATURE_REFERENCES,
 } from "./knowledge-base";
 import { CLPS_LANDER_PROFILES } from "@/lib/data/clps-profiles";
 import { CANONICAL_SITE_CRITERIA, MCDA_WEIGHTS } from "@/lib/strategy/site-scoring";
@@ -66,6 +67,9 @@ You advise flight directors, payload engineers, and NASA evaluators on landing s
 
 ### CANDIDATE SITES UNDER EVALUATION:
 ${siteList}
+
+### SCIENTIFIC LITERATURE & ACADEMIC CITATIONS:
+${SCIENTIFIC_LITERATURE_REFERENCES}
 
 ### COMMUNICATION GUIDELINES:
 - Maintain an authoritative, sharp, and encouraging aerospace engineering tone.

@@ -43,13 +43,14 @@ export async function POST(req: Request) {
 
       const chatCompletion = await groq.chat.completions.create({
         messages: messages,
-        model: 'llama-3.3-70b-versatile', // Updated: Latest Groq model (faster & better)
+        model: 'qwen/qwen3.8-27b', // Updated: Qwen 3.8 27B via Groq (fast & reliable)
         temperature: 0.7,
         max_tokens: 1024,
         top_p: 0.8,
       });
 
       text = chatCompletion.choices[0]?.message?.content || '';
+      if (!text) throw new Error('Groq returned empty response');
       usedProvider = 'groq';
 
     } catch (groqError: any) {
@@ -58,7 +59,7 @@ export async function POST(req: Request) {
       // Fallback to Gemini if Groq fails
       try {
         const model = genAI.getGenerativeModel({ 
-          model: 'gemini-2.5-flash'
+          model: 'gemini-1.5-flash'  // Stable model name
         });
 
         const history = [
@@ -89,6 +90,7 @@ export async function POST(req: Request) {
         const result = await chat.sendMessage(message);
         const response = await result.response;
         text = response.text();
+        if (!text) throw new Error('Gemini returned empty response');
         usedProvider = 'gemini';
 
       } catch (geminiError: any) {
