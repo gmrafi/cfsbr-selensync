@@ -391,3 +391,56 @@ export function getCLPSProfile(id: string): CLPSLanderConstraintProfile | undefi
 export function getAllCLPSProfiles(): CLPSLanderConstraintProfile[] {
   return Object.values(CLPS_LANDER_PROFILES);
 }
+
+
+
+// ============================================================================
+// NASA VIPER & Artemis LTV Heavy Surface Carrier Profile (Milestone 100)
+// ============================================================================
+export const NASA_VIPER_LTV_PROFILE: CLPSLanderConstraintProfile = {
+  id: "viper-ltv-carrier",
+  name: "Griffin-VIPER / Artemis LTV Rover Carrier",
+  contractor: "Astrobotic & NASA Glenn / Johnson Space Center",
+  program: "NASA CLPS",
+  missionClass: "Heavy Cargo & Rover Carrier",
+  wetMassKg: 5900,
+  dryMassKg: 1950,
+  payloadCapacityKg: 500,
+  dimensions: {
+    heightMeters: 4.5,
+    diameterMeters: 4.2,
+    landingFootprintM2: 18.5,
+  },
+  powerSpecs: {
+    nominalBaseLoadWatts: 450,
+    peakScienceWatts: 850,
+    survivalHeaterWatts: 180,
+    solarArrayPeakWatts: 1200,
+    solarArrayOrientation: "articulated-gimbal",
+    batteryCapacityWh: 15000,
+    allowableBlackoutHours: 54, // Extended cryogenic PSR shadow dwell
+  },
+  terrainTolerances: {
+    maxSlopeDeg: 12.0,
+    maxObstacleHeightCm: 35,
+    surfaceBearingStrengthKPa: 18.0,
+  },
+  telecomSpecs: {
+    primaryBand: "X-Band",
+    commArchitecture: "Dual Direct & Relay",
+    txPowerWatts: 25,
+    antennaGainDbi: 28.5,
+    antennaType: "High-Gain Steerable Parabolic",
+    dsnApertureRequiredM: 34,
+    minLinkMarginDb: 4.2,
+  },
+  thermalLimits: {
+    minOperatingTempKelvin: 40,
+    maxOperatingTempKelvin: 395,
+    cryoSurvivalMethod: "RHU (Radioisotope Heater Unit) & Multi-Layer Insulation",
+  },
+  referenceMissions: ["NASA VIPER South Pole Traverse", "Artemis III/IV LTV Deployment", "Nobile Crater Ice Drill"],
+};
+
+// Auto-register to global profiles directory
+CLPS_LANDER_PROFILES["viper-ltv-carrier"] = NASA_VIPER_LTV_PROFILE;
