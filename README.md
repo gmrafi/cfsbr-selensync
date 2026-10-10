@@ -1,6 +1,6 @@
 # SelenSync: Next-Gen CLPS Lunar Mission Browser & Topographic Horizon Analyzer
 
-[![NASA Space Apps Challenge 2026](https://img.shields.io/badge/NASA%20Space%20Apps-Global%20Nominees%202026-blue.svg?style=for-the-badge&logo=nasa)](https://www.spaceappschallenge.org/)
+[![NASA Space Apps Challenge 2026](https://img.shields.io/badge/NASA%20Space%20Apps-Global%20Nominees%202025-blue.svg?style=for-the-badge&logo=nasa)](https://www.spaceappschallenge.org/)
 [![Platform](https://img.shields.io/badge/Platform-SelenSync%202.0-indigo.svg?style=for-the-badge)](https://github.com/gmrafi/cfsbr-selensync)
 [![Next.js 16](https://img.shields.io/badge/Framework-Next.js%2016-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![Organization](https://img.shields.io/badge/Organization-CFSBR%20SpaceWeb-emerald.svg?style=for-the-badge)](https://github.com/gmrafi)
