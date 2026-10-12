@@ -38,6 +38,7 @@ import CockpitTimeDrawer from "./cockpit/cockpit-time-drawer";
 import TelemetryCharts, { TelemetryDataPoint } from "./telemetry-charts";
 import SiteComparisonMatrix from "./site-comparison-matrix";
 import CockpitGlossaryModal from "./cockpit/cockpit-glossary-modal";
+import LanderAnatomyViewer from "./hardware/lander-anatomy-viewer";
 import { downloadMissionPlanJSON, printExecutiveMissionBriefing } from "@/lib/export/mission-plan-export";
 
 export default function LunarMissionDashboard() {
@@ -319,6 +320,7 @@ export default function LunarMissionDashboard() {
               isEarthOccluded={isEarthOccluded}
               solarWatts={solarOutput.netOutputWatts}
               rfLinkMarginDb={rfLinkOutput.linkMarginDb}
+              onInspectHardware={() => setActiveTab("hardware")}
             />
           </div>
 
@@ -340,7 +342,7 @@ export default function LunarMissionDashboard() {
         {/* COLUMN 3: Right Intelligence & Mission Tabs (4 Cols) */}
         <section className={`col-span-12 lg:col-span-4 min-h-[480px] lg:h-full overflow-hidden flex flex-col border rounded-xl min-h-0 ${panelBg}`}>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col overflow-hidden">
-            <TabsList className="h-9 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 grid grid-cols-5 rounded-none p-0.5 text-xs font-semibold shrink-0">
+            <TabsList className="h-9 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 grid grid-cols-6 rounded-none p-0.5 text-xs font-semibold shrink-0">
               <TabsTrigger
                 value="curves"
                 className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-[#4e6aff] py-1 text-xs"
@@ -370,6 +372,14 @@ export default function LunarMissionDashboard() {
                 Power
               </TabsTrigger>
               <TabsTrigger
+                value="hardware"
+                className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-purple-600 dark:data-[state=active]:text-purple-400 py-1 text-xs"
+                title="Lander & Rover Isometric Hardware Anatomy"
+              >
+                <Layers className="w-3.5 h-3.5 mr-1 text-purple-500" />
+                Hardware
+              </TabsTrigger>
+              <TabsTrigger
                 value="asteria"
                 className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:text-[#4e6aff] py-1 text-xs"
               >
@@ -377,6 +387,14 @@ export default function LunarMissionDashboard() {
                 Asteria
               </TabsTrigger>
             </TabsList>
+
+            {/* Tab: Hardware Anatomy Isometric Inspector */}
+            <TabsContent value="hardware" className="flex-1 overflow-y-auto m-0 p-2 min-h-0">
+              <LanderAnatomyViewer
+                vehicleProfile={activeLander}
+                isDarkMode={isDarkMode}
+              />
+            </TabsContent>
 
             {/* Tab 1: Synchronized Telemetry Recharts */}
             <TabsContent value="curves" className="flex-1 overflow-hidden m-0 p-3 min-h-0">
