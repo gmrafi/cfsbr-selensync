@@ -35,6 +35,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import LunarPolarMapCanvas from "@/components/lunar/map/lunar-polar-map-canvas";
+import DSNAntennaAnatomyViewer from "@/components/lunar/hardware/dsn-antenna-anatomy-viewer";
 
 // Dynamically import Leaflet GIS (client-only)
 const LunarLeafletGIS = dynamic(
@@ -630,6 +631,9 @@ export default function LunarMapPage() {
 
             {/* TAB 2: NASA DSN GROUND RELAY */}
             <TabsContent value="dsn-relay" className="m-0 flex-1 min-h-0 overflow-y-auto space-y-3">
+              {/* NASA DSN 34m Beam Waveguide (BWG) Isometric Anatomy Inspector */}
+              <DSNAntennaAnatomyViewer isDarkMode={isDarkMode} />
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 {DSN_STATIONS.map((station) => (
                   <Card key={station.id} className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 shadow-xs">
