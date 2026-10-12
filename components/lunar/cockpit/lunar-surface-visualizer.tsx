@@ -17,6 +17,7 @@ interface LunarSurfaceVisualizerProps {
   isEarthOccluded: boolean;
   solarWatts: number;
   rfLinkMarginDb: number;
+  onInspectHardware?: () => void;
 }
 
 export default function LunarSurfaceVisualizer({
@@ -30,6 +31,7 @@ export default function LunarSurfaceVisualizer({
   isEarthOccluded,
   solarWatts,
   rfLinkMarginDb,
+  onInspectHardware,
 }: LunarSurfaceVisualizerProps) {
   // Width and height of the visualizer stage
   const width = 640;
@@ -61,6 +63,16 @@ export default function LunarSurfaceVisualizer({
       {/* Top Telemetry HUD Overlay */}
       <div className="absolute top-2.5 left-3 right-3 flex items-center justify-between z-10 pointer-events-none">
         <div className="flex items-center gap-2">
+          {onInspectHardware && (
+            <button
+              onClick={onInspectHardware}
+              className="pointer-events-auto h-5 px-2 rounded bg-slate-900/90 hover:bg-[#4e6aff] text-cyan-300 hover:text-white border border-cyan-500/40 text-[9px] font-mono flex items-center gap-1 transition-all shadow-xs cursor-pointer"
+              title="Inspect Isometric Exploded Anatomy of this Lander"
+            >
+              <Sparkles className="w-2.5 h-2.5 text-amber-400" />
+              <span>Inspect Anatomy</span>
+            </button>
+          )}
           <Badge className="bg-slate-900/90 text-cyan-400 border border-cyan-500/30 font-mono text-[10px] tracking-wider px-2 py-0.5">
             2.5D POLAR SURFACE SIMULATOR
           </Badge>
@@ -263,7 +275,14 @@ export default function LunarSurfaceVisualizer({
         )}
 
         {/* 9. CLPS Lander Vehicle Silhouette / Model */}
-        <g transform={`translate(${landerX}, ${landerY})`}>
+        <g 
+          transform={`translate(${landerX}, ${landerY})`}
+          onClick={onInspectHardware}
+          className="cursor-pointer group"
+        >
+          {/* Hover highlight ring */}
+          <circle cx={0} cy={-4} r={28} fill="none" stroke="#38bdf8" strokeWidth={1} strokeDasharray="3 3" opacity={0.4} />
+
           {/* Lander Body */}
           <rect
             x={-10}
